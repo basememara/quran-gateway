@@ -17,15 +17,28 @@ define([
             //THE NAME IS WHAT IT WILL APPEAR AS OFF THE KENDO NAMESPACE (i.e. kendo.ui.YouTube)
             //THE JQUERY PLUGIN WOULD BE jQuery.fn.kendoYouTube
             //http://www.kendoui.com/blogs/teamblog/posts/12-04-03/creating_custom_kendo_ui_plugins.aspx
-            name: 'DataSourceNames99',
+            name: 'DataSourceVerses',
             transport: {
                 read: function (options) {
-                    Storage.getNames99()
+                    Storage.getVerses()
                         .done(function (data) {
                             options.success(data);
                         });
                 }
-            }
+            },
+            group: {
+                field: 'chapter'
+            },
+            sort: [
+                {
+                    field: 'chapter',
+                    dir: 'asc'
+                },
+                {
+                    field: 'start',
+                    dir: 'asc'
+                }
+            ]
         }
     });
 

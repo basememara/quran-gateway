@@ -2,17 +2,26 @@
  * This is a verses view
  */
 define([
-    'views/baseview'
-], function (BaseView) {
+    'views/baseview',
+    'text!../../views/verses/_list.html',
+    'data/datasourceverses'
+], function (BaseView, listTemplate) {
 
     var View = BaseView.extend({
 
         //EVENTS
+        onInit: function () {
+            this.element.find('.listview').kendoMobileListView({
+                dataSource: new kendo.ui.DataSourceVerses(),
+                template: listTemplate,
+                headerTemplate: 'Chapter ${value}',
+                fixedHeaders: true
+            });
+        },
+
         onShow: function (e) {
-            //CHOOSE ACTIVE TAB STRIP
-            e.view.footer.find('[data-role="tabstrip"]')
-                .data('kendoMobileTabStrip')
-                .switchTo('views/chapters/list.html');
+            //RESET SCROLL AND MENUS
+            BaseView.fn.reset.call(this, e);
         }
 
     });

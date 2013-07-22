@@ -8,6 +8,7 @@ define([
 ], function ($, TAFFY, Helpers) {
     //PRIVATE PROPERTIES
     var chapters;
+    var verses;
     var names99;
     var hadiths;
 
@@ -58,6 +59,58 @@ define([
         } else {
             //PASS DATA TO CALLBACK
             defer.resolve(chapters(filter).get());
+        }
+
+        return defer.promise();
+    };
+
+    var getVerseById = function (id) {
+        return getVerse({ id: id });
+    };
+
+    var getVerse = function (filter) {
+        var me = this;
+        var defer = new $.Deferred();
+
+        if (!verses) {
+            //CALL JSON DATA VIA AJAX
+            $.getJSON(Helpers.toServicesUrl('verses'))
+                .done(function (json) {
+                    //CREATE DATABASE FOR LATER USE
+                    verses = TAFFY(json);
+
+                    //PASS DATA TO CALLBACK
+                    defer.resolve(verses(filter).first());
+                }).fail(function () {
+                    defer.reject();
+                });
+        } else {
+            //PASS DATA TO CALLBACK
+            defer.resolve(verses(filter).first());
+        }
+
+        return defer.promise();
+    };
+
+    var getVerses = function (filter) {
+        var me = this;
+        var defer = new $.Deferred();
+
+        if (!verses) {
+            //CALL JSON DATA VIA AJAX
+            $.getJSON(Helpers.toServicesUrl('verses'))
+                .done(function (json) {
+                    //CREATE DATABASE FOR LATER USE
+                    verses = TAFFY(json);
+
+                    //PASS DATA TO CALLBACK
+                    defer.resolve(verses(filter).get());
+                }).fail(function () {
+                    defer.reject();
+                });
+        } else {
+            //PASS DATA TO CALLBACK
+            defer.resolve(verses(filter).get());
         }
 
         return defer.promise();
@@ -172,6 +225,9 @@ define([
         getChapterById: getChapterById,
         getChapter: getChapter,
         getChapters: getChapters,
+        getVerseById: getVerseById,
+        getVerse: getVerse,
+        getVerses: getVerses,
         getName99ById: getName99ById,
         getName99: getName99,
         getNames99: getNames99,

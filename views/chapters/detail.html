@@ -8,17 +8,25 @@
         data-init="App.views.Chapter.onInit"
         data-show="App.views.Chapter.onShow">
         <ul class="chapter-sections" data-index="0" style="margin-top: 15px;">
-            <li data-icon="compose" data-badge="6">Explanation</li>
+            <li data-icon="info">Info</li>
+            <li data-icon="compose" data-badge="6">Exegesis</li>
             <li data-icon="favorites" data-badge="3">Virtues</li>
-            <li data-icon="add">More</li>
         </ul>
-        <ul data-role="listview" data-style="inset" class="listview-explanation">
-            <li><a href="#">Tafsir al-Qur'an al-Azim<br />by Ibn Kathir</a></li>
-            <li><a href="#">In the Shade of the Qur'an<br />by Sayyid Qutb</a></li>
-            <li><a href="#">Tafhim al-Qur'an<br />by Sayyid Abul Ala Maududi</a></li>
-            <li><a href="#">The Ascendant Qur'an<br />by Muhammad al-Asi</a></li>
-            <li><a href="#">Tafseer Quran<br />by Muhammad Metwally al-Sharawy</a></li>
-            <li><a href="#">Safwat al-Tafaseer<br />by Muhammad Ali al-Saboony</a></li>
+        <ul data-role="listview" data-style="inset" class="listview-info">
+            <li>Arabic: <span class="pull-right"></span></li>
+            <li>Chapter: <span class="pull-right"></span></li>
+            <li>Verses: <span class="pull-right"></span></li>
+            <li>Chronology: <span class="pull-right"></span></li>
+            <li>Juz: <span class="pull-right"></span></li>
+            <li>Sajdas: <span class="pull-right"></span></li>
+        </ul>
+        <ul data-role="listview" data-style="inset" class="listview-explanations" style="display:none">
+            <li><a href="#">Tafsir al-Qur'an al-Azim<br /><small>by Ibn Kathir</small></a></li>
+            <li><a href="#">In the Shade of the Qur'an<br /><small>by Sayyid Qutb</small></a></li>
+            <li><a href="#">Towards Understanding the Qur'an<br /><small>by Sayyid Abul Ala Maududi</small></a></li>
+            <li><a href="#">The Ascendant Qur'an<br /><small>by Muhammad al-Asi</small></a></li>
+            <li><a href="#">Tafseer Quran<br /><small>by Muhammad Metwally al-Sharawy</small></a></li>
+            <li><a href="#">Safwat al-Tafaseer<br /><small>by Muhammad Ali al-Saboony</small></a></li>
         </ul>
         <ul data-role="listview" data-style="inset" class="listview-virtues" style="display:none">
             <li>Hadith 1</li>
@@ -27,13 +35,6 @@
             <li>Books 1</li>
             <li>Books 2</li>
             <li>Verses that affected companions</li>
-        </ul>
-        <ul data-role="listview" data-style="inset" class="listview-more" style="display:none">
-            <li>Chapter: #</li>
-            <li>Verses: #</li>
-            <li>Chronology: #</li>
-            <li>Juz: #</li>
-            <li>Sadjas: #</li>
         </ul>
     </div>
 </body>

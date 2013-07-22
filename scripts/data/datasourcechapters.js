@@ -2,9 +2,8 @@
  * Base class for Kendo data source for chapters
  */
 define([
-    'utils/helpers',
     'utils/storage'
-], function (Helpers, Storage) {
+], function (Storage) {
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({

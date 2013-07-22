@@ -36,7 +36,7 @@ define([
                         data: [52]
                     },
                     {
-                        name: 'Duaa\'s',
+                        name: 'Supplications',
                         data: [24]
                     },
                     {
@@ -71,11 +71,6 @@ define([
                     template: '#= series.name #: #= value #%'
                 }
             });
-        },
-
-        onHide: function () {
-            //HIDE BACK BUTTON ON HOME PAGE
-            this.header.find('[data-role="backbutton"]').show();
         }
 
     });
