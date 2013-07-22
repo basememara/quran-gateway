@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="hadiths-list" data-role="view" data-layout="default"
+        data-title="Hadiths"
+        data-init="App.views.Hadiths.onInit"
+        data-show="App.views.Hadiths.onShow">
+        <div class="listview"></div>
+    </div>
+
+    <div id="hadith-modal" data-role="modalview" style="width: 95%; height: 18em;"
+         data-open="App.views.Hadith.onOpen">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a data-click="App.views.Hadith.onClose" data-role="button" data-icon="downloads" data-align="right"></a>
+            </div>
+        </div>
+        <div class="content"></div>
+    </div>
+
+</body>
+</html>

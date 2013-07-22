@@ -1,0 +1,29 @@
+﻿.container-img {
+    padding: 3px;
+    width: 100%;
+    text-align: center;
+}
+
+.container-img img {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 5px;
+}
+
+.hijri-date {
+    width: 100%;
+    text-align: center;
+}
+
+#hadiths-sermon p {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}

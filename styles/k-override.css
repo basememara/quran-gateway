@@ -1,0 +1,17 @@
+﻿#sub-drawer .km-content
+{
+    background-color: #4e4e4e;
+    color: #fff;
+}
+
+#sub-drawer .km-navbar,
+.km-tablet .km-ios #sub-drawer .km-view-title
+{
+    background-color: #2e2e2e;
+    color: #fff;
+    text-shadow: 0 -1px rgba(0,0,0,.5);
+}
+
+.km-modalview .km-content {
+    padding: 15px;
+}

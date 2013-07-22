@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+ 
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-title" content="QuranGateway">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>Quran Gateway</title>
+    
+    <!-- CSS -->
+    <link href="scripts/libs/kendoui/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="scripts/libs/kendoui/styles/kendo.flat.min.css" rel="stylesheet" />
+    <link href="scripts/libs/kendoui/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="scripts/libs/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="scripts/libs/add2home/add2home.css" rel="stylesheet" />
+    <link href="styles/k-override.css" rel="stylesheet" />
+    <link href="styles/icons.css" rel="stylesheet" />
+    <link href="styles/main.css" rel="stylesheet" />
+
+    <!-- iPhone, iPhone (Retina), iPad, iPad (Retina) Icons -->
+    <link href="resources/images/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="resources/images/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="resources/images/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+    <link href="resources/images/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+    
+    <!-- iPhone, iPhone (Retina), iPad, iPad (Retina) Start up screens -->
+    <link href="resources/images/icons/apple-touch-startup-image2-320x460.png"
+            media="(device-width: 320px) and (device-height: 480px)
+                and (-webkit-device-pixel-ratio: 1)"
+            rel="apple-touch-startup-image">
+    <link href="resources/images/icons/apple-touch-startup-image2-640x920.png"
+            media="(device-width: 320px) and (device-height: 480px)
+                and (-webkit-device-pixel-ratio: 2)"
+            rel="apple-touch-startup-image">
+    <link href="resources/images/icons/apple-touch-startup-image2-640x1096.png"
+            media="(device-width: 320px) and (device-height: 568px)
+                and (-webkit-device-pixel-ratio: 2)"
+            rel="apple-touch-startup-image">
+    <link href="resources/images/icons/apple-touch-startup-image-768x1004.png"
+            media="(device-width: 768px) and (device-height: 1024px)
+                and (orientation: portrait)
+                and (-webkit-device-pixel-ratio: 1)"
+            rel="apple-touch-startup-image">
+    <link href="resources/images/icons/apple-touch-startup-image-748x1024.png"
+            media="(device-width: 768px) and (device-height: 1024px)
+                and (orientation: landscape)
+                and (-webkit-device-pixel-ratio: 1)"
+            rel="apple-touch-startup-image">
+    <link href="resources/images/icons/apple-touch-startup-image-1536x2008.png"
+            media="(device-width: 768px) and (device-height: 1024px)
+                and (orientation: portrait)
+                and (-webkit-device-pixel-ratio: 2)"
+            rel="apple-touch-startup-image">
+    <link href="resources/images/icons/apple-touch-startup-image-1496x2048.png"
+            media="(device-width: 768px) and (device-height: 1024px)
+                and (orientation: landscape)
+                and (-webkit-device-pixel-ratio: 2)"
+            rel="apple-touch-startup-image">
+</head>
+<body>
+
+    <section data-id="default" data-role="layout" data-init="App.layouts.Default.onInit">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-role="button" data-rel="drawer" href="#main-drawer" data-icon="icon-menu" data-align="left"></a>
+                <span data-role="view-title"></span>
+                <a data-role="backbutton" data-icon="reply" data-align="right"></a>
+            </div>
+        </header>
+        <!--View content will render here-->
+        <footer data-role="footer">
+            <div data-role="tabstrip">
+			    <a href="#home" data-icon="recents">Dashboard</a>
+			    <a href="views/chapters/list.html" data-icon="bookmarks">Chapters</a>
+			    <a href="views/names99/list.html" data-icon="featured">99 Names</a>
+			    <a href="views/more/index.html" data-icon="more">More</a>
+            </div> 
+        </footer>
+    </section>
+
+    <div id="main-drawer" data-role="drawer" style="width: 250px;">
+        <ul data-role="listview" data-type="group">
+            <li>The Quran
+                <ul>
+                    <li data-icon="icon-rain-inv"><a href="views/verses/supplications.html" data-transition="none">Supplications</a></li>
+                    <li data-icon="icon-attention"><a href="views/verses/o-believers.html" data-transition="none">'O Believers</a></li>
+                    <li data-icon="icon-comment"><a href="views/verses/believers-say.html" data-transition="none">Believers "Say"</a></li>
+                    <li data-icon="icon-hourglass"><a href="views/verses/divine-promises.html" data-transition="none">Divine Promises</a></li>
+                    <li data-icon="icon-bookmark"><a href="views/verses/special-verses.html" data-transition="none">Special Verses</a></li>
+                    <li data-icon="icon-arrows-cw"><a href="views/verses/most-repeated.html" data-transition="none">Most Repeated</a></li>
+                </ul>
+            </li>
+            <li>The Messenger
+                <ul>
+                    <li><a href="views/hadiths/list.html?filter=qudsi" data-transition="none">40 Hadith Qudsi</a></li>
+                    <li><a href="views/hadiths/list.html?filter=nawawi" data-transition="none">42 Hadith Nawawi</a></li>
+                    <li><a href="views/hadiths/sermon.html" data-transition="none">The Last Sermon</a></li>
+                </ul>
+            </li>
+            <li>My Progress
+                <ul>
+                    <li><a href="views/progress/recitation.html" data-transition="none">Recitation</a></li>
+                    <li><a href="views/progress/memorization.html" data-transition="none">Memorization</a></li>
+                    <li><a href="views/progress/duaas.html" data-transition="none">Duaa's</a></li>
+                    <li><a href="views/progress/prayers.html" data-transition="none">Prayers</a></li>
+                    <li><a href="views/progress/fasting.html" data-transition="none">Fasting</a></li>
+                    <li><a href="views/progress/charity.html" data-transition="none">Charity</a></li>
+                    <li><a href="views/progress/sunnah.html" data-transition="none">Sunnah</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="home" data-role="view" data-layout="default" data-title="Quran Gateway"
+        data-init="App.views.Home.onInit"
+        data-show="App.views.Home.onShow"
+        data-hide="App.views.Home.onHide">
+        <div class="container-img"><img src="resources/images/bismillah.png" /></div>
+        <div class="progress"></div>
+    </div>
+
+    <!-- JS -->
+    <script src="scripts/libs/kendoui/js/jquery.min.js"></script>
+    <script src="scripts/libs/kendoui/js/kendo.all.min.js"></script>
+    <script src="scripts/libs/require/require.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
