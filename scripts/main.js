@@ -75,8 +75,9 @@ var App = {};
         'views/hadith',
         'views/hadiths',
         'views/progress',
+        'views/topics',
         'add2home'
-    ], function ($, Default, Home, Chapter, Chapters, Verses, Name99, Names99, Hadith, Hadiths, Progress) {
+    ], function ($, Default, Home, Chapter, Chapters, Verses, Name99, Names99, Hadith, Hadiths, Progress, Topics) {
 
         //CONSTRUCTOR
         var init = function () {
@@ -108,7 +109,8 @@ var App = {};
                 Names99: Names99,
                 Hadith: Hadith,
                 Hadiths: Hadiths,
-                Progress: Progress
+                Progress: Progress,
+                Topics: Topics
             };
         };
 

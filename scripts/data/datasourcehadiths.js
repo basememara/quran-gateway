@@ -2,8 +2,8 @@
  * Base class for Kendo data source for chapters
  */
 define([
-    'utils/storage'
-], function (Storage) {
+    'api'
+], function (Api) {
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({
@@ -20,11 +20,15 @@ define([
             name: 'DataSourceHadiths',
             transport: {
                 read: function (options) {
-                    Storage.getHadiths()
+                    Api.getHadiths()
                         .done(function (data) {
                             options.success(data);
                         });
                 }
+            },
+            sort: {
+                field: 'name',
+                dir: 'asc'
             }
         }
     });

@@ -18,6 +18,7 @@
     <link href="styles/k-override.css" rel="stylesheet" />
     <link href="styles/icons.css" rel="stylesheet" />
     <link href="styles/main.css" rel="stylesheet" />
+    <link href="styles/responsive.css" rel="stylesheet" />
 
     <!-- iPhone, iPhone (Retina), iPad, iPad (Retina) Icons -->
     <link href="resources/images/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
@@ -64,7 +65,7 @@
     <section data-id="default" data-role="layout" data-init="App.layouts.Default.onInit">
         <header data-role="header">
             <div data-role="navbar">
-                <a data-role="button" data-rel="drawer" href="#main-drawer" data-icon="icon-menu" data-align="left"></a>
+                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
                 <span data-role="view-title"></span>
             </div>
         </header>
@@ -73,13 +74,13 @@
             <div data-role="tabstrip">
 			    <a href="#home" data-icon="recents">Dashboard</a>
 			    <a href="views/chapters/list.html" data-icon="bookmarks">Chapters</a>
-			    <a href="views/names99/list.html" data-icon="featured">99 Names</a>
-			    <a href="views/more/index.html" data-icon="more">More</a>
+			    <a href="views/topics/list.html" data-icon="featured">Topics</a>
+			    <a href="views/names99/list.html" data-icon="action">99 Names</a>
             </div> 
         </footer>
     </section>
 
-    <div id="main-drawer" data-role="drawer" style="width: 250px;">
+    <div id="drawer-menu" data-role="drawer" style="width: 250px;">
         <ul data-role="listview" data-type="group">
             <li>The Quran
                 <ul>
@@ -87,26 +88,15 @@
                     <li data-icon="icon-attention"><a href="views/verses/o-believers.html" data-transition="none">'O Believers</a></li>
                     <li data-icon="icon-comment"><a href="views/verses/believers-say.html" data-transition="none">Believers "Say"</a></li>
                     <li data-icon="icon-hourglass"><a href="views/verses/divine-promises.html" data-transition="none">Divine Promises</a></li>
+                    <li data-icon="icon-plus-squared"><a href="views/verses/prostrations.html" data-transition="none">Prostrations</a></li>
                     <li data-icon="icon-bookmark"><a href="views/verses/special-verses.html" data-transition="none">Special Verses</a></li>
                     <li data-icon="icon-arrows-cw"><a href="views/verses/most-repeated.html" data-transition="none">Most Repeated</a></li>
                 </ul>
             </li>
             <li>The Messenger
                 <ul>
-                    <li><a href="views/hadiths/list.html?filter=qudsi" data-transition="none">40 Hadith Qudsi</a></li>
-                    <li><a href="views/hadiths/list.html?filter=nawawi" data-transition="none">42 Hadith Nawawi</a></li>
-                    <li><a href="views/hadiths/sermon.html" data-transition="none">The Last Sermon</a></li>
-                </ul>
-            </li>
-            <li>My Progress
-                <ul>
-                    <li><a href="views/progress/recitation.html" data-transition="none">Recitation</a></li>
-                    <li><a href="views/progress/memorization.html" data-transition="none">Memorization</a></li>
-                    <li><a href="views/progress/supplications.html" data-transition="none">Supplications</a></li>
-                    <li><a href="views/progress/prayers.html" data-transition="none">Prayers</a></li>
-                    <li><a href="views/progress/fasting.html" data-transition="none">Fasting</a></li>
-                    <li><a href="views/progress/charity.html" data-transition="none">Charity</a></li>
-                    <li><a href="views/progress/sunnah.html" data-transition="none">Sunnah</a></li>
+                    <li><a href="views/hadiths/list.html" data-transition="none">Special Hadiths</a></li>
+                    <li><a href="views/hadiths/sermon.html" data-transition="none">Last Sermon</a></li>
                 </ul>
             </li>
         </ul>
@@ -116,7 +106,17 @@
         data-init="App.views.Home.onInit"
         data-show="App.views.Home.onShow">
         <div class="container-img"><img src="resources/images/bismillah.png" /></div>
-        <div class="progress"></div>
+        <div class="progress-wrapper">
+            <div id="chart-recitation"></div>
+            <div id="chart-memorization"></div>
+            <div id="chart-names99"></div>
+            <div id="chart-understanding"></div>
+            <div id="chart-supplications"></div>
+            <div id="chart-prayers"></div>
+            <div id="chart-fasting"></div>
+            <div id="chart-charity"></div>
+            <div id="chart-sunnah"></div>
+        </div>
     </div>
 
     <!-- JS -->

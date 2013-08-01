@@ -15,9 +15,8 @@
     text-align: center;
 }
 
-#hadiths-sermon p {
+blockquote {
     font-style: italic;
-    font-weight: bold;
 }
 
 .pull-left {
@@ -26,4 +25,21 @@
 
 .pull-right {
     float: right;
+}
+
+.sections.km-buttongroup {
+    margin-top: 15px;
+}
+
+#home .progress-wrapper .k-chart {
+    margin: auto;
+    display: inline-block;
+}
+
+#toast-container>div {
+    width: 200px;
+}
+
+#popover-sort {
+    height: 170px !important;
 }

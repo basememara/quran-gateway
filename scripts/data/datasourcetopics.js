@@ -2,9 +2,8 @@
  * Base class for Kendo data source for chapters
  */
 define([
-    'api',
-    'models/chapter'
-], function (Api, Model) {
+    'api'
+], function (Api) {
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({
@@ -18,17 +17,18 @@ define([
             //THE NAME IS WHAT IT WILL APPEAR AS OFF THE KENDO NAMESPACE (i.e. kendo.ui.YouTube)
             //THE JQUERY PLUGIN WOULD BE jQuery.fn.kendoYouTube
             //http://www.kendoui.com/blogs/teamblog/posts/12-04-03/creating_custom_kendo_ui_plugins.aspx
-            name: 'DataSourceChapters',
+            name: 'DataSourceTopics',
             transport: {
                 read: function (options) {
-                    Api.getChapters()
+                    Api.getTopics()
                         .done(function (data) {
                             options.success(data);
                         });
                 }
             },
-            schema: {
-                model: Model
+            sort: {
+                field: 'name',
+                dir: 'asc'
             }
         }
     });

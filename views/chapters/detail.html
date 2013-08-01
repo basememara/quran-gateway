@@ -1,34 +1,35 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>All Chapters</title>
+    <title></title>
 </head>
 <body>
     <div id="chapters-detail" data-role="view" data-layout="default"
         data-init="App.views.Chapter.onInit"
         data-show="App.views.Chapter.onShow">
-        <ul class="chapter-sections" data-index="0" style="margin-top: 15px;">
+        <ul class="sections" data-index="0"">
             <li data-icon="info">Info</li>
-            <li data-icon="compose" data-badge="6">Exegesis</li>
+            <li data-icon="compose" data-badge="6">Background</li>
             <li data-icon="favorites" data-badge="3">Virtues</li>
         </ul>
-        <ul data-role="listview" data-style="inset" class="listview-info">
+        <ul data-role="listview" data-style="inset" class="content info">
             <li>Arabic: <span class="pull-right"></span></li>
             <li>Chapter: <span class="pull-right"></span></li>
             <li>Verses: <span class="pull-right"></span></li>
             <li>Chronology: <span class="pull-right"></span></li>
             <li>Juz: <span class="pull-right"></span></li>
-            <li>Sajdas: <span class="pull-right"></span></li>
+            <li>Sajdah: <span class="pull-right"></span></li>
         </ul>
-        <ul data-role="listview" data-style="inset" class="listview-explanations" style="display:none">
+        <ul data-role="listview" data-style="inset" class="content" style="display: none;">
             <li><a href="#">Tafsir al-Qur'an al-Azim<br /><small>by Ibn Kathir</small></a></li>
             <li><a href="#">In the Shade of the Qur'an<br /><small>by Sayyid Qutb</small></a></li>
-            <li><a href="#">Towards Understanding the Qur'an<br /><small>by Sayyid Abul Ala Maududi</small></a></li>
+            <li><a href="views/chapters/exegesis.html?source=Sayyid Abul Ala Maududi">Towards Understanding the Qur'an<br /><small>by Sayyid Abul Ala Maududi</small></a></li>
             <li><a href="#">The Ascendant Qur'an<br /><small>by Muhammad al-Asi</small></a></li>
             <li><a href="#">Tafseer Quran<br /><small>by Muhammad Metwally al-Sharawy</small></a></li>
             <li><a href="#">Safwat al-Tafaseer<br /><small>by Muhammad Ali al-Saboony</small></a></li>
+            <li><a href="#">Fath al-Qadeer<br /><small>by Muhammad ash-Shawkani</small></a></li>
         </ul>
-        <ul data-role="listview" data-style="inset" class="listview-virtues" style="display:none">
+        <ul data-role="listview" data-style="inset" class="content" style="display: none;">
             <li>Hadith 1</li>
             <li>Hadith 2</li>
             <li>Lecture</li>

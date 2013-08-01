@@ -6,46 +6,117 @@ define([
     'text!../../views/hadiths/_list.html',
     'data/datasourcehadiths'
 ], function (BaseView, listTemplate) {
+    var context = null;
 
     var View = BaseView.extend({
+        view: null,
+        dataSource: null,
+
+        //CONSTRUCTOR
+        init: function () {
+            BaseView.fn.init.call(this);
+
+            //CACHE CONTEXT FOR LATER
+            context = this;
+        },
 
         //EVENTS
-        onInit: function () {
-            this.element.find('.listview').kendoMobileListView({
+        onInit: function (e) {
+            e.view.element.find('.listview').kendoMobileListView({
                 dataSource: new kendo.ui.DataSourceHadiths(),
-                template: listTemplate
+                template: listTemplate,
+                filterable: {
+                    field: 'translation',
+                    operator: 'contains',
+                    ignoreCase: true
+                }
             });
         },
 
         onShow: function (e) {
-            //GET DATASOURCE OF MOBILE LIST
-            var ds = this.element.find('.listview')
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //CACHE DATASOURCE FOR LATER USE
+            context.dataSource = e.view.element.find('.listview')
                 .data('kendoMobileListView')
                 .dataSource;
 
-            //DETERMINE FILTER FROM PASS
-            if (this.params.filter) {
-                ds.query({
-                    filter: {
-                        field: this.params.filter,
-                        operator: 'eq',
-                        value: '\u0001'
+            //RESET QUERY ON DATASOURCE
+            context.dataSource.query({
+                filter: null,
+                sort: [
+                    {
+                        field: 'qudsi',
+                        dir: 'desc'
                     },
-                    sort: [
-                        {
-                            field: this.params.filter,
-                            dir: 'desc'
-                        },
-                        {
-                            field: 'title',
-                            dir: 'asc'
-                        }
-                    ]
-                });
-            }
+                    {
+                        field: 'nawawi',
+                        dir: 'desc'
+                    },
+                    {
+                        field: 'title',
+                        dir: 'asc'
+                    }
+                ]
+            });
+
+            //RESET SEARCH INPUT
+            e.view.element.find('[type="search"]').val('');
+
+            //SELECT FIRST BUTTON AS DEFAULT
+            e.view.header.find('[data-role="buttongroup"]')
+                .data('kendoMobileButtonGroup')
+                .select(0);
 
             //RESET SCROLL AND MENUS
             BaseView.fn.reset.call(this, e);
+        },
+
+        onFilter: function (e) {
+            //DETERMINE FILTER FROM SELECTION
+            var filter = null;
+            switch (this.selectedIndex) {
+                case 1:
+                    filter = {
+                        field: 'qudsi',
+                        operator: 'eq',
+                        value: '\u0001'
+                    };
+                    break;
+                case 2:
+                    filter = {
+                        field: 'nawawi',
+                        operator: 'eq',
+                        value: '\u0001'
+                    };
+                    break;
+            }
+
+            //APPLY FILTER TO DATASOURCE
+            context.dataSource.query({
+                filter: filter,
+                sort: [
+                    {
+                        field: 'qudsi',
+                        dir: 'desc'
+                    },
+                    {
+                        field: 'nawawi',
+                        dir: 'desc'
+                    },
+                    {
+                        field: 'title',
+                        dir: 'asc'
+                    }
+                ]
+            });
+
+            //RESET SEARCH INPUT
+            context.view.element.find('[type="search"]').val('');
+
+            //SCROLL TO TOP ON PAGE LOAD
+            context.view.scroller.reset();
         }
 
     });

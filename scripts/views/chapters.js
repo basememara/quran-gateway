@@ -6,15 +6,103 @@ define([
     'text!../../views/chapters/_list.html',
     'data/datasourcechapters'
 ], function (BaseView, listTemplate) {
+    var context = null;
 
     var View = BaseView.extend({
+        view: null,
+        dataSource: null,
+
+        //CONSTRUCTOR
+        init: function () {
+            BaseView.fn.init.call(this);
+
+            //CACHE CONTEXT FOR LATER
+            context = this;
+        },
 
         //EVENTS
-        onInit: function () {
-            this.element.find('.listview').kendoMobileListView({
+        onInit: function (e) {
+            //BIND CHAPTERS TO LIST
+            e.view.element.find('.listview').kendoMobileListView({
                 dataSource: new kendo.ui.DataSourceChapters(),
-                template: listTemplate
+                template: listTemplate,
+                filterable: {
+                    field: 'name',
+                    operator: 'contains',
+                    ignoreCase: true
+                }
             });
+        },
+
+        onShow: function (e) {
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //CACHE DATASOURCE FOR LATER USE
+            context.dataSource = e.view.element.find('.listview')
+                .data('kendoMobileListView')
+                .dataSource;
+
+            //RESET VIEW
+            context.reset(e);
+        },
+
+        onPopOverInit: function (e) {
+            //HANDLE SORT CLICK
+            e.view.element.find('.km-listview')
+                .data('kendoMobileListView')
+                .bind('click', context.onSort);
+        },
+
+        onPopOverShow: function (e) {
+            //SELECT FIRST BUTTON AS DEFAULT
+            e.view.element.find('.km-listview input[value="id"]')
+                .prop('checked', true);
+        },
+
+        onSort: function (e) {
+            var value = e.item.find('input').val();
+
+            //APPLY FILTER TO DATASOURCE
+            context.dataSource.query({
+                sort: [
+                    {
+                        field: value,
+                        dir: 'asc'
+                    },
+                    {
+                        field: 'id',
+                        dir: 'asc'
+                    }
+                ]
+            });
+
+            //CLOSE POPOVER
+            $('[data-role="popover"]')
+                .data("kendoMobilePopOver")
+                .close();
+
+            //RESET SEARCH INPUT
+            context.view.element.find('[type="search"]').val('');
+        },
+
+        reset: function (e) {
+            //CALL BASE METHOD
+            BaseView.fn.reset.call(this, e);
+
+            //RESET QUERY ON DATASOURCE
+            context.dataSource.query({
+                sort: [{
+                    field: 'id',
+                    dir: 'asc'
+                }]
+            });
+
+            //RESET SORT INPUT
+            $('[data-role="popover"] input[value="id"]').prop('checked', true);
+
+            //RESET SEARCH INPUT
+            e.view.element.find('[type="search"]').val('');
         }
 
     });

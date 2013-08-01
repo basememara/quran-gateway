@@ -3,236 +3,73 @@
  */
 define([
     'jquery',
+    'underscore',
     'taffy',
     'utils/helpers'
-], function ($, TAFFY, Helpers) {
+], function ($, _, TAFFY, Helpers) {
     //PRIVATE PROPERTIES
-    var chapters;
-    var verses;
-    var names99;
-    var hadiths;
+    var database = [];
 
-    var getChapterById = function (id) {
-        return getChapter({ id: id });
-    };
-
-    var getChapter = function (filter) {
-        var me = this;
+    var getTable = function (key, options) {
         var defer = new $.Deferred();
+        options = options || {};
 
-        if (!chapters) {
+        if (!database[key]) {
             //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('chapters'))
+            $.getJSON(Helpers.toServicesUrl(options.service || key))
                 .done(function (json) {
                     //CREATE DATABASE FOR LATER USE
-                    chapters = TAFFY(json);
+                    database[key] = TAFFY(json);
 
                     //PASS DATA TO CALLBACK
-                    defer.resolve(chapters(filter).first());
+                    defer.resolve(database[key]);
                 }).fail(function () {
                     defer.reject();
                 });
         } else {
             //PASS DATA TO CALLBACK
-            defer.resolve(chapters(filter).first());
+            defer.resolve(database[key]);
         }
 
         return defer.promise();
     };
 
-    var getChapters = function (filter) {
-        var me = this;
+    var get = function (key, filter, options) {
         var defer = new $.Deferred();
 
-        if (!chapters) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('chapters'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    chapters = TAFFY(json);
+        //GET TABLE AND RETRIEVE DATA
+        getTable(key, options)
+            .done(function (data) {
+                //OVERLOAD PARAMETER FOR ID OR FILTER
+                var overloaded = _.isObject(filter) ? filter : { id: parseInt(filter) };
 
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(chapters(filter).get());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(chapters(filter).get());
-        }
+                //PASS DATA TO CALLBACK
+                defer.resolve(data(overloaded).first());
+            }).fail(function () {
+                defer.reject();
+            });
 
         return defer.promise();
     };
 
-    var getVerseById = function (id) {
-        return getVerse({ id: id });
-    };
-
-    var getVerse = function (filter) {
-        var me = this;
+    var getAll = function (key, filter, options) {
         var defer = new $.Deferred();
 
-        if (!verses) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('verses'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    verses = TAFFY(json);
-
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(verses(filter).first());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(verses(filter).first());
-        }
-
-        return defer.promise();
-    };
-
-    var getVerses = function (filter) {
-        var me = this;
-        var defer = new $.Deferred();
-
-        if (!verses) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('verses'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    verses = TAFFY(json);
-
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(verses(filter).get());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(verses(filter).get());
-        }
-
-        return defer.promise();
-    };
-
-    var getName99ById = function (id) {
-        return getName99({ id: id });
-    };
-
-    var getName99 = function (filter) {
-        var me = this;
-        var defer = new $.Deferred();
-
-        if (!names99) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('names99'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    names99 = TAFFY(json);
-
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(names99(filter).first());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(names99(filter).first());
-        }
-
-        return defer.promise();
-    };
-
-    var getNames99 = function (filter) {
-        var me = this;
-        var defer = new $.Deferred();
-
-        if (!names99) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('names99'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    names99 = TAFFY(json);
-
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(names99(filter).get());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(names99(filter).get());
-        }
-
-        return defer.promise();
-    };
-
-    var getHadithById = function (id) {
-        return getHadith({ id: id });
-    };
-
-    var getHadith = function (filter) {
-        var me = this;
-        var defer = new $.Deferred();
-
-        if (!hadiths) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('hadiths'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    hadiths = TAFFY(json);
-
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(hadiths(filter).first());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(hadiths(filter).first());
-        }
-
-        return defer.promise();
-    };
-
-    var getHadiths = function (filter) {
-        var me = this;
-        var defer = new $.Deferred();
-
-        if (!hadiths) {
-            //CALL JSON DATA VIA AJAX
-            $.getJSON(Helpers.toServicesUrl('hadiths'))
-                .done(function (json) {
-                    //CREATE DATABASE FOR LATER USE
-                    hadiths = TAFFY(json);
-
-                    //PASS DATA TO CALLBACK
-                    defer.resolve(hadiths(filter).get());
-                }).fail(function () {
-                    defer.reject();
-                });
-        } else {
-            //PASS DATA TO CALLBACK
-            defer.resolve(hadiths(filter).get());
-        }
+        //GET TABLE AND RETRIEVE DATA
+        getTable(key, options)
+            .done(function (data) {
+                //PASS DATA TO CALLBACK
+                defer.resolve(data(filter).get());
+            }).fail(function () {
+                defer.reject();
+            });
 
         return defer.promise();
     };
 
     //PUBLIC PROPERTIES
     return {
-        getChapterById: getChapterById,
-        getChapter: getChapter,
-        getChapters: getChapters,
-        getVerseById: getVerseById,
-        getVerse: getVerse,
-        getVerses: getVerses,
-        getName99ById: getName99ById,
-        getName99: getName99,
-        getNames99: getNames99,
-        getHadithById: getHadithById,
-        getHadith: getHadith,
-        getHadiths: getHadiths
+        get: get,
+        getAll: getAll
     };
 });

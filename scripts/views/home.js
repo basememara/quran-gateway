@@ -2,73 +2,70 @@
  * This is a home view
  */
 define([
+    'api',
     'views/baseview'
-], function (BaseView) {
+], function (Api, BaseView) {
+    var context = null;
 
     var View = BaseView.extend({
 
+        //CONSTRUCTOR
+        init: function () {
+            BaseView.fn.init.call(this);
+
+            //CACHE CONTEXT FOR LATER
+            context = this;
+        },
+
         //EVENTS
         onShow: function () {
-            //HIDE BACK BUTTON ON HOME PAGE
-            this.header.find('[data-role="backbutton"]').hide();
+            //INITIALIZE CHARTS
+            context.loadProgress('recitation');
+            context.loadProgress('memorization');
+            context.loadProgress('names99', '99 Names');
+            context.loadProgress('understanding');
+            context.loadProgress('supplications');
+            context.loadProgress('prayers');
+            context.loadProgress('fasting');
+            context.loadProgress('charity');
+            context.loadProgress('sunnah');
+        },
 
-            //INITIALIZE PROGRESS CHART
-            this.element.find('.progress').kendoChart({
+        loadProgress: function (key, title) {
+            //SET PIE VALUES
+            var perUnit = 100 / (Api.getProgress()[key].total || 1);
+            var amount = Api.getProgress()[key].complete.length * perUnit;
+            var data = [amount || 1, (100 - amount)];
+
+            //SET COLOR BASED ON VALUE
+            var color = data[0] > 60 ? '#10c4b2'
+                : data[0] > 30 ? '#ffb74f'
+                : '#ff7663';
+
+            //INITIALIZE CHART
+            $('#chart-' + key).kendoChart({
+                title: {
+                    text: title || (key.charAt(0).toUpperCase() + key.slice(1))
+                },
                 legend: {
                     position: 'top'
                 },
                 chartArea: {
-                    margin: {
-                        bottom: 200
-                    },
                     background: 'transparent'
                 },
+                series: [{
+                    data: data
+                }],
                 seriesDefaults: {
-                    type: 'column'
+                    type: 'pie',
+                    padding: 0
                 },
-                series: [
-                    {
-                        name: 'Recitation',
-                        data: [35]
-                    },
-                    {
-                        name: 'Memorization',
-                        data: [52]
-                    },
-                    {
-                        name: 'Supplications',
-                        data: [24]
-                    },
-                    {
-                        name: 'Prayers',
-                        data: [76]
-                    },
-                    {
-                        name: 'Fasting',
-                        data: [67]
-                    },
-                    {
-                        name: 'Charity',
-                        data: [76]
-                    },
-                    {
-                        name: 'Sunnah',
-                        data: [43]
-                    }
-                ],
-                valueAxis: {
-                    labels: {
-                        format: '{0}%'
-                    },
-                    line: {
-                        visible: false
-                    },
-                    axisCrossingValue: 0
+                seriesColors: [color, '#ccc'],
+                seriesClick: function (e) {
+                    App.kendo.navigate('views/progress/' + key + '.html');
                 },
                 tooltip: {
-                    visible: true,
-                    format: '{0}%',
-                    template: '#= series.name #: #= value #%'
+                    visible: false
                 }
             });
         }
