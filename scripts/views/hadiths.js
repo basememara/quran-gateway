@@ -73,6 +73,37 @@ define([
             BaseView.fn.reset.call(this, e);
         },
 
+        onSupplicationsShow: function (e) {
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //CACHE DATASOURCE FOR LATER USE
+            context.dataSource = e.view.element.find('.listview')
+                .data('kendoMobileListView')
+                .dataSource;
+
+            //RESET QUERY ON DATASOURCE
+            context.dataSource.query({
+                filter: {
+                    field: 'supplication',
+                    operator: 'eq',
+                    value: true
+                },
+                sort: [
+                    {
+                        field: 'title',
+                        dir: 'asc'
+                    }
+                ]
+            });
+
+            //RESET SEARCH INPUT
+            e.view.element.find('[type="search"]').val('');
+
+            //RESET SCROLL AND MENUS
+            BaseView.fn.reset.call(this, e);
+        },
+
         onFilter: function (e) {
             //DETERMINE FILTER FROM SELECTION
             var filter = null;
@@ -81,14 +112,14 @@ define([
                     filter = {
                         field: 'qudsi',
                         operator: 'eq',
-                        value: '\u0001'
+                        value: true
                     };
                     break;
                 case 2:
                     filter = {
                         field: 'nawawi',
                         operator: 'eq',
-                        value: '\u0001'
+                        value: true
                     };
                     break;
             }

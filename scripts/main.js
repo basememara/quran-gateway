@@ -18,10 +18,10 @@ var App = {};
         baseUrl: currentPath,
         paths: {
             add2home: 'libs/add2home/add2home',
-            amplify: 'libs/amplify/amplify.min',
             hijri: 'libs/hijricalendar/hijricalendar.mod',
             jsurl: 'libs/js-url/url.min',
             kendoui: 'libs/kendoui/js', //FOR AMD USE
+            lostorage: 'libs/lostorage/loStorage.min',
             moment: 'libs/moment/moment.min',
             text: 'libs/require/text',
             taffy: 'libs/taffy/taffy-min',
@@ -32,9 +32,6 @@ var App = {};
         // The shim config allows us to configure dependencies for
         // scripts that do not call define() to register a module
         shim: {
-            amplify: {
-                exports: 'amplify'
-            },
             jsurl: {
                 deps: ['jquery'],
                 exports: 'url'

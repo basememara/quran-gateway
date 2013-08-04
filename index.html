@@ -76,6 +76,7 @@
 			    <a href="views/chapters/list.html" data-icon="bookmarks">Chapters</a>
 			    <a href="views/topics/list.html" data-icon="featured">Topics</a>
 			    <a href="views/names99/list.html" data-icon="action">99 Names</a>
+			    <a href="views/favorites/index.html" data-icon="favorites">Favorites</a>
             </div> 
         </footer>
     </section>
@@ -84,18 +85,19 @@
         <ul data-role="listview" data-type="group">
             <li>The Quran
                 <ul>
-                    <li data-icon="icon-rain-inv"><a href="views/verses/supplications.html" data-transition="none">Supplications</a></li>
-                    <li data-icon="icon-attention"><a href="views/verses/o-believers.html" data-transition="none">'O Believers</a></li>
-                    <li data-icon="icon-comment"><a href="views/verses/believers-say.html" data-transition="none">Believers "Say"</a></li>
-                    <li data-icon="icon-hourglass"><a href="views/verses/divine-promises.html" data-transition="none">Divine Promises</a></li>
-                    <li data-icon="icon-plus-squared"><a href="views/verses/prostrations.html" data-transition="none">Prostrations</a></li>
+                    <li data-icon="icon-rain-inv"><a href="views/verses/list.html?type=supplication&title=Supplications" data-transition="none">Supplications</a></li>
+                    <li data-icon="icon-attention"><a href="views/verses/list.html?type=believers&title=%27O%20Believers" data-transition="none">'O Believers</a></li>
+                    <li data-icon="icon-comment"><a href="views/verses/list.html?type=say&title=Believers%20%22Say%22" data-transition="none">Believers "Say"</a></li>
+                    <li data-icon="icon-hourglass"><a href="views/verses/list.html?type=promise&title=Divine%20Promises" data-transition="none">Divine Promises</a></li>
+                    <li data-icon="icon-plus-squared"><a href="views/verses/list.html?type=sajdah&title=Prostrations" data-transition="none">Prostrations</a></li>
                     <li data-icon="icon-bookmark"><a href="views/verses/special-verses.html" data-transition="none">Special Verses</a></li>
-                    <li data-icon="icon-arrows-cw"><a href="views/verses/most-repeated.html" data-transition="none">Most Repeated</a></li>
+                    <li data-icon="icon-arrows-cw"><a href="views/verses/list.html?type=occurrence&title=Most%20Repeated" data-transition="none">Most Repeated</a></li>
                 </ul>
             </li>
             <li>The Messenger
                 <ul>
                     <li><a href="views/hadiths/list.html" data-transition="none">Special Hadiths</a></li>
+                    <li><a href="views/hadiths/supplications.html" data-transition="none">Supplications</a></li>
                     <li><a href="views/hadiths/sermon.html" data-transition="none">Last Sermon</a></li>
                 </ul>
             </li>

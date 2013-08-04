@@ -1,4 +1,9 @@
 ﻿<h2>#= name #</h2>
-<p>#= translation #</p>
-<a href="\#hadith-modal" data-role="detailbutton" data-icon="more" data-rel="modalview"
-    data-title="#= name #" data-content="Sources: #= source #"></a>
+<p>#= translation #
+    <a href="\#hadith-modal"
+        data-role="button"
+        data-rel="modalview"
+        data-hadith-id="#= id #"
+        style="font-size: 0.7em">References</a>
+</p>
+<a href="\#" data-role="detailbutton" data-style="rowinsert"></a>

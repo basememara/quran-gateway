@@ -9,7 +9,6 @@ define([], function () {
         fields: {
             id: { type: 'number' },
             name: { type: 'string' },
-            description: { type: 'string' },
             translation: { type: 'string' },
             arabic: { type: 'string' },
             verses: { type: 'number' },
@@ -18,7 +17,7 @@ define([], function () {
             period: { type: 'string' },
             period_exceptions: { type: 'string' },
             juz: { type: 'number' },
-            sajdas: { type: 'string' }
+            sajdah: { type: 'string' }
         }
     });
 });

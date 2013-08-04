@@ -2,8 +2,10 @@
  * Base class for Kendo data source for chapters
  */
 define([
-    'api'
-], function (Api) {
+    'underscore',
+    'api',
+    'models/verse'
+], function (_, Api, Model) {
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({
@@ -22,9 +24,19 @@ define([
                 read: function (options) {
                     Api.getVerses()
                         .done(function (data) {
+                            //MANIPULATE DATA
+                            _.each(data, function (item) {
+                                //TRUNCATE FOR DYNAMIC SUMMARY FIELD
+                                item.summary = _.truncate(item.translation, 150);
+                            })
+
+                            //SEND BACK TO KENDO DATA SOURCE
                             options.success(data);
                         });
                 }
+            },
+            schema: {
+                model: Model
             },
             group: {
                 field: 'chapter'

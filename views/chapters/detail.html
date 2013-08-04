@@ -7,10 +7,17 @@
     <div id="chapters-detail" data-role="view" data-layout="default"
         data-init="App.views.Chapter.onInit"
         data-show="App.views.Chapter.onShow">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
+                <span data-role="view-title"></span>
+                <a href="#" data-role="button" data-icon="add" data-align="right"></a>
+            </div>
+        </header>
         <ul class="sections" data-index="0"">
             <li data-icon="info">Info</li>
             <li data-icon="compose" data-badge="6">Background</li>
-            <li data-icon="favorites" data-badge="3">Virtues</li>
+            <li data-icon="add" data-badge="3">Virtues</li>
         </ul>
         <ul data-role="listview" data-style="inset" class="content info">
             <li>Arabic: <span class="pull-right"></span></li>

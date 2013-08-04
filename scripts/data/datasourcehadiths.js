@@ -2,8 +2,9 @@
  * Base class for Kendo data source for chapters
  */
 define([
-    'api'
-], function (Api) {
+    'api',
+    'models/hadith'
+], function (Api, Model) {
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({
@@ -25,6 +26,9 @@ define([
                             options.success(data);
                         });
                 }
+            },
+            schema: {
+                model: Model
             },
             sort: {
                 field: 'name',

@@ -23,7 +23,7 @@ define([
             context.loadProgress('recitation');
             context.loadProgress('memorization');
             context.loadProgress('names99', '99 Names');
-            context.loadProgress('understanding');
+            context.loadProgress('understanding', 'Understand');
             context.loadProgress('supplications');
             context.loadProgress('prayers');
             context.loadProgress('fasting');
@@ -33,8 +33,8 @@ define([
 
         loadProgress: function (key, title) {
             //SET PIE VALUES
-            var perUnit = 100 / (Api.getProgress()[key].total || 1);
-            var amount = Api.getProgress()[key].complete.length * perUnit;
+            var perUnit = 100 / (Api.getProgress(key).total || 1);
+            var amount = Api.getProgress(key).complete.length * perUnit;
             var data = [amount || 1, (100 - amount)];
 
             //SET COLOR BASED ON VALUE

@@ -2,11 +2,10 @@
  * This is the api
  */
 define([
-    'amplify',
-    'utils/alerts',
+    'lostorage',
     'utils/helpers',
     'utils/storage'
-], function (amplify, Alerts, Helpers, Storage) {
+], function (loStorage, Helpers, Storage) {
 
     //PUBLIC PROPERTIES
     return {
@@ -19,11 +18,11 @@ define([
         },
 
         getVerse: function (filter) {
-            return Storage.get('verses', filter);
+            return Storage.get('verses/ranges', filter);
         },
 
         getVerses: function (filter) {
-            return Storage.getAll('verses', filter);
+            return Storage.getAll('verses/ranges', filter);
         },
 
         getName99: function (filter) {
@@ -58,81 +57,41 @@ define([
             return Storage.getAll('topics', filter);
         },
 
-        getProgress: function () {
-            var key = 'myprogress';
-
+        getProgress: function (key) {
             //INITIALIZE DATA STORE IF APPLICABLE
-            if (!amplify.store(key)) {
+            if (!loStorage.storage.get('myprogress-' + key)) {
                 //STORE DEFAULT IN LOCAL STORAGE
-                amplify.store(key, {
-                    recitation: {
-                        complete: [],
-                        total: 0
-                    },
-                    memorization: {
-                        complete: [],
-                        total: 0
-                    },
-                    names99: {
-                        complete: [],
-                        total: 0
-                    },
-                    understanding: {
-                        complete: [],
-                        total: 0
-                    },
-                    supplications: {
-                        complete: [],
-                        total: 0
-                    },
-                    prayers: {
-                        complete: [],
-                        total: 0
-                    },
-                    fasting: {
-                        complete: [],
-                        total: 0
-                    },
-                    charity: {
-                        complete: [],
-                        total: 0
-                    },
-                    sunnah: {
-                        complete: [],
-                        total: 0
-                    }
+                loStorage.storage.set('myprogress-' + key, {
+                    complete: [],
+                    total: 0
                 });
-
-                Alerts.info('Click on the chart to update progress.');
             }
 
             //RETURN DATA FROM LOCAL STORAGE
-            return amplify.store(key);
+            return loStorage.storage.get('myprogress-' + key);
         },
 
-        setProgress: function (value) {
-            var key = 'myprogress';
-
+        setProgress: function (key, value) {
             //STORE DATA IN LOCAL STORAGE
-            amplify.store(key, value);
+            loStorage.storage.set('myprogress-' + key, value);
         },
 
         addProgress: function (key, value) {
-            var progress = this.getProgress();
-            Helpers.pushUnique(progress[key].complete, value);
-            this.setProgress(progress);
+            var progress = this.getProgress(key);
+            Helpers.pushUnique(progress.complete, value);
+            this.setProgress(key, progress);
         },
 
         removeProgress: function (key, value) {
-            var progress = this.getProgress();
-            Helpers.remove(progress[key].complete, value);
-            this.setProgress(progress);
+            var progress = this.getProgress(key);
+            Helpers.remove(progress.complete, value);
+            this.setProgress(key, progress);
         },
 
         totalProgress: function (key, value) {
-            var progress = this.getProgress();
-            progress[key].total = value;
-            this.setProgress(progress);
+            var progress = this.getProgress(key);
+            progress.total = value;
+            this.setProgress(key, progress);
         }
     };
 });

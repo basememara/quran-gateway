@@ -90,7 +90,7 @@ define([
             var key = e.sender.element.data('progress');
 
             //CHECK INPUTS BASED ON INPUT
-            $.each(Api.getProgress()[key].complete, function (index, item) {
+            $.each(Api.getProgress(key).complete, function (index, item) {
                 e.sender.element.find('input[name="' + item + '"]').prop('checked', true);
             });
 

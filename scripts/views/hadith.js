@@ -2,19 +2,30 @@
  * This is a hadith modal
  */
 define([
+    'api',
     'views/basemodal'
-], function (BaseModal) {
+], function (Api, BaseModal) {
 
     var Modal = BaseModal.extend({
 
         //EVENTS
         onOpen: function (e) {
-            //INITIALIZE VARIABLES
-            var title = e.target.data('title');
-            var content = e.target.data('content');
+            var me = this;
 
-            //PASS VARIABLES TO BASE FOR PROCESSING
-            BaseModal.fn.onOpen.call(this, e, title, content);
+            //INITIALIZE VARIABLES
+            var id = e.target.closest('a').data('hadith-id');
+
+            Api.getHadith(id)
+                .done(function (data) {
+                    var content = 'Sources: ' + data.source;
+
+                    //ADD NOTES IF AVAILABLE
+                    if (data.note)
+                        content = data.note + '<br /><br />' + content;
+
+                    //PASS VARIABLES TO BASE FOR PROCESSING
+                    BaseModal.fn.onOpen.call(me, e, 'References', content);
+                });
         }
 
     });

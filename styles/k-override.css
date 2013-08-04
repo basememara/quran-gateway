@@ -19,3 +19,7 @@
 .km-header .km-navbar .km-buttongroup {
     margin: 3px 0 5px 0;
 }
+
+.km-listview a {
+    text-decoration: none;
+}

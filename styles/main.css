@@ -43,3 +43,30 @@ blockquote {
 #popover-sort {
     height: 170px !important;
 }
+
+.panel-container {
+    border: 1px solid transparent;
+    margin: 15px 5px;
+    padding: 15px 30px 15px 15px;
+    border-left-width: 5px;
+}
+
+.panel-container.info {
+    background-color: #f0f7fd;
+    border-color: #d0e3f0;
+}
+
+.panel-container.error {
+    background-color: #fcf2f2;
+    border-color: #dFb5b4;
+}
+
+.panel-container.success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.panel-container.warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
