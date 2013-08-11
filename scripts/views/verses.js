@@ -80,24 +80,25 @@ define([
         },
 
         onDetailShow: function (e) {
-            //GET REQUESTED ITEM
-            Api.getVerse(e.view.params.id)
-                .done(function (data) {
+            //GET REQUESTED ITEMS
+            $.when(Api.getVerse(e.view.params.id), Api.getChapter(e.view.params.chapter))
+                .done(function (verse, chapter) {
+                    //INITIALIZE VARIABLES
+                    verse.range = verse.start;
+                    if (verse.end) verse.range += '-' + verse.end;
+
                     //UPDATE HEADER TITLE
-                    var template = kendo.template('Chapter #= chapter #');
                     e.view.header.find('[data-role="navbar"]')
                         .data('kendoMobileNavBar')
-                        .title(template(data));
+                        .title('[Quran, ' + chapter.id + ':' + verse.range + ']');
 
                     //BIND CONTENT
-                    e.view.element.find('.arabic').html(data.arabic);
-                    e.view.element.find('.translation').html(data.translation);
+                    e.view.element.find('.arabic').html(verse.arabic);
+                    e.view.element.find('.translation').html(verse.translation);
 
-                    //BIND VERSES DETAILS
-                    var range;
-                    if (data.end) range = 'Verses: ' + data.start + ' - ' + data.end;
-                    else range = 'Verse: ' + data.start
-                    e.view.element.find('.range small').html(range);
+                    //BIND VERSE DETAILS
+                    var template = kendo.template('Chapter #= chapter.id #: #= chapter.transliteration# (#= chapter.translation #), Verse: #= verse.range #');
+                    e.view.element.find('.range small').html(template({ chapter: chapter, verse: verse }));
                 });
 
             //RESET SCROLL AND MENUS

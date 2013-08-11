@@ -11,13 +11,13 @@
             <div data-role="navbar">
                 <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
                 <span data-role="view-title"></span>
-                <a href="#" data-role="button" data-icon="add" data-align="right"></a>
+                <a data-click="App.views.Chapter.toogleFavorite" data-role="button" data-icon="add" data-align="right" class="favorite"></a>
             </div>
         </header>
         <ul class="sections" data-index="0"">
             <li data-icon="info">Info</li>
-            <li data-icon="compose" data-badge="6">Background</li>
-            <li data-icon="add" data-badge="3">Virtues</li>
+            <li data-icon="compose" data-badge="6">Meanings</li>
+            <li data-icon="favorites" data-badge="3">Lectures</li>
         </ul>
         <ul data-role="listview" data-style="inset" class="content info">
             <li>Arabic: <span class="pull-right"></span></li>
@@ -30,7 +30,7 @@
         <ul data-role="listview" data-style="inset" class="content" style="display: none;">
             <li><a href="#">Tafsir al-Qur'an al-Azim<br /><small>by Ibn Kathir</small></a></li>
             <li><a href="#">In the Shade of the Qur'an<br /><small>by Sayyid Qutb</small></a></li>
-            <li><a href="views/chapters/exegesis.html?source=Sayyid Abul Ala Maududi">Towards Understanding the Qur'an<br /><small>by Sayyid Abul Ala Maududi</small></a></li>
+            <li><a href="views/chapters/explanation.html?source=Sayyid Abul Ala Maududi&chapter=1">Towards Understanding the Qur'an<br /><small>by Sayyid Abul Ala Maududi</small></a></li>
             <li><a href="#">The Ascendant Qur'an<br /><small>by Muhammad al-Asi</small></a></li>
             <li><a href="#">Tafseer Quran<br /><small>by Muhammad Metwally al-Sharawy</small></a></li>
             <li><a href="#">Safwat al-Tafaseer<br /><small>by Muhammad Ali al-Saboony</small></a></li>

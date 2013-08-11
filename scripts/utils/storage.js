@@ -40,11 +40,15 @@ define([
         //GET TABLE AND RETRIEVE DATA
         getTable(key, options)
             .done(function (data) {
-                //OVERLOAD PARAMETER FOR ID OR FILTER
-                var overloaded = _.isObject(filter) ? filter : { id: parseInt(filter) };
-
-                //PASS DATA TO CALLBACK
-                defer.resolve(data(overloaded).first());
+                //PASS DATA TO CALLBACK BASED ON PARAMETER
+                if (_.isObject(filter)) {
+                    //RETURN ITEM BY FILTER
+                    defer.resolve(data(filter).first());
+                } else {
+                    //RETURN ITEM BY STRING OR INT BASED KEY
+                    defer.resolve(data({ id: filter }).first()
+                        || data({ id: parseInt(filter) }).first());
+                }
             }).fail(function () {
                 defer.reject();
             });

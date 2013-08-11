@@ -2,10 +2,11 @@
  * This is the api
  */
 define([
+    'underscore',
     'lostorage',
     'utils/helpers',
     'utils/storage'
-], function (loStorage, Helpers, Storage) {
+], function (_, loStorage, Helpers, Storage) {
 
     //PUBLIC PROPERTIES
     return {
@@ -77,21 +78,60 @@ define([
         },
 
         addProgress: function (key, value) {
-            var progress = this.getProgress(key);
-            Helpers.pushUnique(progress.complete, value);
-            this.setProgress(key, progress);
+            var data = this.getProgress(key);
+            Helpers.pushUnique(data.complete, value);
+            this.setProgress(key, data);
         },
 
         removeProgress: function (key, value) {
-            var progress = this.getProgress(key);
-            Helpers.remove(progress.complete, value);
-            this.setProgress(key, progress);
+            var data = this.getProgress(key);
+            Helpers.remove(data.complete, value);
+            this.setProgress(key, data);
         },
 
         totalProgress: function (key, value) {
-            var progress = this.getProgress(key);
-            progress.total = value;
-            this.setProgress(key, progress);
+            var data = this.getProgress(key);
+            data.total = value;
+            this.setProgress(key, data);
+        },
+
+        getFavorites: function () {
+            //INITIALIZE DATA STORE IF APPLICABLE
+            if (!loStorage.storage.get('myfavorites')) {
+                //STORE DEFAULT IN LOCAL STORAGE
+                loStorage.storage.set('myfavorites', []);
+            }
+
+            //RETURN DATA FROM LOCAL STORAGE
+            return loStorage.storage.get('myfavorites');
+        },
+
+        getFavorite: function (value) {
+            //FIND MATCHING VALUE FROM STORAGE
+            var item = _.where(this.getFavorites(), {
+                id: value.id,
+                type: value.type
+            });
+
+            return item.length > 0 ? item[1] : null;
+        },
+
+        addFavorite: function (value) {
+            //UPDATE DATA FROM LOCAL STORAGE
+            var data = this.getFavorites();
+            Helpers.pushUnique(data, value);
+
+            //STORE DATA IN LOCAL STORAGE
+            loStorage.storage.set('myfavorites', data);
+        },
+
+        removeFavorite: function (value) {
+            //UPDATE DATA FROM LOCAL STORAGE
+            var data = this.getFavorites();
+            Helpers.remove(data, value);
+
+            //STORE DATA IN LOCAL STORAGE
+            loStorage.storage.set('myfavorites', data);
         }
     };
 });

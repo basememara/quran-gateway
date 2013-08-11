@@ -10,6 +10,7 @@ define([
     var context = null;
 
     var View = BaseView.extend({
+        view: null,
 
         //CONSTRUCTOR
         init: function () {
@@ -25,10 +26,6 @@ define([
             var contents = e.view.element.find('.content');
             e.view.element.find('.sections').kendoMobileButtonGroup({
                 select: function () {
-                    //TRIGGER BACK BUTTON IF NO CONTENT AVAILABLE
-                    if (contents.eq(this.selectedIndex).length === 0)
-                        App.kendo.navigate('#:back');
-
                     //SWITCH LIST ON BUTTON SELECT
                     contents.hide()
                         .eq(this.selectedIndex)
@@ -39,8 +36,17 @@ define([
         },
 
         onShow: function (e) {
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //RESET SCROLL AND MENUS
+            context.reset(e, {
+                id: e.view.params.id,
+                type: 'Chapter'
+            });
+
             //GET REQUESTED ITEM
-            Api.getChapter(this.params.id)
+            Api.getChapter(e.view.params.id)
                 .done(function (data) {
                     //UPDATE HEADER TITLE
                     var template = kendo.template('#= transliteration #');
@@ -61,25 +67,52 @@ define([
                     infoItems.eq(4).find('span').text(data.juz);
                     infoItems.eq(5).find('span').text(data.sajdah || 'none');
                 });
-
-            //RESET SCROLL AND MENUS
-            context.reset(e);
         },
 
-        onExegesisShow: function (e) {
+        onExplanationShow: function (e) {
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //GET CHAPTER ITEM
+            Api.getChapter(e.view.params.chapter)
+                .done(function (data) {
+                    //UPDATE HEADER TITLE
+                    var template = kendo.template('#= transliteration #');
+                    e.view.header.find('[data-role="navbar"]')
+                        .data('kendoMobileNavBar')
+                        .title(template(data));
+                });
+
             //POPULATE DATA
             Api.getExplanation({ source: e.view.params.source })
                 .done(function (data) {
-                    e.view.element.find('.intro').html(data.description);
+                    e.view.element.find('.prologue').html(data.description);
                 });
 
             //RESET SCROLL AND MENUS
             context.reset(e);
         },
 
-        reset: function (e) {
+        toogleFavorite: function (e) {
+            var me = this;
+
+            //GET REQUESTED ITEM
+            Api.getChapter(context.view.params.id)
+                .done(function (data) {
+                    //UPDATE FAVORITE BUTTON
+                    BaseView.fn.toggleFavorite.call(me, context, null, {
+                        id: parseInt(data.id),
+                        type: 'Chapter',
+                        name: data.transliteration,
+                        description: 'Chapter ' + data.id + ': ' + data.translation,
+                        url: 'views/chapters/detail.html?id=' + data.id
+                    });
+                });
+        },
+
+        reset: function (e, data) {
             //CALL BASE METHOD
-            BaseView.fn.reset.call(this, e);
+            BaseView.fn.reset.call(this, e, data);
 
             //SELECT FIRST BUTTON AS DEFAULT
             e.view.element.find('.sections')

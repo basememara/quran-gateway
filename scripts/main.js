@@ -19,6 +19,7 @@ var App = {};
         paths: {
             add2home: 'libs/add2home/add2home',
             hijri: 'libs/hijricalendar/hijricalendar.mod',
+            jplayer: 'libs/jplayer/jquery.jplayer.min',
             jsurl: 'libs/js-url/url.min',
             kendoui: 'libs/kendoui/js', //FOR AMD USE
             lostorage: 'libs/lostorage/loStorage.min',
@@ -73,8 +74,9 @@ var App = {};
         'views/hadiths',
         'views/progress',
         'views/topics',
+        'views/ummah',
         'add2home'
-    ], function ($, Default, Home, Chapter, Chapters, Verses, Name99, Names99, Hadith, Hadiths, Progress, Topics) {
+    ], function ($, Default, Home, Chapter, Chapters, Verses, Name99, Names99, Hadith, Hadiths, Progress, Topics, Ummah) {
 
         //CONSTRUCTOR
         var init = function () {
@@ -107,7 +109,8 @@ var App = {};
                 Hadith: Hadith,
                 Hadiths: Hadiths,
                 Progress: Progress,
-                Topics: Topics
+                Topics: Topics,
+                Ummah: Ummah
             };
         };
 
