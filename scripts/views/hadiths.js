@@ -2,11 +2,12 @@
  * This is a hadiths view
  */
 define([
+    'underscore',
     'api',
     'views/baseview',
     'text!../../views/hadiths/_list.html',
     'data/datasourcehadiths'
-], function (Api, BaseView, listTemplate) {
+], function (_, Api, BaseView, listTemplate) {
     var context = null;
 
     var View = BaseView.extend({
@@ -158,13 +159,17 @@ define([
             //GET REQUESTED ITEM
             Api.getHadith(id)
                 .done(function (data) {
-                    var template = kendo.template('<em>#= name #:</em><br /><span>#= translation #</span>');
+                    var template = kendo.template('<em>#= name #:</em><br /><span>#= summary #</span>');
+
+                    //EXTEND DATA
+                    data.summary = _.truncate(data.translation, 150);
 
                     //UPDATE FAVORITE BUTTON
                     BaseView.fn.toggleFavorite.call(me, context, null, {
                         id: parseInt(id),
                         type: 'Hadiths',
                         name: template(data),
+                        description: data.translation,
                         url: null
                     });
                 });

@@ -106,6 +106,7 @@ define([
                         id: parseInt(data.id),
                         type: 'Chapters',
                         name: template(data),
+                        description: null,
                         url: 'views/chapters/detail.html?id=' + data.id
                     });
                 });

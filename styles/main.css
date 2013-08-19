@@ -81,3 +81,7 @@ blockquote {
     font-weight: bold;
     float: right;
 }
+
+#favorite-modal .km-content {
+    padding: 5px 15px 0;
+}

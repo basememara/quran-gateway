@@ -69,6 +69,7 @@ define([
                         id: parseInt(data.id),
                         type: 'Verses',
                         name: template(data),
+                        description: null,
                         url: 'views/verses/detail.html?id=' + data.id
                             + '&chapter=' + context.view.params.chapter
                     });

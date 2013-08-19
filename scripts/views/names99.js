@@ -48,6 +48,7 @@ define([
                         id: parseInt(id),
                         type: 'Names of Allah',
                         name: template(data),
+                        description: null,
                         url: null
                     });
                 });
