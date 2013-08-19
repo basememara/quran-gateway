@@ -67,16 +67,17 @@ var App = {};
         'views/home',
         'views/chapter',
         'views/chapters',
+        'views/verse',
         'views/verses',
-        'views/name99',
         'views/names99',
         'views/hadith',
         'views/hadiths',
         'views/progress',
         'views/topics',
         'views/ummah',
+        'views/favorites',
         'add2home'
-    ], function ($, Default, Home, Chapter, Chapters, Verses, Name99, Names99, Hadith, Hadiths, Progress, Topics, Ummah) {
+    ], function ($, Default, Home, Chapter, Chapters, Verse, Verses, Names99, Hadith, Hadiths, Progress, Topics, Ummah, Favorites) {
 
         //CONSTRUCTOR
         var init = function () {
@@ -103,14 +104,15 @@ var App = {};
                 Home: Home,
                 Chapter: Chapter,
                 Chapters: Chapters,
+                Verse: Verse,
                 Verses: Verses,
-                Name99: Name99,
                 Names99: Names99,
                 Hadith: Hadith,
                 Hadiths: Hadiths,
                 Progress: Progress,
                 Topics: Topics,
-                Ummah: Ummah
+                Ummah: Ummah,
+                Favorites: Favorites
             };
         };
 

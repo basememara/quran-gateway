@@ -113,7 +113,7 @@ define([
                 type: value.type
             });
 
-            return item.length > 0 ? item[1] : null;
+            return item.length > 0 ? item[0] : null;
         },
 
         addFavorite: function (value) {
@@ -132,6 +132,10 @@ define([
 
             //STORE DATA IN LOCAL STORAGE
             loStorage.storage.set('myfavorites', data);
+        },
+
+        isFavorite: function (value) {
+            return !!this.getFavorite(value);
         }
     };
 });

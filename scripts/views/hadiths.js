@@ -2,10 +2,11 @@
  * This is a hadiths view
  */
 define([
+    'api',
     'views/baseview',
     'text!../../views/hadiths/_list.html',
     'data/datasourcehadiths'
-], function (BaseView, listTemplate) {
+], function (Api, BaseView, listTemplate) {
     var context = null;
 
     var View = BaseView.extend({
@@ -148,6 +149,32 @@ define([
 
             //SCROLL TO TOP ON PAGE LOAD
             context.view.scroller.reset();
+        },
+
+        toggleFavorite: function (e) {
+            var me = this;
+            var id = e.button.data('hadith-id');
+
+            //GET REQUESTED ITEM
+            Api.getHadith(id)
+                .done(function (data) {
+                    var template = kendo.template('<em>#= name #:</em><br /><span>#= translation #</span>');
+
+                    //UPDATE FAVORITE BUTTON
+                    BaseView.fn.toggleFavorite.call(me, context, null, {
+                        id: parseInt(id),
+                        type: 'Hadiths',
+                        name: template(data),
+                        url: null
+                    });
+                });
+        },
+
+        isFavorite: function (id) {
+            return Api.isFavorite({
+                id: id,
+                type: 'Hadiths'
+            });
         }
 
     });

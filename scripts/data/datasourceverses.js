@@ -1,5 +1,5 @@
 ﻿/**
- * Base class for Kendo data source for chapters
+ * Base class for Kendo data source for verses
  */
 define([
     'underscore',

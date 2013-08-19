@@ -50,11 +50,12 @@ define([
                 .clear();
 
             //UPDATE FAVORITE BUTTON IF APPLICABLE
-            if (data) context.toggleFavorite(e, !!Api.getFavorite(data));
+            if (data) context.toggleFavorite(e, Api.isFavorite(data));
         },
 
         toggleFavorite: function (e, toggle, data) {
             var btnFavorite = e.view.header.find('.km-button.favorite .km-icon');
+            if (btnFavorite.length == 0) btnFavorite = this.element;
 
             //HANDLE TOGGLE VALUE IF APPLICABLE
             if (toggle == null) toggle = !Api.getFavorite(data);
@@ -62,13 +63,23 @@ define([
             //UPDATE FAVORITE ICON
             if (toggle === true) {
                 //UPDATE INTERFACE
-                if (btnFavorite.length > 0) btnFavorite.removeClass('km-add').addClass('km-mostrecent');
+                if (btnFavorite.length > 0) {
+                    if (btnFavorite.hasClass('km-add'))
+                        btnFavorite.removeClass('km-add').addClass('km-mostrecent');
+                    else if (btnFavorite.hasClass('km-rowinsert'))
+                        btnFavorite.removeClass('km-rowinsert').addClass('km-rowdelete');
+                }
 
                 //ADD FAVORITE IF APPLICABLE
                 if (data) Api.addFavorite(data);
             } else if (toggle === false) {
                 //UPDATE INTERFACE
-                if (btnFavorite.length > 0) btnFavorite.removeClass('km-mostrecent').addClass('km-add');
+                if (btnFavorite.length > 0) {
+                    if (btnFavorite.hasClass('km-mostrecent'))
+                        btnFavorite.removeClass('km-mostrecent').addClass('km-add');
+                    else if (btnFavorite.hasClass('km-rowdelete'))
+                        btnFavorite.removeClass('km-rowdelete').addClass('km-rowinsert');
+                }
 
                 //REMOVE FROM FAVORITE IF APPLICABLE
                 if (data) Api.removeFavorite(data);

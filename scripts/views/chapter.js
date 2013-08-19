@@ -41,8 +41,8 @@ define([
 
             //RESET SCROLL AND MENUS
             context.reset(e, {
-                id: e.view.params.id,
-                type: 'Chapter'
+                id: parseInt(e.view.params.id),
+                type: 'Chapters'
             });
 
             //GET REQUESTED ITEM
@@ -93,18 +93,19 @@ define([
             context.reset(e);
         },
 
-        toogleFavorite: function (e) {
+        toggleFavorite: function (e) {
             var me = this;
 
             //GET REQUESTED ITEM
             Api.getChapter(context.view.params.id)
                 .done(function (data) {
+                    var template = kendo.template('#= id #: #= transliteration # (#= translation #)');
+
                     //UPDATE FAVORITE BUTTON
                     BaseView.fn.toggleFavorite.call(me, context, null, {
                         id: parseInt(data.id),
-                        type: 'Chapter',
-                        name: data.transliteration,
-                        description: 'Chapter ' + data.id + ': ' + data.translation,
+                        type: 'Chapters',
+                        name: template(data),
                         url: 'views/chapters/detail.html?id=' + data.id
                     });
                 });

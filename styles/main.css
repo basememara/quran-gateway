@@ -70,3 +70,14 @@ blockquote {
     background-color: #fefbed;
     border-color: #f1e7bc;
 }
+
+#verses-list .km-listview small,
+#favorites-list .km-listview small {
+    margin: 5px 0 5px;
+    display: block;
+}
+
+#chapters-detail .km-listview.info span {
+    font-weight: bold;
+    float: right;
+}
