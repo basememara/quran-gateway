@@ -8,48 +8,52 @@ define([
     'text!../../views/verses/_list.html',
     'data/datasourceverses'
 ], function (_, Api, BaseView, listTemplate) {
+    var context = null;
 
     var View = BaseView.extend({
+        view: null,
+
+        //CONSTRUCTOR
+        init: function () {
+            BaseView.fn.init.call(this);
+
+            //CACHE CONTEXT FOR LATER
+            context = this;
+        },
 
         //EVENTS
         onInit: function (e) {
             //BIND LIST
             e.view.element.find('.listview').kendoMobileListView({
-                dataSource: new kendo.ui.DataSourceVerses,
                 template: listTemplate,
                 headerTemplate: 'Chapter #= value #',
                 fixedHeaders: true
+                /*TODO: DOES NOT WORK WITH ANY APPLIED FILTERS
+                filterable: {
+                    field: 'translation',
+                    operator: 'contains',
+                    ignoreCase: true
+                }*/
             });
         },
 
         onShow: function (e) {
-            //DETERMINE FILTER FROM PARAM
-            var filter = null;
-            switch (e.view.params.type) {
-                case 'occurrence':
-                    filter = {
-                        field: 'occurrence',
-                        operator: 'gt',
-                        value: 1
-                    };
-                    break;
-                default:
-                    //FILTER BY PASSED IN FIELD
-                    if (e.view.params.type) {
-                        filter = {
-                            field: e.view.params.type,
-                            operator: 'eq',
-                            value: true
-                        };
-                    }
-            }
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
 
-            //SET FILTER ON DATASOURCE
+            //DETERMINE FILTER FROM PARAM
+            var filter = e.view.params.type ? {
+                field: e.view.params.type,
+                operator: 'eq',
+                value: true
+            } : null;
+
+            //SET DATASOURCE FOR LIST
             e.view.element.find('.listview')
                 .data('kendoMobileListView')
-                .dataSource.query({
+                .setDataSource(new kendo.ui.DataSourceVerses({
                     filter: filter
-                });
+                }));
                
             //UPDATE HEADER TITLE
             e.view.header.find('[data-role="navbar"]')
@@ -60,24 +64,8 @@ define([
             BaseView.fn.reset.call(this, e);
         },
 
-        onSpecialInit: function (e) {
-            //BIND LIST WITH FILTER
-            e.view.element.find('.listview').kendoMobileListView({
-                dataSource: new kendo.ui.DataSourceVerses(),
-                template: listTemplate,
-                headerTemplate: 'Chapter #= value #',
-                fixedHeaders: true,
-                filterable: {
-                    field: 'translation',
-                    operator: 'contains',
-                    ignoreCase: true
-                }
-            });
-        },
-
-        onSpecialShow: function (e) {
-            //RESET SCROLL AND MENUS
-            BaseView.fn.reset.call(this, e);
+        getTitle: function () {
+            return context.view.params.title;
         }
 
     });

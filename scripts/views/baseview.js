@@ -11,12 +11,9 @@ define([
     var BaseView = kendo.Class.extend({
 
         //CONSTRUCTOR CALLED ON NEW INSTANCES
-        init: function () {
+        init: function (scope) {
             //MUST CALL BELOW IN DERIVED CLASSES IF NEEDED
             //BaseView.fn.init.call(this);
-
-            //CACHE CONTEXT FOR LATER
-            context = this;
         },
 
         //EVENTS
@@ -86,6 +83,9 @@ define([
             }
         }
     });
+
+    //STORE ORIGINAL SCOPE FOR LATER USE
+    context = BaseView.fn;
 
     return BaseView;
 });

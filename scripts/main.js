@@ -77,9 +77,10 @@ var App = {};
         'views/ummah',
         'views/favorite',
         'views/favorites',
+        'views/shared',
         'add2home'
     ], function ($, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
-        Hadith, Hadiths, Progress, Topics, Ummah, Favorite, Favorites) {
+        Hadith, Hadiths, Progress, Topics, Ummah, Favorite, Favorites, Shared) {
 
         //CONSTRUCTOR
         var init = function () {
@@ -115,7 +116,8 @@ var App = {};
                 Topics: Topics,
                 Ummah: Ummah,
                 Favorite: Favorite,
-                Favorites: Favorites
+                Favorites: Favorites,
+                Shared: Shared
             };
         };
 

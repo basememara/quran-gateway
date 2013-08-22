@@ -38,9 +38,7 @@ define([
             schema: {
                 model: Model
             },
-            group: {
-                field: 'chapter'
-            },
+            group: 'chapter',
             sort: [
                 {
                     field: 'chapter',

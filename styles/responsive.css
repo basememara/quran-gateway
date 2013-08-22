@@ -2,7 +2,7 @@
 @media only screen and (max-width: 767px) {
 
     #home .progress-wrapper .k-chart {
-        width: 95px;
+        width: 30%;
         height: 95px;
     }
 

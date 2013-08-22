@@ -31,6 +31,10 @@ blockquote {
     margin-top: 15px;
 }
 
+#home .progress-wrapper {
+    text-align: center;
+}
+
 #home .progress-wrapper .k-chart {
     margin: auto;
     display: inline-block;

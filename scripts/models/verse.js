@@ -16,8 +16,11 @@ define([], function () {
             //promise: { type: 'boolean' },
             //believers: { type: 'boolean' },
             //special: { type: 'boolean' },
+            //pilgrimage: { type: 'boolean' },
+            //ramadan: { type: 'boolean' },
+            //science: { type: 'boolean' },
+            //book: { type: 'boolean' },
             //sajdah: { type: 'boolean' },
-            occurrence: { type: 'number' },
             topic: { type: 'number' },
             translation: { type: 'string' },
             arabic: { type: 'string' }

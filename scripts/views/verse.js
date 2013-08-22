@@ -30,11 +30,14 @@ define([
                     //INITIALIZE VARIABLES
                     verse.range = verse.start;
                     if (verse.end) verse.range += '-' + verse.end;
+                    var title = context.view.params.title
+                        ? decodeURIComponent(context.view.params.title)
+                        : '[Quran, ' + chapter.id + ':' + verse.range + ']';
 
                     //UPDATE HEADER TITLE
                     e.view.header.find('[data-role="navbar"]')
                         .data('kendoMobileNavBar')
-                        .title('[Quran, ' + chapter.id + ':' + verse.range + ']');
+                        .title(title);
 
                     //BIND CONTENT
                     e.view.element.find('.arabic').html(verse.arabic);
@@ -72,6 +75,7 @@ define([
                         description: null,
                         url: 'views/verses/detail.html?id=' + data.id
                             + '&chapter=' + context.view.params.chapter
+                            + '&title=' + context.view.params.title
                     });
                 });
         }
