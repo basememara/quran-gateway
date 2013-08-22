@@ -18,7 +18,7 @@ define([
         },
 
         //EVENTS
-        onShow: function () {
+        onShow: function (e) {
             //INITIALIZE CHARTS
             context.loadProgress('recitation');
             context.loadProgress('memorization');
@@ -29,6 +29,9 @@ define([
             context.loadProgress('fasting');
             context.loadProgress('charity');
             context.loadProgress('sunnah');
+
+            //INITIALIZE FAVORITES COUNT
+            BaseView.fn.updateFavoritesDisplay.call(this, e);
         },
 
         loadProgress: function (key, title) {

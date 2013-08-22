@@ -32,6 +32,9 @@ define([
         onShow: function (e) {
             //CACHE VIEW FOR LATER USE
             context.view = e.view;
+
+            //INITIALIZE FAVORITES COUNT
+            BaseView.fn.updateFavoritesDisplay.call(this, e);
         },
 
         toggleFavorite: function (e) {
@@ -56,8 +59,8 @@ define([
 
         isFavorite: function (id) {
             return Api.isFavorite({
-                id: id,
-                type: 'Hadiths'
+                id: parseInt(id),
+                type: 'Names of Allah'
             });
         }
 

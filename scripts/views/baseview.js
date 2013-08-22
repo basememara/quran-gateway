@@ -48,6 +48,9 @@ define([
 
             //UPDATE FAVORITE BUTTON IF APPLICABLE
             if (data) context.toggleFavorite(e, Api.isFavorite(data));
+
+            //INITIALIZE FAVORITES COUNT
+            context.updateFavoritesDisplay.call(this, e);
         },
 
         toggleFavorite: function (e, toggle, data) {
@@ -81,6 +84,16 @@ define([
                 //REMOVE FROM FAVORITE IF APPLICABLE
                 if (data) Api.removeFavorite(data);
             }
+
+            //UPDATE FAVORITES TABS
+            context.updateFavoritesDisplay(e);
+        },
+
+        updateFavoritesDisplay: function (e) {
+            var favCount = Api.getFavorites().length;
+            e.view.footer.find('[data-role="tabstrip"]')
+                .data('kendoMobileTabStrip')
+                .badge(3, favCount);
         }
     });
 

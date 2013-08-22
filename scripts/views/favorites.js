@@ -28,8 +28,11 @@ define([
                 .dataSource
                 .read();
 
-            //RESET SCROLL AND MENUS
-            BaseView.fn.reset.call(this, e);
+            //SCROLL TO TOP ON PAGE LOAD
+            e.view.scroller.reset();
+
+            //INITIALIZE FAVORITES COUNT
+            BaseView.fn.updateFavoritesDisplay.call(this, e);
         }
 
     });

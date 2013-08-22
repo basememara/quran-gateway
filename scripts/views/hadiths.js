@@ -46,7 +46,11 @@ define([
 
             //RESET QUERY ON DATASOURCE
             context.dataSource.query({
-                filter: null,
+                filter: {
+                    field: 'qudsi',
+                    operator: 'eq',
+                    value: true
+                },
                 sort: [
                     {
                         field: 'qudsi',
@@ -110,14 +114,14 @@ define([
             //DETERMINE FILTER FROM SELECTION
             var filter = null;
             switch (this.selectedIndex) {
-                case 1:
+                case 0:
                     filter = {
                         field: 'qudsi',
                         operator: 'eq',
                         value: true
                     };
                     break;
-                case 2:
+                case 1:
                     filter = {
                         field: 'nawawi',
                         operator: 'eq',

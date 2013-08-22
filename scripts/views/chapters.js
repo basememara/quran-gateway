@@ -43,8 +43,11 @@ define([
                 .data('kendoMobileListView')
                 .dataSource;
 
-            //RESET VIEW
-            context.reset(e);
+            //SCROLL TO TOP ON PAGE LOAD
+            e.view.scroller.reset();
+
+            //INITIALIZE FAVORITES COUNT
+            BaseView.fn.updateFavoritesDisplay.call(this, e);
         },
 
         onPopOverInit: function (e) {
