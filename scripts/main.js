@@ -20,6 +20,7 @@ var App = {};
             add2home: 'libs/add2home/add2home',
             hijri: 'libs/hijricalendar/hijricalendar.mod',
             jplayer: 'libs/jplayer/jquery.jplayer.min',
+            jplaylist: 'libs/jplayer/add-on/jplayer.playlist.min',
             jsurl: 'libs/js-url/url.min',
             kendoui: 'libs/kendoui/js', //FOR AMD USE
             lostorage: 'libs/lostorage/loStorage.min',
@@ -33,6 +34,7 @@ var App = {};
         // The shim config allows us to configure dependencies for
         // scripts that do not call define() to register a module
         shim: {
+            jplaylist: ['jplayer'],
             jsurl: {
                 deps: ['jquery'],
                 exports: 'url'
@@ -63,6 +65,7 @@ var App = {};
     //INITIALIZE APP
     require([
         'jquery',
+        'utils/alerts',
         'layouts/default',
         'views/home',
         'views/chapter',
@@ -79,12 +82,13 @@ var App = {};
         'views/favorites',
         'views/shared',
         'add2home'
-    ], function ($, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
+    ], function ($, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
         Hadith, Hadiths, Progress, Topics, Ummah, Favorite, Favorites, Shared) {
 
         //CONSTRUCTOR
         var init = function () {
             //INITIALIZE APP PARTS
+            initErrors();
             initLayouts();
             initViews();
 
@@ -92,6 +96,37 @@ var App = {};
             App.kendo = new kendo.mobile.Application($(document.body), {
                 skin: 'flat'
             });
+        };
+
+        var initErrors = function (options) {
+            //ATTACH TO WINDOW ERROR
+            window.onerror = function (msg, url, line) {
+                //NOTIFY THE USER IF APPLICABLE
+                Alerts.error('There was an error with your request: "' + msg
+                    + '". Please try again or restart the app.');
+
+                /*LOG TO SERVER USING WEB SERVICE API
+                try {
+                    $.ajax({
+                        type: 'GET',
+                        contentType: 'application/json',
+                        cache: false,
+                        url: Helpers.toServicesUrl('/System/Log'),
+                        data: {
+                            message: msg,
+                            file: window.location.href,
+                            line: line,
+                            url: url,
+                            userAgent: navigator.userAgent
+                        }
+                    });
+                } catch (err) {
+                    //DO NOTHING TO AVOID INFINITE ERROR LOOP
+                }*/
+
+                //BUBBLE ERROR TO CONSOLE STILL
+                return false;
+            };
         };
 
         var initLayouts = function () {

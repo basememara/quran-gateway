@@ -14,8 +14,24 @@
             </div>
         </header>
         <p class="range"><small></small></p>
-        <p class="arabic panel-container success" style="text-align: right; font-weight: bold;"></p>
+        <ul data-role="buttongroup" data-index="1" data-select="App.views.Verse.onSelect">
+            <li data-icon="play"></li>
+            <li data-icon="pause"></li>
+            <!--
+            <li data-icon="rewind"></li>
+            <li data-icon="fastforward"></li>
+            -->
+        </ul>
+        <p class="arabic panel-container success"></p>
         <p class="translation panel-container info"></p>
+        <p><a href="#" data-role="button" data-icon="featured" data-rel="external" class="large quran" target="_blank">Qur'an</a></p>
+        <!-- PLACEHOLDERS FOR AUDIO ELEMENTS -->
+        <div id="jq_jplayer"></div>
+        <div id="jq_jplayer_container" style="display: none;">
+          <div class="jp-playlist">
+            <ul><li></li></ul>
+          </div>
+        </div>
     </div>
 </body>
 </html>

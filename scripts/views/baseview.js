@@ -93,7 +93,7 @@ define([
             var favCount = Api.getFavorites().length;
             e.view.footer.find('[data-role="tabstrip"]')
                 .data('kendoMobileTabStrip')
-                .badge(3, favCount);
+                .badge(3, favCount > 0 ? favCount : false);
         }
     });
 

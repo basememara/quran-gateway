@@ -55,6 +55,11 @@ blockquote {
     border-left-width: 5px;
 }
 
+.panel-container.arabic {
+    font-size: 18px;
+    text-align: right;
+}
+
 .panel-container.info {
     background-color: #f0f7fd;
     border-color: #d0e3f0;
@@ -79,6 +84,10 @@ blockquote {
 #favorites-list .km-listview small {
     margin: 5px 0 5px;
     display: block;
+}
+
+#verses-detail .range {
+    text-align: center;
 }
 
 #chapters-detail .km-listview.info span {

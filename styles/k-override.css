@@ -23,3 +23,10 @@
 .km-listview a {
     text-decoration: none;
 }
+
+.km-button.large
+{
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+}
