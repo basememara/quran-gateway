@@ -56,7 +56,7 @@ blockquote {
 }
 
 .panel-container.arabic {
-    font-size: 18px;
+    font-size: 1.5em;
     text-align: right;
 }
 
@@ -87,6 +87,10 @@ blockquote {
 }
 
 #verses-detail .range {
+    text-align: center;
+}
+
+#verses-detail .actions {
     text-align: center;
 }
 

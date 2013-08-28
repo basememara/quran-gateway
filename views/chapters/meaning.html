@@ -6,19 +6,14 @@
 <body>
     <div id="chapters-explanation" data-role="view" data-layout="default"
         data-init="App.views.Chapter.onInit"
-        data-show="App.views.Chapter.onExplanationShow">
+        data-show="App.views.Chapter.onMeaningShow">
         <header data-role="header">
             <div data-role="navbar">
                 <a data-role="backbutton" data-icon="reply" data-align="left"></a>
                 <span data-role="view-title"></span>
             </div>
         </header>
-        <ul class="sections" data-index="0">
-            <li data-icon="compose">Prologue</li>
-            <li data-icon="organize">Verses</li>
-        </ul>
-        <p class="content prologue"></p>
-        <p class="content verses" style="display:none"></p>
+        <p class="content"></p>
     </div>
 </body>
 </html>

@@ -39,11 +39,13 @@ define([
             //CACHE VIEW FOR LATER USE
             context.view = e.view;
 
-            //RESET SCROLL AND MENUS
-            context.reset(e, {
-                id: parseInt(e.view.params.id),
-                type: 'Chapters'
-            });
+            //RESET SCROLL AND MENUS IF APPLICABLE
+            if (!e.view._back) {
+                context.reset(e, {
+                    id: parseInt(e.view.params.id),
+                    type: 'Chapters'
+                });
+            }
 
             //GET REQUESTED ITEM
             Api.getChapter(e.view.params.id)
@@ -69,7 +71,7 @@ define([
                 });
         },
 
-        onExplanationShow: function (e) {
+        onMeaningShow: function (e) {
             //CACHE VIEW FOR LATER USE
             context.view = e.view;
 
@@ -86,11 +88,11 @@ define([
             //POPULATE DATA
             Api.getExplanation({ source: e.view.params.source })
                 .done(function (data) {
-                    e.view.element.find('.prologue').html(data.description);
+                    e.view.element.find('.content').html(data.description);
                 });
 
             //RESET SCROLL AND MENUS
-            context.reset(e);
+            BaseView.fn.reset.call(this, e);
         },
 
         toggleFavorite: function (e) {

@@ -20,9 +20,8 @@
 
         <div id="popover-sort" data-role="popover">
             <div data-role="view"
-                data-init="App.views.Chapters.onPopOverInit"
                 data-show="App.views.Chapters.onPopOverShow">
-                <ul data-role="listview">
+                <ul data-role="listview" data-click="App.views.Chapters.onSort">
                     <li><label>Chapter <input type="radio" name="chaptersort" value="id"></label></li>
                     <li><label>Name <input type="radio" name="chaptersort" value="name"></label></li>
                     <li><label>Verses <input type="radio" name="chaptersort" value="verses"></label></li>

@@ -57,11 +57,28 @@ define([
 
                     //BIND VERSE DETAILS
                     var template = kendo.template('#= chapter.transliteration # (#= chapter.translation #)<br />[#= chapter.id #:#= verse.range #]');
-                    e.view.element.find('.range small').html(template({ chapter: chapter, verse: verse }));
+                    e.view.element.find('.range').html(template({ chapter: chapter, verse: verse }));
 
                     //HANDLE QUR'AN CLICK
-                    $('.quran').attr('href', 'http://beta.quranexplorer.com/#' + chapter.id 
+                    e.view.element.find('.actions a[data-icon="featured"]').attr('href', 'http://beta.quranexplorer.com/#' + chapter.id
                         + '/' + verse.start + '/' + (verse.end || verse.start) + '/');
+
+                    //HANDLE SHARE CLICK
+                    var bodyTemplate = kendo.template('Chapter #= chapter.id #. #= chapter.translation #, Verse #= verse.range #:'
+                        + '\n\n#=verse.arabic #\n\nTranslation:\n#= verse.translation #'
+                        + '\n\nvia Quran Gateway - http://qurangateway.publicrealm.net');
+                    var body = bodyTemplate({ chapter: chapter, verse: verse });
+                    e.view.element.find('.actions a[data-icon="share"]').attr('href', 'mailto: ?'
+                        + 'subject=' + encodeURIComponent('Qur\'an verse')
+                        + '&body=' + encodeURIComponent(body));
+                    
+                    /*TODO: SOME DEVICES NOT SUPPORTED FOR EMAILING
+                    if (kendo.support.mobileOS && kendo.support.mobileOS == 'windows') {
+                        e.view.element.find('.actions a[data-icon="share"]').onclick(function (e) {
+                            e.preventDefault();
+                            alert('Your device does not support sharing via email.');
+                        });
+                    }*/
 
                     //INITIALIZE AUDIO IF APPLICABLE
                     if (!context.audioPlayer) {
@@ -128,6 +145,37 @@ define([
             }
         },
 
+        onReciterOpen: function (e) {
+            //SELECT FIRST BUTTON AS DEFAULT
+            e.sender.element.find('.km-listview input[value="' + Api.getReciter() + '"]')
+                .prop('checked', true);
+        },
+
+        onReciterClose: function (e) {
+            //GET MODAL
+            var modal = e.target.closest('.km-modalview')
+                .data('kendoMobileModalView');
+
+            //CLOSE MODAL
+            modal.close();
+        },
+
+        onReciterSelect: function (e) {
+            //GET SELECTION
+            var value = e.item.find('input').val();
+
+            //UPDATE AUDIO PLAYER
+            var playlist = context.audioPlayer.playlist;
+            for (var i = 0; i < playlist.length; i++) {
+                playlist[i].mp3 = playlist[i].mp3.replace(Api.getReciter(), value);
+            }
+            context.audioPlayer.remove();
+            context.audioPlayer.setPlaylist(playlist);
+
+            //STORE DATA
+            Api.setReciter(value);
+        },
+
         toggleFavorite: function (e) {
             var me = this;
 
@@ -155,7 +203,7 @@ define([
 
         getAudioName: function (chapter, verse) {
             return verse
-                ? 'resources/audio/mohammad_jibreel/'
+                ? 'resources/audio/' + Api.getReciter() + '/'
                     + _.lpad(chapter, 3, '0')
                     + _.lpad(verse, 3, '0')
                     + '.mp3'

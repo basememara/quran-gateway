@@ -50,13 +50,6 @@ define([
             BaseView.fn.updateFavoritesDisplay.call(this, e);
         },
 
-        onPopOverInit: function (e) {
-            //HANDLE SORT CLICK
-            e.view.element.find('.km-listview')
-                .data('kendoMobileListView')
-                .bind('click', context.onSort);
-        },
-
         onPopOverShow: function (e) {
             //SELECT FIRST BUTTON AS DEFAULT
             e.view.element.find('.km-listview input[value="id"]')

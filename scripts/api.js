@@ -136,6 +136,22 @@ define([
 
         isFavorite: function (value) {
             return !!this.getFavorite(value);
+        },
+
+        getReciter: function () {
+            //INITIALIZE DATA STORE IF APPLICABLE
+            if (!loStorage.storage.get('reciter')) {
+                //STORE DEFAULT IN LOCAL STORAGE
+                loStorage.storage.set('reciter', 'mishary_alafasy');
+            }
+
+            //RETURN DATA FROM LOCAL STORAGE
+            return loStorage.storage.get('reciter');
+        },
+
+        setReciter: function (value) {
+            //STORE DATA IN LOCAL STORAGE
+            loStorage.storage.set('reciter', value);
         }
     };
 });
