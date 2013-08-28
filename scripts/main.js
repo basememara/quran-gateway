@@ -73,17 +73,15 @@ var App = {};
         'views/verse',
         'views/verses',
         'views/names99',
-        'views/hadith',
         'views/hadiths',
         'views/progress',
         'views/topics',
         'views/ummah',
-        'views/favorite',
         'views/favorites',
         'views/shared',
         'add2home'
     ], function ($, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
-        Hadith, Hadiths, Progress, Topics, Ummah, Favorite, Favorites, Shared) {
+        Hadiths, Progress, Topics, Ummah, Favorites, Shared) {
 
         //CONSTRUCTOR
         var init = function () {
@@ -145,12 +143,10 @@ var App = {};
                 Verse: Verse,
                 Verses: Verses,
                 Names99: Names99,
-                Hadith: Hadith,
                 Hadiths: Hadiths,
                 Progress: Progress,
                 Topics: Topics,
                 Ummah: Ummah,
-                Favorite: Favorite,
                 Favorites: Favorites,
                 Shared: Shared
             };

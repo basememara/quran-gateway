@@ -156,6 +156,25 @@ define([
             context.view.scroller.reset();
         },
 
+        onModalOpen: function (e) {
+            var me = this;
+
+            //INITIALIZE VARIABLES
+            var id = e.target.closest('a').data('hadith-id');
+
+            Api.getHadith(id)
+                .done(function (data) {
+                    var content = 'Sources: ' + data.source;
+
+                    //ADD NOTES IF AVAILABLE
+                    if (data.note)
+                        content = data.note + '<br /><br />' + content;
+
+                    //PASS VARIABLES TO BASE FOR PROCESSING
+                    BaseView.fn.onModalOpen.call(me, e, 'References', content);
+                });
+        },
+
         toggleFavorite: function (e) {
             var me = this;
             var id = e.button.data('hadith-id');

@@ -33,6 +33,21 @@ define([
 
             //INITIALIZE FAVORITES COUNT
             BaseView.fn.updateFavoritesDisplay.call(this, e);
+        },
+
+        onModalOpen: function (e) {
+            var me = this;
+
+            //INITIALIZE VARIABLES
+            var btn = e.target.closest('a');
+            var data = Api.getFavorite({
+                id: btn.data('favorite-id'),
+                type: btn.data('favorite-type')
+            });
+            var name = _.truncate(_.stripTags(data.name), 18);
+
+            //PASS VARIABLES TO BASE FOR PROCESSING
+            BaseView.fn.onModalOpen.call(me, e, name, data.description);
         }
 
     });

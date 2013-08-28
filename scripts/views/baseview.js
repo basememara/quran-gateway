@@ -3,8 +3,9 @@
  */
 define([
     'jquery',
-    'api'
-], function ($, Api) {
+    'api',
+    'utils/alerts'
+], function ($, Api, Alerts) {
     var context = null;
 
     //CREATE BASE CLASS FOR LATER INHERITANCE
@@ -64,25 +65,31 @@ define([
             if (toggle === true) {
                 //UPDATE INTERFACE
                 if (btnFavorite.length > 0) {
-                    if (btnFavorite.hasClass('km-add'))
-                        btnFavorite.removeClass('km-add').addClass('km-mostrecent');
+                    if (btnFavorite.hasClass('km-icon-star-empty'))
+                        btnFavorite.removeClass('km-icon-star-empty').addClass('km-icon-star');
                     else if (btnFavorite.hasClass('km-rowinsert'))
                         btnFavorite.removeClass('km-rowinsert').addClass('km-rowdelete');
                 }
 
                 //ADD FAVORITE IF APPLICABLE
-                if (data) Api.addFavorite(data);
+                if (data) {
+                    Api.addFavorite(data);
+                    Alerts.success('Added to favorites!');
+                }
             } else if (toggle === false) {
                 //UPDATE INTERFACE
                 if (btnFavorite.length > 0) {
-                    if (btnFavorite.hasClass('km-mostrecent'))
-                        btnFavorite.removeClass('km-mostrecent').addClass('km-add');
+                    if (btnFavorite.hasClass('km-icon-star'))
+                        btnFavorite.removeClass('km-icon-star').addClass('km-icon-star-empty');
                     else if (btnFavorite.hasClass('km-rowdelete'))
                         btnFavorite.removeClass('km-rowdelete').addClass('km-rowinsert');
                 }
 
                 //REMOVE FROM FAVORITE IF APPLICABLE
-                if (data) Api.removeFavorite(data);
+                if (data) {
+                    Api.removeFavorite(data);
+                    Alerts.warning('Removed from favorites!');
+                }
             }
 
             //UPDATE FAVORITES TABS
@@ -94,6 +101,36 @@ define([
             e.view.footer.find('[data-role="tabstrip"]')
                 .data('kendoMobileTabStrip')
                 .badge(3, favCount > 0 ? favCount : false);
+        },
+
+        onModalOpen: function (e, title, content) {
+            //ADD TITLE TO HEADER
+            if (title) {
+                this.header.find('[data-role="navbar"]')
+                    .data('kendoMobileNavBar')
+                    .title(title);
+            }
+
+            //GET TRANSLATION AND INJECT TO DOM
+            if (content)
+                this.element.find('.content').html(content);
+        },
+
+        onModalClose: function (e) {
+            //GET MODAL
+            var modal = e.target.closest('.km-modalview')
+                .data('kendoMobileModalView');
+
+            //CLEAR CONTENT FOR NEXT REQUEST if applicable
+            if (modal.element.find('.content').length) {
+                modal.element.find('.content').empty();
+                modal.header.find('[data-role="navbar"]')
+                    .data('kendoMobileNavBar')
+                    .title('');
+            }
+
+            //CLOSE MODAL
+            modal.close();
         }
     });
 

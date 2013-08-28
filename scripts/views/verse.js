@@ -151,15 +151,6 @@ define([
                 .prop('checked', true);
         },
 
-        onReciterClose: function (e) {
-            //GET MODAL
-            var modal = e.target.closest('.km-modalview')
-                .data('kendoMobileModalView');
-
-            //CLOSE MODAL
-            modal.close();
-        },
-
         onReciterSelect: function (e) {
             //GET SELECTION
             var value = e.item.find('input').val();
