@@ -99,6 +99,11 @@ blockquote {
     float: right;
 }
 
-#favorite-modal .km-content {
+#modal-favorite .km-content {
     padding: 5px 15px 0;
+}
+
+div.jp-audio {
+    width: 100%;
+    border: none;
 }

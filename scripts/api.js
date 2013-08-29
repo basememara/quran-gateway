@@ -42,12 +42,12 @@ define([
             return Storage.getAll('hadiths', filter);
         },
 
-        getExplanation: function (filter) {
-            return Storage.get('explanations', filter);
+        getMeaning: function (filter) {
+            return Storage.get('meanings', filter);
         },
 
-        getExplanations: function (filter) {
-            return Storage.getAll('explanations', filter);
+        getMeanings: function (filter) {
+            return Storage.getAll('meanings', filter);
         },
 
         getTopic: function (filter) {

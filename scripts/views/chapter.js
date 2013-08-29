@@ -5,8 +5,10 @@ define([
     'api',
     'views/baseview',
     'utils/helpers',
+    'text!../../views/chapters/_meaning.html',
+    'data/datasourcemeanings',
     'utils/plugins'
-], function (Api, BaseView, Helpers) {
+], function (Api, BaseView, Helpers, meaningTemplate) {
     var context = null;
 
     var View = BaseView.extend({
@@ -33,6 +35,13 @@ define([
                 },
                 index: 0
             });
+
+            //BIND LECTURES DATA
+            e.view.element.find('.lectures').kendoMobileListView({
+                dataSource: new kendo.ui.DataSourceMeanings(),
+                template: meaningTemplate,
+                style: 'inset'
+            });
         },
 
         onShow: function (e) {
@@ -47,7 +56,7 @@ define([
                 });
             }
 
-            //GET REQUESTED ITEM
+            //GET REQUESTED ITEM FOR POPULATING DETAILS
             Api.getChapter(e.view.params.id)
                 .done(function (data) {
                     //UPDATE HEADER TITLE
@@ -69,6 +78,48 @@ define([
                     infoItems.eq(4).find('span').text(data.juz);
                     infoItems.eq(5).find('span').text(data.sajdah || 'none');
                 });
+
+            //SET MEANINGS LINKS
+            e.view.element.find('.meanings a')
+                .queryString({ chapter: e.view.params.id });
+
+            //SET QUERY ON LECTURES DATASOURCE
+            e.view.element.find('.lectures')
+                .data('kendoMobileListView')
+                .dataSource.query({
+                    filter: [
+                        {
+                            field: 'lecture',
+                            operator: 'eq',
+                            value: true
+                        },
+                        {
+                            field: 'chapter',
+                            operator: 'eq',
+                            value: parseInt(e.view.params.id)
+                        },
+                        {
+                            field: 'start',
+                            operator: 'eq',
+                            value: null
+                        },
+                        {
+                            field: 'end',
+                            operator: 'eq',
+                            value: null
+                        }
+                    ],
+                    sort: [
+                        {
+                            field: 'source',
+                            dir: 'asc'
+                        },
+                        {
+                            field: 'description',
+                            dir: 'asc'
+                        }
+                    ]
+                });
         },
 
         onMeaningShow: function (e) {
@@ -86,10 +137,15 @@ define([
                 });
 
             //POPULATE DATA
-            Api.getExplanation({ source: e.view.params.source })
-                .done(function (data) {
-                    e.view.element.find('.content').html(data.description);
-                });
+            Api.getMeaning({
+                source: e.view.params.source,
+                chapter: parseInt(e.view.params.chapter), //TODO: DATA TYPE CHANGES FROM STRING TO INT AFTER FIRST TIME (???)
+                start: null,
+                end: null,
+                exegesis: "1" //TODO: MAKE STRON TYPED BOOLEAN
+            }).done(function (data) {
+                e.view.element.find('.content').html(data ? data.description : 'Coming soon...');
+            });
 
             //RESET SCROLL AND MENUS
             BaseView.fn.reset.call(this, e);
