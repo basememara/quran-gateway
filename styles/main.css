@@ -103,7 +103,17 @@ blockquote {
     padding: 5px 15px 0;
 }
 
-div.jp-audio {
+#shared-video video {
     width: 100%;
-    border: none;
+    height: 270px;
+}
+
+#shared-audio audio {
+    width: 100%;
+    margin-top: 40px;
+}
+
+#shared-video .km-content h2,
+#shared-audio .km-content h2 {
+    text-align: center;
 }

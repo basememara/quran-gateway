@@ -12,6 +12,7 @@ define([
 
     var View = BaseView.extend({
         view: null,
+        dataSource: null,
 
         //CONSTRUCTOR
         init: function () {
@@ -48,12 +49,15 @@ define([
                 value: true
             } : null;
 
+            //CACHE DATASOURCE FOR LATER USE
+            context.dataSource = new kendo.ui.DataSourceVerses({
+                filter: filter
+            })
+
             //SET DATASOURCE FOR LIST
             e.view.element.find('.listview')
                 .data('kendoMobileListView')
-                .setDataSource(new kendo.ui.DataSourceVerses({
-                    filter: filter
-                }));
+                .setDataSource(context.dataSource);
                
             //UPDATE HEADER TITLE
             e.view.header.find('[data-role="navbar"]')

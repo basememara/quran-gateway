@@ -4,9 +4,10 @@
 define([
     'underscore',
     'api',
+    'utils/alerts',
     'views/baseview',
     'jplaylist'
-], function (_, Api, BaseView) {
+], function (_, Api, Alerts, BaseView) {
     var context = null;
 
     var View = BaseView.extend({
@@ -95,12 +96,14 @@ define([
                                 }
                             }
                         });
-                    }
+                    }
+
                     //BUILD AUDIO PLAYLIST
                     context.audioPlayer.remove();
                     context.audioPlayer.setPlaylist([{
                         mp3: context.getAudioName(chapter.id, verse.start)
-                    }]);
+                    }]);
+
                     //ADD RANGE OF AUDIO IF APPLIABLE
                     if (verse.end) {
                         var count = parseInt(verse.start);
@@ -116,7 +119,8 @@ define([
                         .data('record-id', e.view.params.id)
                         .data('chapter', chapter.id)
                         .data('start', verse.start)
-                        .data('end', verse.end);
+                        .data('end', verse.end)
+                        .data('title', e.view.params.title);
                 });
         },
 
@@ -126,8 +130,12 @@ define([
             var chapter = this.element.data('chapter');
             var start = this.element.data('start');
             var end = this.element.data('end');
+            var title = this.element.data('title');
+            var data = App.views.Verses.dataSource.get(id);
+            var list = App.views.Verses.dataSource.view();
             var index = this.current().index();
             var player = context.view.element.find('#jq_jplayer');
+            var template = kendo.template('views/verses/detail.html?id=#= id #&chapter=#= chapter #&title=#= title #');
 
             switch (index) {
                 case 0:
@@ -137,10 +145,72 @@ define([
                     context.audioPlayer.pause();
                     break;
                 case 2:
-                    console.log(id);
+                    //GO TO PREVIOUS RECORD
+                    for (var i = 0; i < list.length; i++) {
+                        for (var j = 0; j < list[i].items.length; j++) {
+                            if (data.uid == list[i].items[j].uid) {
+                                //VALIDATE REQUESTED POSITION
+                                if (j == 0 && i == 0) {
+                                    Alerts.warning('You are at the beginning!');
+                                    this.select(1);
+                                    return;
+                                }
+
+                                //DETERMINE PARENT AND ITEM INDEX
+                                var parent, index;
+                                if (j > 0) {
+                                    //LOAD PREVIOUS ITEM OF CURRENT GROUP
+                                    parent = i;
+                                    index = j - 1;
+                                } else {
+                                    //LOAD LAST ITEM OF PREVIOUS GROUP
+                                    parent = i - 1;
+                                    index = list[parent].items.length - 1;
+                                }
+
+                                //NAVIGATE TO PREVIOUS RECORD
+                                App.kendo.navigate(template({
+                                    id: list[parent].items[index].id,
+                                    chapter: list[parent].items[index].chapter,
+                                    title: title
+                                }));
+                            }
+                        }
+                    }
                     break;
                 case 3:
-                    console.log(id);
+                    //GO TO NEXT RECORD
+                    for (var i = 0; i < list.length; i++) {
+                        for (var j = 0; j < list[i].items.length; j++) {
+                            if (data.uid == list[i].items[j].uid) {
+                                //VALIDATE REQUESTED POSITION
+                                if (j == list[i].items.length - 1 && i == list.length - 1) {
+                                    Alerts.warning('You are at the end!');
+                                    this.select(1);
+                                    return;
+                                }
+
+                                //DETERMINE PARENT AND ITEM INDEX
+                                var parent, index;
+                                if (j < list[i].items.length - 1) {
+                                    //LOAD PREVIOUS ITEM OF CURRENT GROUP
+                                    parent = i;
+                                    index = j + 1;
+                                } else {
+                                    //LOAD LAST ITEM OF PREVIOUS GROUP
+                                    parent = i + 1;
+                                    index = list[parent].items.length - 1;
+                                }
+
+                                //NAVIGATE TO PREVIOUS RECORD
+                                App.kendo.navigate(template({
+                                    id: list[parent].items[index].id,
+                                    chapter: list[parent].items[index].chapter,
+                                    title: title
+                                }));
+                            }
+                        }
+                    }
                     break;
             }
         },

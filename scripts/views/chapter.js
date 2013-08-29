@@ -5,10 +5,10 @@ define([
     'api',
     'views/baseview',
     'utils/helpers',
-    'text!../../views/chapters/_meaning.html',
+    'text!../../views/chapters/_lecture.html',
     'data/datasourcemeanings',
     'utils/plugins'
-], function (Api, BaseView, Helpers, meaningTemplate) {
+], function (Api, BaseView, Helpers, lectureTemplate) {
     var context = null;
 
     var View = BaseView.extend({
@@ -39,7 +39,7 @@ define([
             //BIND LECTURES DATA
             e.view.element.find('.lectures').kendoMobileListView({
                 dataSource: new kendo.ui.DataSourceMeanings(),
-                template: meaningTemplate,
+                template: lectureTemplate,
                 style: 'inset'
             });
         },
