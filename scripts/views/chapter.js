@@ -144,7 +144,18 @@ define([
                 end: null,
                 exegesis: "1" //TODO: MAKE STRON TYPED BOOLEAN
             }).done(function (data) {
-                e.view.element.find('.content').html(data ? data.description : 'Coming soon...');
+                var content = data ? data.description : 'Coming soon...';
+
+                if (data.file) {
+                    content += '<br /><br /><a href="' + data.file
+                        + '" data-rel="external" class="button-file large" target="_blank">Open File</a>';
+                }
+
+                e.view.element.find('.content').html(content);
+                e.view.element.find('.button-file').kendoMobileButton({
+                    icon: 'organize'
+                });
+
             });
 
             //RESET SCROLL AND MENUS
