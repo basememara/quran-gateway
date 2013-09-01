@@ -4,9 +4,13 @@
     text-align: center;
 }
 
-.container-img img {
-    width: 100%;
-    max-width: 500px;
+.title-img {
+    margin-bottom: -7px;
+    margin-top: 7px;
+}
+
+.title-img img {
+    height: 30px;
     margin-top: 5px;
 }
 
@@ -32,12 +36,29 @@ blockquote {
 }
 
 #home .progress-wrapper {
-    text-align: center;
+    width: 100%;
 }
 
 #home .progress-wrapper .k-chart {
-    margin: auto;
-    display: inline-block;
+    float: left;
+}
+
+#home .km-scrollview .panel-container {
+    white-space: normal;
+} 
+
+#home .km-scrollview .title  {
+    text-align: center;
+}
+
+#home .km-scrollview > div > [data-role=page] {
+    margin-top: 15px;
+}
+
+#home .km-scrollview .km-pages {
+    width: 100%;
+    position: absolute;
+    top: 0;
 }
 
 #toast-container>div {

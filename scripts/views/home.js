@@ -8,6 +8,7 @@ define([
     var context = null;
 
     var View = BaseView.extend({
+        view: null,
 
         //CONSTRUCTOR
         init: function () {
@@ -19,6 +20,14 @@ define([
 
         //EVENTS
         onShow: function (e) {
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //SCROLL TO FIRST PAGE
+            e.view.element.find('.km-scrollview')
+                .data('kendoMobileScrollView')
+                .scrollTo(0);
+
             //INITIALIZE CHARTS
             context.loadProgress('recitation');
             context.loadProgress('memorization');
@@ -29,6 +38,36 @@ define([
             context.loadProgress('fasting');
             context.loadProgress('charity');
             context.loadProgress('sunnah');
+
+            //CENTER CHARTS
+            var spaceRemainder = e.view.element.find('.progress-wrapper').width()
+                % e.view.element.find('.k-chart').width();
+            e.view.element.find('.progress-wrapper').css('padding-left', (spaceRemainder / 2) + 'px');
+
+            //INITIALIZE RANDOM VERSE
+            Api.getVerses()
+                .done(function (data) {
+                    //GET RANDOM
+                    var index = Math.floor(Math.random() * data.length);
+
+                    //BIND CONTENT
+                    var range = data[index].start;
+                    if (data[index].end) range += '-' + data[index].end;
+                    var location = ' [Quran, ' + data[index].chapter + ':' + range + ']';
+                    e.view.element.find('.verse .title').html('Verse of the Day:');
+                    e.view.element.find('.verse .translation').html(data[index].translation + location);
+                });
+
+            //INITIALIZE RANDOM VERSE
+            Api.getHadiths()
+                .done(function (data) {
+                    //GET RANDOM
+                    var index = Math.floor(Math.random() * data.length);
+
+                    //BIND CONTENT
+                    e.view.element.find('.hadith .title').html('Hadith of the Day:');
+                    e.view.element.find('.hadith .translation').html(data[index].translation);
+                });
 
             //INITIALIZE FAVORITES COUNT
             BaseView.fn.updateFavoritesDisplay.call(this, e);
@@ -46,7 +85,7 @@ define([
                 : '#ff7663';
 
             //INITIALIZE CHART
-            $('#chart-' + key).kendoChart({
+            context.view.element.find('.chart-' + key).kendoChart({
                 title: {
                     text: title || (key.charAt(0).toUpperCase() + key.slice(1))
                 },

@@ -115,17 +115,38 @@
     <div id="home" data-role="view" data-layout="default" data-title="Quran Gateway"
         data-init="App.views.Home.onInit"
         data-show="App.views.Home.onShow">
-        <div class="container-img"><img src="resources/images/bismillah.png" /></div>
-        <div class="progress-wrapper">
-            <div id="chart-recitation"></div>
-            <div id="chart-memorization"></div>
-            <div id="chart-names99"></div>
-            <div id="chart-understanding"></div>
-            <div id="chart-supplications"></div>
-            <div id="chart-prayers"></div>
-            <div id="chart-fasting"></div>
-            <div id="chart-charity"></div>
-            <div id="chart-sunnah"></div>
+        <header data-role="header">
+            <div data-role="navbar">
+                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
+                <div class="title-img"><img src="resources/images/bismillah.png" /></div>
+            </div>
+        </header>
+        <div data-role="scrollview">
+            <div data-role="page">
+                <div class="progress-wrapper">
+                    <div class="chart-recitation"></div>
+                    <div class="chart-memorization"></div>
+                    <div class="chart-names99"></div>
+                    <div class="chart-understanding"></div>
+                    <div class="chart-supplications"></div>
+                    <div class="chart-prayers"></div>
+                    <div class="chart-fasting"></div>
+                    <div class="chart-charity"></div>
+                    <div class="chart-sunnah"></div>
+                </div>
+            </div>
+            <div data-role="page" class="verse">
+                <p class="title"></p>
+                <p class="translation panel-container info">
+                    Verse of the day loading...
+                </p>
+            </div>
+            <div data-role="page" class="hadith">
+                <p class="title"></p>
+                <p class="translation panel-container info">
+                    Hadith of the day loading...
+                </p>
+            </div>
         </div>
     </div>
 
