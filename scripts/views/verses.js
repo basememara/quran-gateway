@@ -42,6 +42,11 @@ define([
             //CACHE VIEW FOR LATER USE
             context.view = e.view;
 
+            //RESET SCROLL AND MENUS IF APPLICABLE
+            if (!e.view._back) {
+                BaseView.fn.reset.call(this, e);
+            }
+
             //DETERMINE FILTER FROM PARAM
             var filter = e.view.params.type ? {
                 field: e.view.params.type,
@@ -52,7 +57,7 @@ define([
             //CACHE DATASOURCE FOR LATER USE
             context.dataSource = new kendo.ui.DataSourceVerses({
                 filter: filter
-            })
+            });
 
             //SET DATASOURCE FOR LIST
             e.view.element.find('.listview')
@@ -63,9 +68,6 @@ define([
             e.view.header.find('[data-role="navbar"]')
                 .data('kendoMobileNavBar')
                 .title(decodeURIComponent(this.params.title));
-
-            //RESET SCROLL AND MENUS
-            BaseView.fn.reset.call(this, e);
         },
 
         getTitle: function () {

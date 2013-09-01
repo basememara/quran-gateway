@@ -55,6 +55,11 @@ blockquote {
     border-left-width: 5px;
 }
 
+.km-modalview .panel-container {
+    margin: 0;
+    padding: 12px;
+}
+
 .panel-container.arabic {
     font-size: 1.5em;
     text-align: right;

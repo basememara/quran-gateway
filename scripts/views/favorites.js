@@ -8,8 +8,19 @@ define([
     'text!../../views/favorites/_list.html',
     'data/datasourcefavorites'
 ], function (_, Api, BaseView, listTemplate) {
+    var context = null;
 
     var View = BaseView.extend({
+        view: null,
+        dataSource: null,
+
+        //CONSTRUCTOR
+        init: function () {
+            BaseView.fn.init.call(this);
+
+            //CACHE CONTEXT FOR LATER
+            context = this;
+        },
 
         //EVENTS
         onInit: function (e) {
@@ -23,10 +34,16 @@ define([
         },
 
         onShow: function (e) {
-            e.view.element.find('.listview')
+            //CACHE VIEW FOR LATER USE
+            context.view = e.view;
+
+            //CACHE DATASOURCE FOR LATER USE
+            context.dataSource = e.view.element.find('.listview')
                 .data('kendoMobileListView')
-                .dataSource
-                .read();
+                .dataSource;
+
+            //REFRESH DATA VIEW
+            context.dataSource.read();
 
             //SCROLL TO TOP ON PAGE LOAD
             e.view.scroller.reset();

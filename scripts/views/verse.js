@@ -4,10 +4,11 @@
 define([
     'underscore',
     'api',
+    'utils/helpers',
     'utils/alerts',
     'views/baseview',
     'jplaylist'
-], function (_, Api, Alerts, BaseView) {
+], function (_, Api, Helpers, Alerts, BaseView) {
     var context = null;
 
     var View = BaseView.extend({
@@ -131,11 +132,21 @@ define([
             var start = this.element.data('start');
             var end = this.element.data('end');
             var title = this.element.data('title');
-            var data = App.views.Verses.dataSource.get(id);
-            var list = App.views.Verses.dataSource.view();
             var index = this.current().index();
             var player = context.view.element.find('#jq_jplayer');
-            var template = kendo.template('views/verses/detail.html?id=#= id #&chapter=#= chapter #&title=#= title #');
+            var template = kendo.template('views/verses/detail.html?id=#= id #&chapter=#= chapter #&title=#= title #&favorite=#= favorite #');
+            var favorite = Helpers.convertToBoolean(context.view.params.favorite);
+            var data = null;
+            var list = null;
+
+            //GET DATA SOURCE FOR NEXT/PREVIOUS FUNCTIONS
+            if (favorite) {
+                data = App.views.Favorites.dataSource.get(id);
+                list = App.views.Favorites.dataSource.view();
+            } else if (App.views.Verses.dataSource) {
+                data = App.views.Verses.dataSource.get(id);
+                list = App.views.Verses.dataSource.view();
+            }
 
             switch (index) {
                 case 0:
@@ -150,7 +161,7 @@ define([
                         for (var j = 0; j < list[i].items.length; j++) {
                             if (data.uid == list[i].items[j].uid) {
                                 //VALIDATE REQUESTED POSITION
-                                if (j == 0 && i == 0) {
+                                if (j == 0 && (i == 0 || favorite)) {
                                     Alerts.warning('You are at the beginning!');
                                     this.select(1);
                                     return;
@@ -171,9 +182,13 @@ define([
                                 //NAVIGATE TO PREVIOUS RECORD
                                 App.kendo.navigate(template({
                                     id: list[parent].items[index].id,
-                                    chapter: list[parent].items[index].chapter,
-                                    title: title
+                                    chapter: chapter,
+                                    title: title,
+                                    favorite: favorite
                                 }));
+
+                                //EXIT LOOP
+                                return;
                             }
                         }
                     }
@@ -184,7 +199,7 @@ define([
                         for (var j = 0; j < list[i].items.length; j++) {
                             if (data.uid == list[i].items[j].uid) {
                                 //VALIDATE REQUESTED POSITION
-                                if (j == list[i].items.length - 1 && i == list.length - 1) {
+                                if (j == list[i].items.length - 1 && (i == list.length - 1 || favorite)) {
                                     Alerts.warning('You are at the end!');
                                     this.select(1);
                                     return;
@@ -205,9 +220,13 @@ define([
                                 //NAVIGATE TO PREVIOUS RECORD
                                 App.kendo.navigate(template({
                                     id: list[parent].items[index].id,
-                                    chapter: list[parent].items[index].chapter,
-                                    title: title
+                                    chapter: chapter,
+                                    title: title,
+                                    favorite: favorite
                                 }));
+
+                                //EXIT LOOP
+                                return;
                             }
                         }
                     }

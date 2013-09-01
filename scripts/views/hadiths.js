@@ -161,17 +161,24 @@ define([
 
             //INITIALIZE VARIABLES
             var id = e.target.closest('a').data('hadith-id');
+            var title = e.target.closest('a').text();
 
             Api.getHadith(id)
                 .done(function (data) {
-                    var content = 'Sources: ' + data.source;
+                    //CONSTRUCT CONTENT
+                    var content;
+                    if (title == 'References') {
+                        content = 'Sources: ' + data.source;
 
-                    //ADD NOTES IF AVAILABLE
-                    if (data.note)
-                        content = data.note + '<br /><br />' + content;
+                        //ADD NOTES IF AVAILABLE
+                        if (data.note)
+                            content = data.note + '<br /><br />' + content;
+                    } else if (title == 'Arabic') {
+                        content = '<p class="arabic panel-container success">' + data.arabic + '</p>';
+                    }
 
                     //PASS VARIABLES TO BASE FOR PROCESSING
-                    BaseView.fn.onModalOpen.call(me, e, 'References', content);
+                    BaseView.fn.onModalOpen.call(me, e, title, content);
                 });
         },
 
