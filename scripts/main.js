@@ -65,6 +65,7 @@ var App = {};
     //INITIALIZE APP
     require([
         'jquery',
+        'api',
         'utils/alerts',
         'layouts/default',
         'views/home',
@@ -80,20 +81,27 @@ var App = {};
         'views/favorites',
         'views/shared',
         'add2home'
-    ], function ($, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
+    ], function ($, Api, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
         Hadiths, Progress, Topics, Ummah, Favorites, Shared) {
 
         //CONSTRUCTOR
         var init = function () {
-            //INITIALIZE APP PARTS
-            initErrors();
-            initLayouts();
-            initViews();
+            //PRELOAD OTHER DATA IN CASE GOES OFFLINE LATER
+            $.when(Api.getChapters(), Api.getVerses(), Api.getHadiths, Api.getNames99())
+                .done(function () {
+                    //REMOVE LOADING PANEL
+                    $('#initial_load').remove();
 
-            //INITIALIZE APP AND STORE IN GLOBAL
-            App.kendo = new kendo.mobile.Application($(document.body), {
-                skin: 'flat'
-            });
+                    //INITIALIZE APP PARTS
+                    initErrors();
+                    initLayouts();
+                    initViews();
+
+                    //INITIALIZE APP AND STORE IN GLOBAL
+                    App.kendo = new kendo.mobile.Application($(document.body), {
+                        skin: 'flat'
+                    });
+                });
         };
 
         var initErrors = function (options) {

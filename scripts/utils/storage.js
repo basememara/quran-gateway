@@ -18,45 +18,57 @@ define([
         options = options || {};
 
         if (!database[key]) {
-            //DETERMINE TABLE FRESHNESS FOR CLEARING CACHE
-            $.get(Helpers.toServicesUrl('lastmodified/' + (options.table || key)))
-                .done(function (data) {
-                    //GET TABLE FROM LOCAL STORAGE IF APPLIABLE
-                    if (loStorage.storage.get(loKey)) {
-                        //GET LOCAL STORAGE TIMESTAMP
-                        var loTimestamp = loStorage.storage.get(loKey + '-modified');
+            //HANDLE ONLINE/OFFLINE DATA
+            if (navigator.onLine) {
+                //DETERMINE TABLE FRESHNESS FOR CLEARING CACHE
+                $.get(Helpers.toServicesUrl('lastmodified/' + (options.table || key)))
+                    .done(function (data) {
+                        //GET TABLE FROM LOCAL STORAGE IF APPLIABLE
+                        if (loStorage.storage.get(loKey)) {
+                            //GET LOCAL STORAGE TIMESTAMP
+                            var loTimestamp = loStorage.storage.get(loKey + '-modified');
 
-                        //CLEAR CACHE IF APPLICABLE
-                        if (moment(data.last_modified) <= moment(loTimestamp)) {
-                            var json = loStorage.storage.get(loKey);
-
-                            //CREATE DATABASE FOR LATER USE
-                            database[key] = TAFFY(json);
-
-                            //PASS DATA TO CALLBACK
-                            defer.resolve(database[key]);
-                        } else loStorage.storage.remove(loKey);
-                    }
-
-                    //GET TABLE FROM AJAX IF APPLIABLE
-                    if (defer.state() != 'resolved') {
-                        //CALL JSON DATA VIA AJAX
-                        $.getJSON(Helpers.toServicesUrl(options.service || key))
-                            .done(function (json) {
-                                //STORE DATA IN LOCAL STORAGE AND TIMESTAMP
-                                loStorage.storage.set(loKey, json);
-                                loStorage.storage.set(loKey + '-modified', data.last_modified);
+                            //CLEAR CACHE IF APPLICABLE
+                            if (moment(data.last_modified) <= moment(loTimestamp)) {
+                                var json = loStorage.storage.get(loKey);
 
                                 //CREATE DATABASE FOR LATER USE
                                 database[key] = TAFFY(json);
 
                                 //PASS DATA TO CALLBACK
                                 defer.resolve(database[key]);
-                            }).fail(function () {
-                                defer.reject();
-                            });
-                    }
-                });
+                            } else loStorage.storage.remove(loKey);
+                        }
+
+                        //GET TABLE FROM AJAX IF APPLIABLE
+                        if (defer.state() != 'resolved') {
+                            //CALL JSON DATA VIA AJAX
+                            $.getJSON(Helpers.toServicesUrl(options.service || key))
+                                .done(function (json) {
+                                    //STORE DATA IN LOCAL STORAGE AND TIMESTAMP
+                                    loStorage.storage.set(loKey, json);
+                                    loStorage.storage.set(loKey + '-modified', data.last_modified);
+
+                                    //CREATE DATABASE FOR LATER USE
+                                    database[key] = TAFFY(json);
+
+                                    //PASS DATA TO CALLBACK
+                                    defer.resolve(database[key]);
+                                }).fail(function () {
+                                    defer.reject();
+                                });
+                        }
+                    });
+            } else {
+                //GET DATA FROM LOCAL STORAGE
+                var json = loStorage.storage.get(loKey);
+
+                //CREATE DATABASE FOR LATER USE
+                database[key] = TAFFY(json);
+
+                //PASS DATA TO CALLBACK
+                defer.resolve(database[key]);
+            }
         } else {
             //PASS DATA TO CALLBACK
             defer.resolve(database[key]);
