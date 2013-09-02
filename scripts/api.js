@@ -19,11 +19,15 @@ define([
         },
 
         getVerse: function (filter) {
-            return Storage.get('verses/ranges', filter);
+            return Storage.get('verses/ranges', filter, {
+                table: 'verses_range'
+            });
         },
 
         getVerses: function (filter) {
-            return Storage.getAll('verses/ranges', filter);
+            return Storage.getAll('verses/ranges', filter, {
+                table: 'verses_range'
+            });
         },
 
         getName99: function (filter) {
