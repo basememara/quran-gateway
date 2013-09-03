@@ -3,12 +3,13 @@
  */
 define([
     'underscore',
+    'jsurl',
     'api',
     'utils/helpers',
     'utils/alerts',
     'views/baseview',
     'jplaylist'
-], function (_, Api, Helpers, Alerts, BaseView) {
+], function (_, url, Api, Helpers, Alerts, BaseView) {
     var context = null;
 
     var View = BaseView.extend({
@@ -182,7 +183,9 @@ define([
                                 //NAVIGATE TO PREVIOUS RECORD
                                 App.kendo.navigate(template({
                                     id: list[parent].items[index].id,
-                                    chapter: chapter,
+                                    chapter: favorite
+                                        ? url('?chapter', list[parent].items[index].url)
+                                        : list[parent].items[index].chapter,
                                     title: title,
                                     favorite: favorite
                                 }));
@@ -220,7 +223,9 @@ define([
                                 //NAVIGATE TO PREVIOUS RECORD
                                 App.kendo.navigate(template({
                                     id: list[parent].items[index].id,
-                                    chapter: chapter,
+                                    chapter: favorite
+                                        ? url('?chapter', list[parent].items[index].url)
+                                        : list[parent].items[index].chapter,
                                     title: title,
                                     favorite: favorite
                                 }));

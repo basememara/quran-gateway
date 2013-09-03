@@ -63,12 +63,7 @@
 </head>
 <body>
     <!-- INITIAL LOAD -->
-    <div id="initial_load" class="km-loader">
-        <span class="km-loading km-spin"></span>
-        <span class="km-loading-left"></span>
-        <span class="km-loading-right"></span>
-        <h1>Loading data...</h1>
-    </div>
+    <div id="initial_load" class="loading-page"></div>
 
     <section data-id="default" data-role="layout" data-init="App.layouts.Default.onInit">
         <header data-role="header">
@@ -126,6 +121,7 @@
             <div data-role="navbar">
                 <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
                 <div class="title-img"><img src="resources/images/bismillah.png" /></div>
+                <a href="views/shared/info.html" data-role="button" data-icon="info" data-align="right"></a>
             </div>
         </header>
         <div data-role="scrollview">
