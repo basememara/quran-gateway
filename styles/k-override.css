@@ -1,14 +1,13 @@
-﻿#sub-drawer .km-content
-{
+﻿#sub-drawer .km-content {
     background-color: #4e4e4e;
     color: #fff;
 }
 
 #sub-drawer .km-navbar,
-.km-tablet .km-ios #sub-drawer .km-view-title
-{
+.km-tablet .km-ios #sub-drawer .km-view-title {
     background-color: #2e2e2e;
     color: #fff;
+    -webkit-text-shadow: 0 -1px rgba(0,0,0,.5);
     text-shadow: 0 -1px rgba(0,0,0,.5);
 }
 
@@ -24,9 +23,13 @@
     text-decoration: none;
 }
 
-.km-button.large
-{
+.km-button.large {
     width: 100%;
     text-align: center;
     font-size: 1.2em;
+}
+
+.km-view {
+    -webkit-box-shadow: 0 0 10px #000000;
+    box-shadow: 0 0 10px #000000;
 }
