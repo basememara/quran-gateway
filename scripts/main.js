@@ -26,6 +26,7 @@ var App = {};
             kendoui: 'libs/kendoui/js', //FOR AMD USE
             lostorage: 'libs/lostorage/loStorage.min',
             moment: 'libs/moment/moment.min',
+            spin: 'libs/spin/spin.min',
             text: 'libs/require/text',
             taffy: 'libs/taffy/taffy-min',
             toastr: 'libs/toastr/toastr.min',
@@ -87,11 +88,14 @@ var App = {};
 
         //CONSTRUCTOR
         var init = function () {
+            //START LOADING PANEL
+            Alerts.initSpinner();
+
             //PRELOAD OTHER DATA IN CASE GOES OFFLINE LATER
             $.when(Api.getChapters(), Api.getVerses(), Api.getHadiths, Api.getNames99())
                 .done(function () {
-                    //REMOVE LOADING PANEL
-                    $('#initial_load').remove();
+                    //STOP LOADING PANEL
+                    Alerts.exitSpinner();
 
                     //INITIALIZE APP PARTS
                     initErrors();
