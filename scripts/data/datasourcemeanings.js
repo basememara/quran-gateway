@@ -2,9 +2,10 @@
  * Base class for Kendo data source for meanings
  */
 define([
+    'baseresourcesurl',
     'api',
     'models/meaning'
-], function (Api, Model) {
+], function (baseResourcesUrl, Api, Model) {
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({
@@ -23,6 +24,14 @@ define([
                 read: function (options) {
                     Api.getMeanings()
                         .done(function (data) {
+                            //MANIPULATE DATA
+                            _.each(data, function (item) {
+                                //USE REMOTE FILE IF APPLICABLE
+                                if (item.file)
+                                    item.fileCdn = baseResourcesUrl + '/' + item.file;
+                            })
+
+                            //SEND BACK TO KENDO DATA SOURCE
                             options.success(data);
                         });
                 }

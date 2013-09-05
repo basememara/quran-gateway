@@ -1,6 +1,6 @@
 ﻿<a href="views/shared/#
-    if (file.substring(0, 16) == 'resources/audio/') { #audio# } 
-    else if (file.substring(0, 17) == 'resources/videos/') { #video# }
+    if (file.substring(0, 6) == 'audio/') { #audio# } 
+    else if (file.substring(0, 7) == 'videos/') { #video# }
     else if (file.substring(0, 4) == 'http') { #stream# }
-    #.html?title=#= description #&url=#= encodeURIComponent(file) #">
+    #.html?title=#= description #&url=#= encodeURIComponent(fileCdn) #">
     #= description #<br /><small>by #= source #</small></a>

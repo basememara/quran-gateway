@@ -142,12 +142,12 @@ define([
                 chapter: parseInt(e.view.params.chapter), //TODO: DATA TYPE CHANGES FROM STRING TO INT AFTER FIRST TIME (???)
                 start: null,
                 end: null,
-                exegesis: "1" //TODO: MAKE STRON TYPED BOOLEAN
+                exegesis: '1' //TODO: MAKE STRON TYPED BOOLEAN
             }).done(function (data) {
                 var content = data ? data.description : 'Coming soon...';
 
                 if (data.file) {
-                    content += '<br /><br /><a href="' + data.file
+                    content += '<br /><br /><a href="' + data.fileCdn
                         + '" data-rel="external" class="button-file large" target="_blank">Open File</a>';
                 }
 

@@ -4,12 +4,13 @@
 define([
     'underscore',
     'jsurl',
+    'baseresourcesurl',
     'api',
     'utils/helpers',
     'utils/alerts',
     'views/baseview',
     'jplaylist'
-], function (_, url, Api, Helpers, Alerts, BaseView) {
+], function (_, url, baseResourcesUrl, Api, Helpers, Alerts, BaseView) {
     var context = null;
 
     var View = BaseView.extend({
@@ -288,7 +289,7 @@ define([
 
         getAudioName: function (chapter, verse) {
             return verse
-                ? 'resources/audio/' + Api.getReciter() + '/'
+                ? baseResourcesUrl + '/audio/' + Api.getReciter() + '/'
                     + _.lpad(chapter, 3, '0')
                     + _.lpad(verse, 3, '0')
                     + '.mp3'

@@ -39,6 +39,7 @@ define([
 
         onVideoShow: function (e) {
             var me = this;
+            var player = e.view.element.find('video');
 
             //CACHE VIEW FOR LATER USE
             context.view = e.view;
@@ -47,12 +48,19 @@ define([
             context.reset.call(this, e);
 
             //UPDATE VIDEO SOURCE
-            e.view.element.find('video source')
-                .attr('src', decodeURIComponent(this.params.url));            //INITIALIZE AUDIO            e.view.element.find('video').load();            //SET AUDIO TITLE            e.view.element.find('h2')                .html(decodeURIComponent(this.params.title));
+            player.find('source').attr('src', decodeURIComponent(this.params.url));
+
+            //INITIALIZE AUDIO
+            player.load();
+
+            //SET AUDIO TITLE
+            e.view.element.find('h2')
+                .html(decodeURIComponent(this.params.title));
         },
         
         onAudioShow: function (e) {
             var me = this;
+            var player = e.view.element.find('audio');
 
             //CACHE VIEW FOR LATER USE
             context.view = e.view;
@@ -61,8 +69,14 @@ define([
             context.reset.call(this, e);
 
             //UPDATE AUDIO SOURCE
-            e.view.element.find('audio source')
-                .attr('src', decodeURIComponent(this.params.url));            //INITIALIZE AUDIO            e.view.element.find('audio').load();            //SET AUDIO TITLE            e.view.element.find('h2')                .html(decodeURIComponent(this.params.title));
+            player.find('source').attr('src', decodeURIComponent(this.params.url));
+
+            //INITIALIZE AUDIO
+            player.load();
+
+            //SET AUDIO TITLE
+            e.view.element.find('h2')
+                .html(decodeURIComponent(this.params.title));
         },
 
         reset: function (e) {

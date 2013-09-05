@@ -11,6 +11,7 @@ var App = {};
     define('baseurl', [], function () { return '../'; });
     define('basescriptsurl', [], function () { return currentPath + '/'; });
     define('baseservicesurl', [], function () { return 'http://api.publicrealm.net/qurangateway'; });
+    define('baseresourcesurl', [], function () { return 'http://resources.publicrealm.net'; });
     define('jquery', [], function () { return window.jQuery; });
 
     //CONFIFURE SHORTCUT ALIASES
