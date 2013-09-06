@@ -218,7 +218,7 @@ define([
                                 } else {
                                     //LOAD LAST ITEM OF PREVIOUS GROUP
                                     parent = i + 1;
-                                    index = list[parent].items.length - 1;
+                                    index = 0;
                                 }
 
                                 //NAVIGATE TO PREVIOUS RECORD
