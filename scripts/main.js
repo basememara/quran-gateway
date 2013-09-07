@@ -1,7 +1,4 @@
-﻿//EXPOSE APP MODULE TO GLOBAL FOR KENDO ACCESS
-var App = {};
-
-(function () {
+﻿(function (global) {
     //DETERMINE BASE URL FROM CURRENT SCRIPT PATH
     var scripts = document.getElementsByTagName('script');
     var src = scripts[scripts.length - 1].src;
@@ -88,6 +85,9 @@ var App = {};
 
         //CONSTRUCTOR
         var init = function () {
+            //EXPOSE APP MODULE TO GLOBAL FOR KENDO ACCESS
+            global.App = {};
+
             //START LOADING PANEL
             Alerts.initSpinner();
 
@@ -101,11 +101,7 @@ var App = {};
                     initErrors();
                     initLayouts();
                     initViews();
-
-                    //INITIALIZE APP AND STORE IN GLOBAL
-                    App.kendo = new kendo.mobile.Application($(document.body), {
-                        skin: 'flat'
-                    });
+                    initMobile();
                 });
         };
 
@@ -142,14 +138,14 @@ var App = {};
 
         var initLayouts = function () {
             //STORE IN GLOBAL
-            App.layouts = {
+            global.App.layouts = {
                 Default: Default
             };
         };
         
         var initViews = function () {
             //STORE IN GLOBAL
-            App.views = {
+            global.App.views = {
                 Home: Home,
                 Chapter: Chapter,
                 Chapters: Chapters,
@@ -165,7 +161,29 @@ var App = {};
             };
         };
 
+        var initMobile = function () {
+            //RUN APP AND STORE IN GLOBAL
+            var startApp = function () {
+                global.App.mobile = new kendo.mobile.Application($(document.body), {
+                    skin: 'flat'
+                });
+            };
+
+            //INITIALIZE MOBILE APP BASED ON ENVIRONMENT
+            if (!window.device) {
+                //IMMEDIATE FOR WEB BROWSERS
+                startApp();
+            }
+            else if (navigator.userAgent.indexOf('Browzr') > -1) {
+                //FOR BLACKBERRY
+                setTimeout(startApp(), 250)
+            } else {
+                //ATTACH TO DEVICE READY EVENT FOR PHONEGAP
+                document.addEventListener('deviceready', startApp(), false);
+            }
+        };
+
         //CALL CONSTRUCTOR
         init();
     });
-})();
+})(window);

@@ -104,7 +104,7 @@ define([
                 },
                 seriesColors: [color, '#ccc'],
                 seriesClick: function (e) {
-                    App.kendo.navigate('views/progress/' + key + '.html');
+                    App.mobile.navigate('views/progress/' + key + '.html');
                 },
                 tooltip: {
                     visible: false

@@ -68,7 +68,7 @@ define([
                 : 'views/progress/names99.html';
 
             //REDIRECT TO PAGE
-            App.kendo.navigate(redirect);
+            App.mobile.navigate(redirect);
         },
 
         //WIDGET EVENTS

@@ -182,7 +182,7 @@ define([
                                 }
 
                                 //NAVIGATE TO PREVIOUS RECORD
-                                App.kendo.navigate(template({
+                                App.mobile.navigate(template({
                                     id: list[parent].items[index].id,
                                     chapter: favorite
                                         ? url('?chapter', list[parent].items[index].url)
@@ -222,7 +222,7 @@ define([
                                 }
 
                                 //NAVIGATE TO PREVIOUS RECORD
-                                App.kendo.navigate(template({
+                                App.mobile.navigate(template({
                                     id: list[parent].items[index].id,
                                     chapter: favorite
                                         ? url('?chapter', list[parent].items[index].url)

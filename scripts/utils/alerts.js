@@ -26,11 +26,11 @@
         },
 
         initLoading: function (message, timeout) {
-            App.kendo.showLoading();
+            App.mobile.showLoading();
         },
 
         exitLoading: function () {
-            App.kendo.hideLoading();
+            App.mobile.hideLoading();
         },
 
         initSpinner: function () {
