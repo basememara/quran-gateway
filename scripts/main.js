@@ -102,7 +102,7 @@
                     initLayouts();
                     initViews();
                     initMobile();
-                    initChildBrowser();
+                    initPlugins();
                 });
         };
 
@@ -171,7 +171,7 @@
             };
 
             //INITIALIZE MOBILE APP BASED ON ENVIRONMENT
-            if (!window.device) {
+            if (!global.device) {
                 //IMMEDIATE FOR WEB BROWSERS
                 startApp();
             }
@@ -184,21 +184,23 @@
             }
         };
 
-        var initChildBrowser = function () {
-            //INITIALIZE CHILD BROWSER PLUGIN IF DEVICE
+        var initPlugins = function () {
+            //INITIALIZE MOBILE PLUGINS IF DEVICE
             if ((global.device || navigator.userAgent.indexOf('Browzr') > -1)
-                //PLUGINS DO NOT WORK IN SIMULATOR
-                && (device.uuid != 'e0101010d38bde8e6740011221af335301010333' && device.uuid != 'e0908060g38bde8e6740011221af335301010333')
-                && (global.plugins && global.plugins.childBrowser)) {
-                //INTERCEPT CLICKS
-                $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
-                    e.preventDefault();
-                    //OPEN LINKS VIA CHILD BROWSER PLUGIN
-                    global.plugins.childBrowser.showWebPage($(this).attr('href'),
-                        { showLocationBar: true },
-                        { showAddress: true },
-                        { showNavigationBar: true });
-                });
+                && device.uuid != 'e0101010d38bde8e6740011221af335301010333' //PLUGINS DO NOT WORK IN SIMULATOR
+                && device.uuid != 'e0908060g38bde8e6740011221af335301010333' //PLUGINS DO NOT WORK IN SIMULATOR
+                && global.plugins) {
+                //INITIALIZE CHILD BROWSER IF APPLICABLE
+                if (global.plugins.childBrowser) {
+                    $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
+                        e.preventDefault();
+                        //OPEN LINKS VIA CHILD BROWSER PLUGIN
+                        global.plugins.childBrowser.showWebPage($(this).attr('href'),
+                            { showLocationBar: true },
+                            { showAddress: true },
+                            { showNavigationBar: true });
+                    });
+                }
             }
         };
 
