@@ -179,7 +179,7 @@
                 setTimeout(startApp(), 250)
             } else {
                 //ATTACH TO DEVICE READY EVENT FOR PHONEGAP
-                document.addEventListener('deviceready', startApp(), false);
+                document.addEventListener('deviceready', startApp, false);
             }
         };
 
