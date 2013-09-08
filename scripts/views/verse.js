@@ -155,7 +155,7 @@ define([
                     if (navigator.onLine) context.audioPlayer.play();
                     else {
                         Alerts.error('You are current offline! This feature requires online connnectivity.');
-                        this.select(0);
+                        this.select(1);
                     }
                     break;
                 case 1:
