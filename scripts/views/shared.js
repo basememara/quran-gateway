@@ -2,8 +2,9 @@
  * This is a shared view
  */
 define([
+    'utils/alerts',
     'views/baseview'
-], function (BaseView) {
+], function (Alerts, BaseView) {
     var context = null;
 
     var View = BaseView.extend({
@@ -29,12 +30,12 @@ define([
 
             //UPDATE VIDEO SOURCE
             e.view.element.find('iframe')
-                .attr('src', decodeURIComponent(this.params.url));
+                .attr('src', decodeURIComponent(e.view.params.url));
 
             //UPDATE HEADER TITLE
             e.view.header.find('[data-role="navbar"]')
                 .data('kendoMobileNavBar')
-                .title(decodeURIComponent(this.params.title));
+                .title(decodeURIComponent(e.view.params.title));
         },
 
         onVideoShow: function (e) {
@@ -48,14 +49,14 @@ define([
             context.reset.call(this, e);
 
             //UPDATE VIDEO SOURCE
-            player.find('source').attr('src', decodeURIComponent(this.params.url));
+            player.find('source').attr('src', decodeURIComponent(e.view.params.url));
 
             //INITIALIZE AUDIO
             player.load();
 
             //SET AUDIO TITLE
             e.view.element.find('h2')
-                .html(decodeURIComponent(this.params.title));
+                .html(decodeURIComponent(e.view.params.title));
         },
         
         onAudioShow: function (e) {
@@ -69,14 +70,14 @@ define([
             context.reset.call(this, e);
 
             //UPDATE AUDIO SOURCE
-            player.find('source').attr('src', decodeURIComponent(this.params.url));
+            player.find('source').attr('src', decodeURIComponent(e.view.params.url));
 
             //INITIALIZE AUDIO
             player.load();
 
             //SET AUDIO TITLE
             e.view.element.find('h2')
-                .html(decodeURIComponent(this.params.title));
+                .html(decodeURIComponent(e.view.params.title));
         },
 
         reset: function (e) {
@@ -87,6 +88,10 @@ define([
 
             //RESET SCROLL AND MENUS
             BaseView.fn.reset.call(this, e);
+
+            //CHECK ONLINE CONNECTIVITY
+            if (e.view.params.url.toLowerCase().substring(0, 4) == 'http' && !navigator.onLine)
+                Alerts.error('You are current offline! This feature requires online connnectivity.');
         }
 
     });

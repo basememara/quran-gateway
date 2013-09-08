@@ -33,3 +33,17 @@
     -webkit-box-shadow: 0 0 10px #000000;
     box-shadow: 0 0 10px #000000;
 }
+
+.km-scrollview > div > [data-role=page] {
+    margin-top: 15px;
+}
+
+.km-scrollview .km-pages {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.km-scrollview p {
+    white-space: normal;
+} 

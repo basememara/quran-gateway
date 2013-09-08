@@ -152,7 +152,11 @@ define([
 
             switch (index) {
                 case 0:
-                    context.audioPlayer.play();
+                    if (navigator.onLine) context.audioPlayer.play();
+                    else {
+                        Alerts.error('You are current offline! This feature requires online connnectivity.');
+                        this.select(0);
+                    }
                     break;
                 case 1:
                     context.audioPlayer.pause();

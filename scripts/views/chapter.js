@@ -5,10 +5,11 @@ define([
     'api',
     'views/baseview',
     'utils/helpers',
+    'utils/alerts',
     'text!../../views/chapters/_lecture.html',
     'data/datasourcemeanings',
     'utils/plugins'
-], function (Api, BaseView, Helpers, lectureTemplate) {
+], function (Api, BaseView, Helpers, Alerts, lectureTemplate) {
     var context = null;
 
     var View = BaseView.extend({
@@ -28,10 +29,15 @@ define([
             var contents = e.view.element.find('.content');
             e.view.element.find('.sections').kendoMobileButtonGroup({
                 select: function () {
-                    //SWITCH LIST ON BUTTON SELECT
-                    contents.hide()
-                        .eq(this.selectedIndex)
-                        .show();
+                    if (navigator.onLine && this.selectedIndex != 0) {
+                        //SWITCH LIST ON BUTTON SELECT
+                        contents.hide()
+                            .eq(this.selectedIndex)
+                            .show();
+                    } else {
+                        Alerts.error('You are current offline! This feature requires online connnectivity.');
+                        this.select(0);
+                    }
                 },
                 index: 0
             });
