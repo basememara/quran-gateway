@@ -24,7 +24,7 @@ define([
                 $.get(Helpers.toServicesUrl('lastmodified/' + (options.table || key)))
                     .done(function (data) {
                         //GET TABLE FROM LOCAL STORAGE IF APPLIABLE
-                        if (loStorage.storage.get(loKey)) {
+                        if (options.local !== false && loStorage.storage.get(loKey)) {
                             //GET LOCAL STORAGE TIMESTAMP
                             var loTimestamp = loStorage.storage.get(loKey + '-modified');
 
@@ -46,8 +46,10 @@ define([
                             $.getJSON(Helpers.toServicesUrl(options.service || key))
                                 .done(function (json) {
                                     //STORE DATA IN LOCAL STORAGE AND TIMESTAMP
-                                    loStorage.storage.set(loKey, json);
-                                    loStorage.storage.set(loKey + '-modified', data.last_modified);
+                                    if (options.local !== false) {
+                                        loStorage.storage.set(loKey, json);
+                                        loStorage.storage.set(loKey + '-modified', data.last_modified);
+                                    }
 
                                     //CREATE DATABASE FOR LATER USE
                                     database[key] = TAFFY(json);
@@ -114,9 +116,22 @@ define([
         return defer.promise();
     };
 
+    var localStorageUsed = function () {
+        var allStrings = '';
+        for (var key in window.localStorage) {
+            if (window.localStorage.hasOwnProperty(key)) {
+                allStrings += window.localStorage[key];
+            }
+        }
+
+        //CALCULATE KB OF SPACE USE
+        return allStrings ? 3 + ((allStrings.length * 16) / (8 * 1024)) : 0;
+    };
+
     //PUBLIC PROPERTIES
     return {
         get: get,
-        getAll: getAll
+        getAll: getAll,
+        localStorageUsed: localStorageUsed
     };
 });

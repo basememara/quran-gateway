@@ -29,7 +29,8 @@ define([
             var contents = e.view.element.find('.content');
             e.view.element.find('.sections').kendoMobileButtonGroup({
                 select: function () {
-                    if (navigator.onLine && this.selectedIndex != 0) {
+                    //DATA IN OTHER TABS TOO LARGE FOR LOCAL STORAGE
+                    if (this.selectedIndex == 0 || navigator.onLine) {
                         //SWITCH LIST ON BUTTON SELECT
                         contents.hide()
                             .eq(this.selectedIndex)

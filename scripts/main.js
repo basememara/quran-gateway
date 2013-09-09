@@ -103,6 +103,7 @@
                     initViews();
                     initMobile();
                     initPlugins();
+                    initStats();
                 });
         };
 
@@ -202,6 +203,17 @@
                     });
                 }
             }
+        };
+
+        var initStats = function () {
+            //STORE INSTALL DATE
+            Api.setInstallDate();
+
+            //STORE NUMBER OF RUNS
+            var timesStarted = Api.increaseTimesStarted();
+            $('#drawer-menu a[href="views/ummah/struggle.html"]')
+                .closest('li')
+                .toggle(timesStarted > 50);
         };
 
         //CALL CONSTRUCTOR

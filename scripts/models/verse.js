@@ -18,6 +18,7 @@ define([], function () {
             //special: { type: 'boolean' },
             //pilgrimage: { type: 'boolean' },
             //ramadan: { type: 'boolean' },
+            //struggle: { type: 'boolean' },
             //science: { type: 'boolean' },
             //book: { type: 'boolean' },
             //sajdah: { type: 'boolean' },

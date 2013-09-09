@@ -47,11 +47,15 @@ define([
         },
 
         getMeaning: function (filter) {
-            return Storage.get('meanings', filter);
+            return Storage.get('meanings', filter, {
+                local: false
+            });
         },
 
         getMeanings: function (filter) {
-            return Storage.getAll('meanings', filter);
+            return Storage.getAll('meanings', filter, {
+                local: false
+            });
         },
 
         getTopic: function (filter) {
@@ -156,6 +160,34 @@ define([
         setReciter: function (value) {
             //STORE DATA IN LOCAL STORAGE
             loStorage.storage.set('reciter', value);
+        },
+
+        getInstallDate: function () {
+            return loStorage.storage.get('install-date');
+        },
+
+        setInstallDate: function () {
+            var key = 'install-date';
+
+            //STORE INSTALL DATE
+            if (!loStorage.storage.get(key))
+                loStorage.storage.set(key, new Date());
+        },
+
+        getTimesStarted: function () {
+            return loStorage.storage.get('times-started');
+        },
+
+        increaseTimesStarted: function () {
+            var key = 'times-started';
+
+            //STORE NUMBER OF RUNS
+            if (!loStorage.storage.get(key))
+                loStorage.storage.set(key, 0);
+
+            //INCREASE AND RETURN STATS
+            loStorage.storage.increase(key);
+            return loStorage.storage.get(key);
         }
     };
 });
