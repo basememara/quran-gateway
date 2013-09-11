@@ -86,8 +86,17 @@ define([
         },
 
         addProgress: function (key, value) {
+            //UPDATE DATA FROM LOCAL STORAGE
             var data = this.getProgress(key);
             Helpers.pushUnique(data.complete, value);
+
+            //ACTIVATE NEW SECTIONS IF APPLICABLE
+            if (key == 'understanding' && value == '9')
+                $('#drawer-menu a[href="views/ummah/struggles.html"]')
+                    .closest('li')
+                    .show();
+
+            //STORE DATA IN LOCAL STORAGE
             this.setProgress(key, data);
         },
 
@@ -128,6 +137,12 @@ define([
             //UPDATE DATA FROM LOCAL STORAGE
             var data = this.getFavorites();
             Helpers.pushUnique(data, value);
+
+            //ACTIVATE NEW SECTIONS IF APPLICABLE
+            if (value.id == 9 && value.type == 'Chapters')
+            $('#drawer-menu a[href="views/ummah/struggles.html"]')
+                .closest('li')
+                .show();
 
             //STORE DATA IN LOCAL STORAGE
             loStorage.storage.set('myfavorites', data);
@@ -172,22 +187,6 @@ define([
             //STORE INSTALL DATE
             if (!loStorage.storage.get(key))
                 loStorage.storage.set(key, new Date());
-        },
-
-        getTimesStarted: function () {
-            return loStorage.storage.get('times-started');
-        },
-
-        increaseTimesStarted: function () {
-            var key = 'times-started';
-
-            //STORE NUMBER OF RUNS
-            if (!loStorage.storage.get(key))
-                loStorage.storage.set(key, 0);
-
-            //INCREASE AND RETURN STATS
-            loStorage.storage.increase(key);
-            return loStorage.storage.get(key);
         }
     };
 });

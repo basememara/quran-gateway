@@ -64,7 +64,9 @@
     //INITIALIZE APP
     require([
         'jquery',
+        'underscore',
         'api',
+        'utils/helpers',
         'utils/alerts',
         'layouts/default',
         'views/home',
@@ -80,7 +82,7 @@
         'views/favorites',
         'views/shared',
         'add2home'
-    ], function ($, Api, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
+    ], function ($, _, Api, Helpers, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
         Hadiths, Progress, Topics, Ummah, Favorites, Shared) {
 
         //CONSTRUCTOR
@@ -166,31 +168,28 @@
         var initMobile = function () {
             //RUN APP AND STORE IN GLOBAL
             var startApp = function () {
-                global.App.mobile = new kendo.mobile.Application($(document.body), {
+                //SET MOBILE APP OPTIONS
+                var options = {
                     skin: 'flat'
-                });
+                };
+
+                //START KENDO MOBILE AND CACHE FOR LATER USE
+                global.App.mobile = new kendo.mobile.Application($(document.body), options);
             };
 
             //INITIALIZE MOBILE APP BASED ON ENVIRONMENT
-            if (!global.device) {
-                //IMMEDIATE FOR WEB BROWSERS
-                startApp();
-            }
-            else if (navigator.userAgent.indexOf('Browzr') > -1) {
-                //FOR BLACKBERRY
-                setTimeout(startApp(), 250)
-            } else {
+            if (Helpers.isPhoneGap()) {
                 //ATTACH TO DEVICE READY EVENT FOR PHONEGAP
                 document.addEventListener('deviceready', startApp, false);
+            } else {
+                //IMMEDIATE FOR WEB BROWSERS
+                startApp();
             }
         };
 
         var initPlugins = function () {
             //INITIALIZE MOBILE PLUGINS IF DEVICE
-            if ((global.device || navigator.userAgent.indexOf('Browzr') > -1)
-                && device.uuid != 'e0101010d38bde8e6740011221af335301010333' //PLUGINS DO NOT WORK IN SIMULATOR
-                && device.uuid != 'e0908060g38bde8e6740011221af335301010333' //PLUGINS DO NOT WORK IN SIMULATOR
-                && global.plugins) {
+            if (Helpers.isPhoneGapPluginsAvailable()) {
                 //INITIALIZE CHILD BROWSER IF APPLICABLE
                 if (global.plugins.childBrowser) {
                     $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
@@ -210,10 +209,10 @@
             Api.setInstallDate();
 
             //STORE NUMBER OF RUNS
-            var timesStarted = Api.increaseTimesStarted();
-            $('#drawer-menu a[href="views/ummah/struggle.html"]')
+            $('#drawer-menu a[href="views/ummah/struggles.html"]')
                 .closest('li')
-                .toggle(timesStarted > 50);
+                .toggle(_.contains(Api.getProgress('understanding').complete, '9')
+                    || Api.isFavorite({ id: 9, type: 'Chapters' }));
         };
 
         //CALL CONSTRUCTOR
