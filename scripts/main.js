@@ -207,12 +207,6 @@
         var initStats = function () {
             //STORE INSTALL DATE
             Api.setInstallDate();
-
-            //STORE NUMBER OF RUNS
-            $('#drawer-menu a[href="views/ummah/struggles.html"]')
-                .closest('li')
-                .toggle(_.contains(Api.getProgress('understanding').complete, '9')
-                    || Api.isFavorite({ id: 9, type: 'Chapters' }));
         };
 
         //CALL CONSTRUCTOR

@@ -90,12 +90,6 @@ define([
             var data = this.getProgress(key);
             Helpers.pushUnique(data.complete, value);
 
-            //ACTIVATE NEW SECTIONS IF APPLICABLE
-            if (key == 'understanding' && value == '9')
-                $('#drawer-menu a[href="views/ummah/struggles.html"]')
-                    .closest('li')
-                    .show();
-
             //STORE DATA IN LOCAL STORAGE
             this.setProgress(key, data);
         },
@@ -137,12 +131,6 @@ define([
             //UPDATE DATA FROM LOCAL STORAGE
             var data = this.getFavorites();
             Helpers.pushUnique(data, value);
-
-            //ACTIVATE NEW SECTIONS IF APPLICABLE
-            if (value.id == 9 && value.type == 'Chapters')
-            $('#drawer-menu a[href="views/ummah/struggles.html"]')
-                .closest('li')
-                .show();
 
             //STORE DATA IN LOCAL STORAGE
             loStorage.storage.set('myfavorites', data);
