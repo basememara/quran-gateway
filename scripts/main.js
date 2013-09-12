@@ -1,4 +1,4 @@
-﻿(function (global) {
+﻿(function () {
     //DETERMINE BASE URL FROM CURRENT SCRIPT PATH
     var scripts = document.getElementsByTagName('script');
     var src = scripts[scripts.length - 1].src;
@@ -88,7 +88,7 @@
         //CONSTRUCTOR
         var init = function () {
             //EXPOSE APP MODULE TO GLOBAL FOR KENDO ACCESS
-            global.App = {};
+            window.App = {};
 
             //START LOADING PANEL
             Alerts.initSpinner();
@@ -142,14 +142,14 @@
 
         var initLayouts = function () {
             //STORE IN GLOBAL
-            global.App.layouts = {
+            window.App.layouts = {
                 Default: Default
             };
         };
         
         var initViews = function () {
             //STORE IN GLOBAL
-            global.App.views = {
+            window.App.views = {
                 Home: Home,
                 Chapter: Chapter,
                 Chapters: Chapters,
@@ -174,7 +174,7 @@
                 };
 
                 //START KENDO MOBILE AND CACHE FOR LATER USE
-                global.App.mobile = new kendo.mobile.Application($(document.body), options);
+                window.App.mobile = new kendo.mobile.Application($(document.body), options);
             };
 
             //INITIALIZE MOBILE APP BASED ON ENVIRONMENT
@@ -189,13 +189,13 @@
 
         var initPlugins = function () {
             //INITIALIZE MOBILE PLUGINS IF DEVICE
-            if (Helpers.isPhoneGapPluginsAvailable()) {
+            if (Helpers.hasPhoneGapPlugins()) {
                 //INITIALIZE CHILD BROWSER IF APPLICABLE
-                if (global.plugins.childBrowser) {
+                if (window.plugins.childBrowser) {
                     $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
                         e.preventDefault();
                         //OPEN LINKS VIA CHILD BROWSER PLUGIN
-                        global.plugins.childBrowser.showWebPage($(this).attr('href'),
+                        window.plugins.childBrowser.showWebPage($(this).attr('href'),
                             { showLocationBar: true },
                             { showAddress: true },
                             { showNavigationBar: true });

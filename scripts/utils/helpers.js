@@ -169,7 +169,7 @@ define([
             return window.device && navigator.userAgent.indexOf('Browzr') < 0;
         },
 
-        isPhoneGapPluginsAvailable: function () {
+        hasPhoneGapPlugins: function () {
             return this.isPhoneGap()
                 && device.uuid != 'e0101010d38bde8e6740011221af335301010333' //PLUGINS DO NOT WORK IN SIMULATOR
                 && device.uuid != 'e0908060g38bde8e6740011221af335301010333' //PLUGINS DO NOT WORK IN SIMULATOR
