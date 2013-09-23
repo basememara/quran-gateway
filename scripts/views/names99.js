@@ -39,16 +39,16 @@ define([
 
         toggleFavorite: function (e) {
             var me = this;
-            var id = e.button.data('name99-id');
+            var id = parseInt(e.button.data('name99-id'));
 
             //GET REQUESTED ITEM
-            Api.getName99(id.toString())
+            Api.getName99(id)
                 .done(function (data) {
                     var template = kendo.template('<span>#= name # - #= arabic #</span>');
 
                     //UPDATE FAVORITE BUTTON
                     BaseView.fn.toggleFavorite.call(me, context, null, {
-                        id: parseInt(id),
+                        id: id,
                         type: 'Names of Allah',
                         name: template(data),
                         description: null,

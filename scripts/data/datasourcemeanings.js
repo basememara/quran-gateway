@@ -6,6 +6,7 @@ define([
     'api',
     'models/meaning'
 ], function (baseResourcesUrl, Api, Model) {
+    var context = null;
 
     //EXTEND KENDO DATA SOURCE
     var DataSource = kendo.data.DataSource.extend({
@@ -13,6 +14,9 @@ define([
         init: function (element, options) {
             //BASE CALL TO WIDGET INITIALIZATION
             kendo.data.DataSource.fn.init.call(this, element, options);
+
+            //CACHE CONTEXT FOR LATER
+            context = this;
         },
 
         options: {
@@ -20,20 +24,16 @@ define([
             //THE JQUERY PLUGIN WOULD BE jQuery.fn.kendoYouTube
             //http://www.kendoui.com/blogs/teamblog/posts/12-04-03/creating_custom_kendo_ui_plugins.aspx
             name: 'DataSourceMeanings',
+            chapter: null,
             transport: {
                 read: function (options) {
-                    Api.getMeanings()
-                        .done(function (data) {
-                            //MANIPULATE DATA
-                            _.each(data, function (item) {
-                                //USE REMOTE FILE IF APPLICABLE
-                                if (item.file)
-                                    item.fileCdn = baseResourcesUrl + '/' + item.file;
-                            })
-
-                            //SEND BACK TO KENDO DATA SOURCE
-                            options.success(data);
-                        });
+                    if (context.options.chapter) {
+                        Api.getMeaningsByChapter(context.options.chapter)
+                            .done(function (data) {
+                                //SEND BACK TO KENDO DATA SOURCE
+                                options.success(data);
+                            });
+                    }
                 }
             },
             schema: {

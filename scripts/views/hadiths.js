@@ -160,7 +160,7 @@ define([
             var me = this;
 
             //INITIALIZE VARIABLES
-            var id = e.target.closest('a').data('hadith-id');
+            var id = parseInt(e.target.closest('a').data('hadith-id'));
             var title = e.target.closest('a').text();
 
             Api.getHadith(id)
@@ -184,7 +184,7 @@ define([
 
         toggleFavorite: function (e) {
             var me = this;
-            var id = e.button.data('hadith-id');
+            var id = parseInt(e.button.data('hadith-id'));
 
             //GET REQUESTED ITEM
             Api.getHadith(id)
@@ -196,7 +196,7 @@ define([
 
                     //UPDATE FAVORITE BUTTON
                     BaseView.fn.toggleFavorite.call(me, context, null, {
-                        id: parseInt(id),
+                        id: id,
                         type: 'Hadiths',
                         name: template(data),
                         description: data.translation,

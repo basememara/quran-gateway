@@ -43,16 +43,15 @@ define([
                 index: 0
             });
 
-            //BIND LECTURES DATA
+            //INITALIZE LECTURES LIST CONTAINER
             e.view.element.find('.lectures').kendoMobileListView({
-                dataSource: new kendo.ui.DataSourceMeanings(),
                 template: lectureTemplate,
                 style: 'inset'
             });
         },
 
         onShow: function (e) {
-            //CACHE VIEW FOR LATER USE
+            //CACHE VARIABLES FOR LATER USE
             context.view = e.view;
 
             //RESET SCROLL AND MENUS IF APPLICABLE
@@ -64,7 +63,7 @@ define([
             }
 
             //GET REQUESTED ITEM FOR POPULATING DETAILS
-            Api.getChapter(e.view.params.id)
+            Api.getChapter(parseInt(e.view.params.id))
                 .done(function (data) {
                     //UPDATE HEADER TITLE
                     var template = kendo.template('#= transliteration #');
@@ -90,20 +89,16 @@ define([
             e.view.element.find('.meanings a')
                 .queryString({ chapter: e.view.params.id });
 
-            //SET QUERY ON LECTURES DATASOURCE
+            //SET QUERY FOR LECTURES
             e.view.element.find('.lectures')
                 .data('kendoMobileListView')
-                .dataSource.query({
+                .setDataSource(new kendo.ui.DataSourceMeanings({
+                    chapter: e.view.params.id,
                     filter: [
                         {
                             field: 'lecture',
                             operator: 'eq',
                             value: true
-                        },
-                        {
-                            field: 'chapter',
-                            operator: 'eq',
-                            value: parseInt(e.view.params.id)
                         },
                         {
                             field: 'start',
@@ -126,7 +121,7 @@ define([
                             dir: 'asc'
                         }
                     ]
-                });
+                }));
         },
 
         onMeaningShow: function (e) {
@@ -134,7 +129,7 @@ define([
             context.view = e.view;
 
             //GET CHAPTER ITEM
-            Api.getChapter(e.view.params.chapter)
+            Api.getChapter(parseInt(e.view.params.chapter))
                 .done(function (data) {
                     //UPDATE HEADER TITLE
                     var template = kendo.template('#= transliteration #');
@@ -144,17 +139,16 @@ define([
                 });
 
             //POPULATE DATA
-            Api.getMeaning({
+            Api.getMeaningsByChapter(e.view.params.chapter, {
                 source: e.view.params.source,
-                chapter: parseInt(e.view.params.chapter), //TODO: DATA TYPE CHANGES FROM STRING TO INT AFTER FIRST TIME (???)
                 start: null,
                 end: null,
-                exegesis: '1' //TODO: MAKE STRON TYPED BOOLEAN
+                exegesis: 1
             }).done(function (data) {
-                var content = data ? data.description : 'Coming soon...';
+                var content = data && data.length ? data[0].description : 'Coming soon...';
 
-                if (data.file) {
-                    content += '<br /><br /><a href="' + data.fileCdn
+                if (data[0].file) {
+                    content += '<br /><br /><a href="' + data[0].fileCdn
                         + '" data-rel="external" class="button-file large" target="_blank">Open File</a>';
                 }
 
@@ -162,7 +156,6 @@ define([
                 e.view.element.find('.button-file').kendoMobileButton({
                     icon: 'organize'
                 });
-
             });
 
             //RESET SCROLL AND MENUS
@@ -173,7 +166,7 @@ define([
             var me = this;
 
             //GET REQUESTED ITEM
-            Api.getChapter(context.view.params.id)
+            Api.getChapter(parseInt(context.view.params.id))
                 .done(function (data) {
                     var template = kendo.template('#= id #: #= transliteration # (#= translation #)');
 

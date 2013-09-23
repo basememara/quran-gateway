@@ -41,7 +41,7 @@ define([
             audioControls.data('kendoMobileButtonGroup').select(1);
 
             //GET REQUESTED ITEMS
-            $.when(Api.getVerse(e.view.params.id), Api.getChapter(e.view.params.chapter))
+            $.when(Api.getVerse(parseInt(e.view.params.id)), Api.getChapter(parseInt(e.view.params.chapter)))
                 .done(function (verse, chapter) {
                     //INITIALIZE VARIABLES
                     verse.range = verse.start;
@@ -270,7 +270,7 @@ define([
             var me = this;
 
             //GET REQUESTED ITEM
-            Api.getVerse(context.view.params.id)
+            Api.getVerse(parseInt(context.view.params.id))
                 .done(function (data) {
                     var template = kendo.template('<span>#= summary #</span><small>Chapter: #= chapter #, # if (end) { # Verses: #= start # to #= end # # } else { # Verse: #= start # # } #</small>');
 
@@ -280,7 +280,7 @@ define([
 
                     //UPDATE FAVORITE BUTTON
                     BaseView.fn.toggleFavorite.call(me, context, null, {
-                        id: parseInt(data.id),
+                        id: data.id,
                         type: 'Verses',
                         name: template(data),
                         description: null,

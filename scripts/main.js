@@ -22,6 +22,7 @@
             jsurl: 'libs/js-url/url.min',
             kendoui: 'libs/kendoui/js', //FOR AMD USE
             lostorage: 'libs/lostorage/loStorage.min',
+            localstoragedb: 'libs/localstoragedb/localstoragedb.min',
             moment: 'libs/moment/moment.min',
             spin: 'libs/spin/spin.min',
             text: 'libs/require/text',
@@ -37,6 +38,9 @@
             jsurl: {
                 deps: ['jquery'],
                 exports: 'url'
+            },
+            localstoragedb: {
+                exports: 'localStorageDB'
             },
             moment: {
                 deps: ['jquery'],

@@ -4,9 +4,10 @@
 define([
     'underscore',
     'lostorage',
+    'baseresourcesurl',
     'utils/helpers',
     'utils/storage'
-], function (_, loStorage, Helpers, Storage) {
+], function (_, loStorage, baseResourcesUrl, Helpers, Storage) {
 
     //PUBLIC PROPERTIES
     return {
@@ -19,14 +20,16 @@ define([
         },
 
         getVerse: function (filter) {
-            return Storage.get('verses/ranges', filter, {
-                table: 'verses_range'
+            return Storage.get('verses', filter, {
+                service: 'verses/ranges',
+                modifiedUrl: Helpers.toServicesUrl('lastmodified/verses_range')
             });
         },
 
         getVerses: function (filter) {
-            return Storage.getAll('verses/ranges', filter, {
-                table: 'verses_range'
+            return Storage.getAll('verses', filter, {
+                service: 'verses/ranges',
+                modifiedUrl: Helpers.toServicesUrl('lastmodified/verses_range')
             });
         },
 
@@ -55,6 +58,23 @@ define([
         getMeanings: function (filter) {
             return Storage.getAll('meanings', filter, {
                 local: false
+            });
+        },
+
+        getMeaningsByChapter: function (id, filter) {
+            return Storage.getAll('meanings_' + id, filter, {
+                service: 'meanings/' + id,
+                modifiedUrl: Helpers.toServicesUrl('lastmodified/meanings')
+            }).then(function (data) {
+                //MANIPULATE DATA
+                _.each(data, function (item) {
+                    //USE REMOTE FILE IF APPLICABLE
+                    if (item.file)
+                        item.fileCdn = baseResourcesUrl + '/' + item.file;
+                })
+
+                //SEND MODIFIED DATA BACK
+                return data;
             });
         },
 
