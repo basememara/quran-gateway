@@ -65,8 +65,8 @@ define([
             if (toggle === true) {
                 //UPDATE INTERFACE
                 if (btnFavorite.length > 0) {
-                    if (btnFavorite.hasClass('km-icon-star-empty'))
-                        btnFavorite.removeClass('km-icon-star-empty').addClass('km-icon-star');
+                    if (btnFavorite.hasClass('km-heart-empty'))
+                        btnFavorite.removeClass('km-heart-empty').addClass('km-heart');
                     else if (btnFavorite.hasClass('km-rowinsert'))
                         btnFavorite.removeClass('km-rowinsert').addClass('km-rowdelete');
                 }
@@ -79,8 +79,8 @@ define([
             } else if (toggle === false) {
                 //UPDATE INTERFACE
                 if (btnFavorite.length > 0) {
-                    if (btnFavorite.hasClass('km-icon-star'))
-                        btnFavorite.removeClass('km-icon-star').addClass('km-icon-star-empty');
+                    if (btnFavorite.hasClass('km-heart'))
+                        btnFavorite.removeClass('km-heart').addClass('km-heart-empty');
                     else if (btnFavorite.hasClass('km-rowdelete'))
                         btnFavorite.removeClass('km-rowdelete').addClass('km-rowinsert');
                 }

@@ -17,6 +17,7 @@
     <link href="scripts/libs/add2home/add2home.css" rel="stylesheet" />
     <link href="scripts/libs/jplayer/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" />
     <link href="styles/k-override.css" rel="stylesheet" />
+    <link href="styles/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="styles/icons.css" rel="stylesheet" />
     <link href="styles/main.css" rel="stylesheet" />
     <link href="styles/responsive.css" rel="stylesheet" />
@@ -59,17 +60,17 @@
     <section data-id="default" data-role="layout" data-init="App.layouts.Default.onInit">
         <header data-role="header">
             <div data-role="navbar">
-                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
+                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="reorder" data-align="left" class="fa"></a>
                 <span data-role="view-title"></span>
             </div>
         </header>
         <!--View content will render here-->
         <footer data-role="footer">
             <div data-role="tabstrip">
-			    <a href="#home" data-icon="recents">Dashboard</a>
-			    <a href="views/chapters/list.html" data-icon="bookmarks">Chapters</a>
-			    <a href="views/names99/list.html" data-icon="action">99 Names</a>
-			    <a href="views/favorites/list.html" data-icon="favorites">Favorites</a>
+			    <a href="#home" class="fa" data-icon="dashboard">Dashboard</a>
+			    <a href="views/chapters/list.html" data-icon="book" class="fa">Chapters</a>
+			    <a href="views/names99/list.html" data-icon="th" class="fa">99 Names</a>
+			    <a href="views/favorites/list.html" data-icon="heart" class="fa">Favorites</a>
             </div> 
         </footer>
     </section>
@@ -78,14 +79,14 @@
         <ul data-role="listview" data-type="group">
             <li>The Quran
                 <ul>
-                    <li data-icon="icon-rain-inv"><a href="views/verses/list.html?type=supplication&title=Supplications" data-transition="none">Supplications</a></li>
-                    <li data-icon="icon-attention"><a href="views/verses/list.html?type=believers&title=%27O%20Believers" data-transition="none">'O Believers</a></li>
-                    <li data-icon="icon-comment"><a href="views/verses/list.html?type=say&title=Believers%20%22Say%22" data-transition="none">Believers "Say"</a></li>
-                    <li data-icon="icon-hourglass"><a href="views/verses/list.html?type=promise&title=Divine%20Promises" data-transition="none">Divine Promises</a></li>
-                    <li data-icon="icon-lightbulb"><a href="views/verses/list.html?type=science&title=Scientific%20Miracles" data-transition="none">Scientific Miracles</a></li>
-                    <li data-icon="icon-book"><a href="views/verses/list.html?type=book&title=People%20of%20the%20Book" data-transition="none">People of the Book</a></li>
-                    <li data-icon="icon-plus-squared"><a href="views/verses/list.html?type=sajdah&title=Prostrations" data-transition="none">Prostrations</a></li>
-                    <li data-icon="icon-bookmark"><a href="views/verses/list.html?type=special&title=Special%20Verses" data-transition="none">Special Verses</a></li>
+                    <li data-icon="umbrella" class="fa"><a href="views/verses/list.html?type=supplication&title=Supplications" data-transition="none">Supplications</a></li>
+                    <li data-icon="warning-sign" class="fa"><a href="views/verses/list.html?type=believers&title=%27O%20Believers" data-transition="none">'O Believers</a></li>
+                    <li data-icon="comment" class="fa"><a href="views/verses/list.html?type=say&title=Believers%20%22Say%22" data-transition="none">Believers "Say"</a></li>
+                    <li data-icon="legal" class="fa"><a href="views/verses/list.html?type=promise&title=Divine%20Promises" data-transition="none">Divine Promises</a></li>
+                    <li data-icon="beaker" class="fa"><a href="views/verses/list.html?type=science&title=Scientific%20Miracles" data-transition="none">Scientific Miracles</a></li>
+                    <li data-icon="book" class="fa"><a href="views/verses/list.html?type=book&title=People%20of%20the%20Book" data-transition="none">People of the Book</a></li>
+                    <li data-icon="plus-sign-alt" class="fa"><a href="views/verses/list.html?type=sajdah&title=Prostrations" data-transition="none">Prostrations</a></li>
+                    <li data-icon="bookmark" class="fa"><a href="views/verses/list.html?type=special&title=Special%20Verses" data-transition="none">Special Verses</a></li>
                 </ul>
             </li>
             <li>The Messenger
@@ -110,9 +111,9 @@
         data-show="App.views.Home.onShow">
         <header data-role="header">
             <div data-role="navbar">
-                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="icon-menu" data-align="left"></a>
+                <a href="#drawer-menu" data-role="button" data-rel="drawer" data-icon="reorder" data-align="left" class="fa"></a>
                 <div class="title-img"><img src="images/bismillah.png" /></div>
-                <a href="views/shared/info.html" data-role="button" data-icon="info" data-align="right"></a>
+                <a href="views/shared/info.html" data-role="button" data-icon="cogs" data-align="right" class="fa"></a>
             </div>
         </header>
         <div data-role="scrollview"><div data-role="page">
