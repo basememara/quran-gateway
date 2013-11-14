@@ -1,4 +1,4 @@
-﻿//EXPOSE APP MODULE TO GLOBAL FOR KENDO ACCESS
+//EXPOSE APP MODULE TO GLOBAL FOR KENDO ACCESS
 var App = {};
 
 /**
@@ -53,7 +53,7 @@ define([
             .done(callback);
     };
 
-    var initErrors = function (options) {
+    var initErrors = function () {
         //ATTACH TO WINDOW ERROR
         window.onerror = function (msg, url, line) {
             //NOTIFY THE USER IF APPLICABLE
@@ -141,18 +141,13 @@ define([
 
     var initPlugins = function () {
         //INITIALIZE MOBILE PLUGINS IF DEVICE
-        if (Helpers.hasPhoneGapPlugins()) {
+        if (Helpers.isPhoneGap()) {
             //INITIALIZE CHILD BROWSER IF APPLICABLE
-            if (window.plugins.childBrowser) {
-                $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
-                    e.preventDefault();
-                    //OPEN LINKS VIA CHILD BROWSER PLUGIN
-                    window.plugins.childBrowser.showWebPage($(this).attr('href'),
-                        { showLocationBar: true },
-                        { showAddress: true },
-                        { showNavigationBar: true });
-                });
-            }
+            $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
+                e.preventDefault();
+                //OPEN LINKS VIA CHILD BROWSER PLUGIN
+                window.open($(this).attr('href'), '_blank');
+            });
         }
     };
 
