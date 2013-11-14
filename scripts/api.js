@@ -195,6 +195,44 @@ define([
             //STORE INSTALL DATE
             if (!loStorage.storage.get(key))
                 loStorage.storage.set(key, new Date());
+        },
+
+        getUsageCounter: function () {
+            var key = 'usage-counter';
+
+            //STORE COUNTER
+            if (!loStorage.storage.get(key))
+                loStorage.storage.set(key, 1);
+
+            return loStorage.storage.get(key);
+        },
+
+        setUsageCounter: function () {
+            var key = 'usage-counter';
+
+            //STORE COUNTER
+            if (!loStorage.storage.get(key))
+                loStorage.storage.set(key, 0);
+
+            //INCREMENT COUNTER
+            loStorage.storage.increase(key);
+        },
+
+        getEnableInstructions: function () {
+            var key = 'enable-instructions';
+
+            //STORE ENABLE INSTRUCTIONS FLAG
+            if (Helpers.isNullOrEmpty(loStorage.storage.get(key)))
+                loStorage.storage.set(key, true);
+
+            return loStorage.storage.get(key);
+        },
+
+        setEnableInstructions: function (enable) {
+            var key = 'enable-instructions';
+
+            //STORE ENABLE INSTRUCTIONS FLAG
+            loStorage.storage.set(key, enable);
         }
     };
 });

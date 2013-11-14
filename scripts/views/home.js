@@ -71,6 +71,22 @@ define([
 
             //INITIALIZE FAVORITES COUNT
             BaseView.fn.updateFavoritesDisplay.call(this, e);
+
+            //DISPLAY WELCOME SCREEN IF APPLICABLE
+            if (Api.getEnableInstructions())
+                $('#getting-started-modal').getKendoMobileModalView().open();
+        },
+
+        onModalConfirm: function (e) {
+            //DISABLE INSTRUCTIONS
+            Api.setEnableInstructions(false);
+
+            //GET MODAL
+            var modal = e.target.closest('.km-modalview')
+                .data('kendoMobileModalView');
+
+            //CLOSE MODAL
+            modal.close();
         },
 
         loadProgress: function (key, title) {

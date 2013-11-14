@@ -154,8 +154,9 @@ define([
     };
 
     var initStats = function () {
-        //STORE INSTALL DATE
+        //STORE INSTALL DATE AND USAGE COUNTER
         Api.setInstallDate();
+        Api.setUsageCounter();
     };
 
     //PUBLIC PROPERTIES
