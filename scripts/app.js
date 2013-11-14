@@ -122,6 +122,9 @@ define([
             if (kendo.support.mobileOS.ios && kendo.support.mobileOS.flatVersion >= 700)
                 options.statusBarStyle = 'black-translucent';
 
+            //FIX FOR REMOVING INITIAL HASH SINCE KENDO CRASHES
+            history.pushState('', document.title, window.location.pathname);
+
             //START KENDO MOBILE AND CACHE FOR LATER USE
             App.mobile = new kendo.mobile.Application(document.body, options);
         };
