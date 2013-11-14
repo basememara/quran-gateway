@@ -118,8 +118,12 @@ define([
                 skin: 'flat'
             };
 
+            //FIX FOR IOS7 STATUS BAR FOR APPS
+            if (kendo.support.mobileOS.ios && kendo.support.mobileOS.flatVersion >= 700)
+                options.statusBarStyle = 'black-translucent';
+
             //START KENDO MOBILE AND CACHE FOR LATER USE
-            App.mobile = new kendo.mobile.Application($(document.body), options);
+            App.mobile = new kendo.mobile.Application(document.body, options);
         };
 
         //INITIALIZE MOBILE APP BASED ON ENVIRONMENT
