@@ -5,11 +5,10 @@ define([
     'jquery',
     'underscore',
     'moment',
-    'localstoragedb',
     'lostorage',
-    'taffy',
+    'localstoragedb',
     'utils/helpers'
-], function ($, _, moment, localStorageDB, loStorage, TAFFY, Helpers) {
+], function ($, _, moment, loStorage, localStorageDB, Helpers) {
     //PRIVATE PROPERTIES
     var database;
 

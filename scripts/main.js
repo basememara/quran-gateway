@@ -26,7 +26,6 @@
             moment: 'libs/moment/moment.min',
             spin: 'libs/spin/spin.min',
             text: 'libs/require/text',
-            taffy: 'libs/taffy/taffy-min',
             toastr: 'libs/toastr/toastr.min',
             underscore: 'libs/underscore/underscore-min',
             'underscore.string': 'libs/underscore/underscore.string.min'
@@ -46,9 +45,6 @@
                 deps: ['jquery'],
                 exports: 'moment'
             },
-            taffy: {
-                exports: 'TAFFY'
-            },
             toastr: {
                 deps: ['jquery'],
                 exports: 'toastr'
@@ -65,155 +61,10 @@
         }
     });
 
-    //INITIALIZE APP
     require([
-        'jquery',
-        'underscore',
-        'api',
-        'utils/helpers',
-        'utils/alerts',
-        'layouts/default',
-        'views/home',
-        'views/chapter',
-        'views/chapters',
-        'views/verse',
-        'views/verses',
-        'views/names99',
-        'views/hadiths',
-        'views/progress',
-        'views/topics',
-        'views/ummah',
-        'views/favorites',
-        'views/shared',
-        'add2home'
-    ], function ($, _, Api, Helpers, Alerts, Default, Home, Chapter, Chapters, Verse, Verses, Names99,
-        Hadiths, Progress, Topics, Ummah, Favorites, Shared) {
-
-        //CONSTRUCTOR
-        var init = function () {
-            //EXPOSE APP MODULE TO GLOBAL FOR KENDO ACCESS
-            window.App = {};
-
-            //START LOADING PANEL
-            Alerts.initSpinner();
-
-            //PRELOAD OTHER DATA IN CASE GOES OFFLINE LATER
-            $.when(Api.getChapters(), Api.getVerses(), Api.getHadiths, Api.getNames99())
-                .done(function () {
-                    //STOP LOADING PANEL
-                    Alerts.exitSpinner();
-
-                    //INITIALIZE APP PARTS
-                    initErrors();
-                    initLayouts();
-                    initViews();
-                    initMobile();
-                    initPlugins();
-                    initStats();
-                });
-        };
-
-        var initErrors = function (options) {
-            //ATTACH TO WINDOW ERROR
-            window.onerror = function (msg, url, line) {
-                //NOTIFY THE USER IF APPLICABLE
-                Alerts.error('There was an error with your request: "' + msg
-                    + '". Please try again or restart the app.');
-
-                /*LOG TO SERVER USING WEB SERVICE API
-                try {
-                    $.ajax({
-                        type: 'GET',
-                        contentType: 'application/json',
-                        cache: false,
-                        url: Helpers.toServicesUrl('/System/Log'),
-                        data: {
-                            message: msg,
-                            file: window.location.href,
-                            line: line,
-                            url: url,
-                            userAgent: navigator.userAgent
-                        }
-                    });
-                } catch (err) {
-                    //DO NOTHING TO AVOID INFINITE ERROR LOOP
-                }*/
-
-                //BUBBLE ERROR TO CONSOLE STILL
-                return false;
-            };
-        };
-
-        var initLayouts = function () {
-            //STORE IN GLOBAL
-            window.App.layouts = {
-                Default: Default
-            };
-        };
-        
-        var initViews = function () {
-            //STORE IN GLOBAL
-            window.App.views = {
-                Home: Home,
-                Chapter: Chapter,
-                Chapters: Chapters,
-                Verse: Verse,
-                Verses: Verses,
-                Names99: Names99,
-                Hadiths: Hadiths,
-                Progress: Progress,
-                Topics: Topics,
-                Ummah: Ummah,
-                Favorites: Favorites,
-                Shared: Shared
-            };
-        };
-
-        var initMobile = function () {
-            //RUN APP AND STORE IN GLOBAL
-            var startApp = function () {
-                //SET MOBILE APP OPTIONS
-                var options = {
-                    skin: 'flat'
-                };
-
-                //START KENDO MOBILE AND CACHE FOR LATER USE
-                window.App.mobile = new kendo.mobile.Application($(document.body), options);
-            };
-
-            //INITIALIZE MOBILE APP BASED ON ENVIRONMENT
-            if (Helpers.isPhoneGap()) {
-                //ATTACH TO DEVICE READY EVENT FOR PHONEGAP
-                document.addEventListener('deviceready', startApp, false);
-            } else {
-                //IMMEDIATE FOR WEB BROWSERS
-                startApp();
-            }
-        };
-
-        var initPlugins = function () {
-            //INITIALIZE MOBILE PLUGINS IF DEVICE
-            if (Helpers.hasPhoneGapPlugins()) {
-                //INITIALIZE CHILD BROWSER IF APPLICABLE
-                if (window.plugins.childBrowser) {
-                    $(document).on('click', 'a[data-rel="external"][target="_blank"]', function (e) {
-                        e.preventDefault();
-                        //OPEN LINKS VIA CHILD BROWSER PLUGIN
-                        window.plugins.childBrowser.showWebPage($(this).attr('href'),
-                            { showLocationBar: true },
-                            { showAddress: true },
-                            { showNavigationBar: true });
-                    });
-                }
-            }
-        };
-
-        var initStats = function () {
-            //STORE INSTALL DATE
-            Api.setInstallDate();
-        };
-
-        //CALL CONSTRUCTOR
-        init();
+        'app'
+    ], function (App) {
+        //INITIALIZE APP
+        App.init();
     });
-})(window);
+})();
