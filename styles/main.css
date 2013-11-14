@@ -1,15 +1,22 @@
-﻿.loading-panel
-{
+.loading-panel {
     width: 100%;
     height: 50px;
     background: url('../images/loading/loading9.gif') no-repeat center center;
 }
 
-.loading-page
-{
+.loading-page {
     width: 100%;
     height: 200px;
     background: transparent url('../images/loading/loading40.gif') no-repeat center center;
+}
+
+.logo {
+    padding: 10px;
+	text-align: center;
+}
+
+.logo img {
+    width: 100%;
 }
 
 .container-img {
