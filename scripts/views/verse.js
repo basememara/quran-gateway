@@ -70,7 +70,7 @@ define([
                     //HANDLE SHARE CLICK
                     var bodyTemplate = kendo.template('Chapter #= chapter.id #. #= chapter.translation #, Verse #= verse.range #:'
                         + '\n\n#=verse.arabic #\n\nTranslation:\n#= verse.translation #'
-                        + '\n\nvia Quran Gateway - http://qurangateway.publicrealm.net');
+                        + '\n\nvia Quran Gateway - http://falafelsoft.ae');
                     var body = bodyTemplate({ chapter: chapter, verse: verse });
                     e.view.element.find('.actions a[data-icon="share"]').attr('href', 'mailto: ?'
                         + 'subject=' + encodeURIComponent('Qur\'an verse')
