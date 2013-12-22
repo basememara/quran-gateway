@@ -11,6 +11,10 @@
     text-shadow: 0 -1px rgba(0,0,0,.5);
 }
 
+.k-animation-container {
+    max-width: 500px;
+}
+
 .km-modalview .km-content {
     padding: 15px;
 }
