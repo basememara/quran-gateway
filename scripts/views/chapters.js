@@ -26,6 +26,8 @@ define([
             e.view.element.find('.listview').kendoMobileListView({
                 dataSource: new kendo.ui.DataSourceChapters(),
                 template: listTemplate,
+                endlessScroll: true,
+                virtualViewSize: 10,
                 filterable: {
                     field: 'name',
                     operator: 'contains',

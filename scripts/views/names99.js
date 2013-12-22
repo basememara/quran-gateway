@@ -25,7 +25,9 @@ define([
             //CREATE LIST VIEW
             this.element.find('.listview').kendoMobileListView({
                 dataSource: new kendo.ui.DataSourceNames99(),
-                template: listTemplate
+                template: listTemplate,
+                endlessScroll: true,
+                virtualViewSize: 20
             });
         },
 
