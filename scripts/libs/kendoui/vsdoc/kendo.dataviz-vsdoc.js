@@ -359,18 +359,10 @@ kendo.Router.prototype = {
     },
 
 
-    Example: function() {
-        /// <summary>
-        /// 
-        /// </summary>
-
-    },
-
-
     route: function(route,callback) {
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -849,7 +841,7 @@ $.fn.kendoDataSource = function(options) {
     /// &#10;The number of data items per page.
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;The configuration used to parse the remote sevice response.
+    /// &#10;The configuration used to parse the remote service response.
     /// &#10;
     /// &#10;serverAggregates — Boolean (default: false)
     /// &#10;If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
@@ -967,7 +959,7 @@ kendo.data.Model.prototype = {
     isNew: function() {
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
         /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
 
@@ -1334,6 +1326,17 @@ kendo.data.SchedulerDataSource.prototype = {
 
 
 
+
+    expand: function(start,end) {
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1380,6 +1383,37 @@ kendo.data.SchedulerEvent = function() { };
 kendo.data.SchedulerEvent.prototype = {
 
 
+
+
+    clone: function(options) {
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+
+    },
+
+
+    duration: function() {
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+
+    },
+
+
+    expand: function(start,end,timeZoneId) {
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -1428,7 +1462,7 @@ $.fn.kendoSchedulerEvent = function(options) {
     /// &#10;If set to true the event is "all day". By default events are not all day.
     /// &#10;
     /// &#10;recurrenceException — String (default: undefined)
-    /// &#10;The recurrence exceptions. A list of colon separated dates formatted using the yyyyMMddTHHmmssZ format string.
+    /// &#10;The recurrence exceptions. A list of semicolon separated dates formatted using the yyyyMMddTHHmmssZ format string.
     /// &#10;
     /// &#10;recurrenceId — String|Number|Object (default: undefined)
     /// &#10;The id of the recurrence parent event. Required for events that are recurrence exceptions.
@@ -1840,6 +1874,93 @@ $.fn.kendoLinearGauge = function(options) {
     /// &#10;
     /// &#10;transitions — Boolean (default: true)
     /// &#10;A value indicating if transition animations should be played.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.dataviz.ui.Map = function() { };
+
+kendo.dataviz.ui.Map.prototype = {
+
+
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoMap = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.dataviz.ui.Map widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.dataviz.ui.Map">The kendo.dataviz.ui.Map instance (if present).</returns>
+};
+
+$.fn.kendoMap = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.dataviz.ui.Map widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;center — Array 
+    /// &#10;The map center. Coordinates are listed as [Latitude, Longitude].
+/// &#10;You can also use a kendo.dataviz.map.Location instance.
+    /// &#10;
+    /// &#10;controls — Object 
+    /// &#10;The configuration of built-in map controls.
+    /// &#10;
+    /// &#10;layerDefaults — Object 
+    /// &#10;The default configuration for map layers by type.
+    /// &#10;
+    /// &#10;layers — Array 
+    /// &#10;The configuration of the map layers.
+/// &#10;The layer type is determined by the value of the type field.
+    /// &#10;
+    /// &#10;markerDefaults — Object 
+    /// &#10;The default options for all markers.
+    /// &#10;
+    /// &#10;markers — Array 
+    /// &#10;The initial markers to display on the map.
+    /// &#10;
+    /// &#10;minZoom — Number (default: 2)
+    /// &#10;The minimum zoom level.
+    /// &#10;
+    /// &#10;maxZoom — Number (default: 19)
+    /// &#10;The maximum zoom level.
+    /// &#10;
+    /// &#10;minSize — Number (default: 256)
+    /// &#10;The size of the map in pixels at zoom level 0.
+    /// &#10;
+    /// &#10;theme — String (default: "default")
+    /// &#10;The map theme name.The built-in themes are:
+    /// &#10;
+    /// &#10;zoom — Number (default: 3)
+    /// &#10;The initial zoom level.Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).The map size is derived from the zoom level and minScale options: size = (2 ^ zoom) * minSize
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2449,6 +2570,14 @@ kendo.ui.Draggable.prototype = {
 
 
 
+
+    cancelHold: function() {
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -2495,6 +2624,9 @@ $.fn.kendoDraggable = function(options) {
     /// &#10;
     /// &#10;hint — Function 
     /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+    /// &#10;
+    /// &#10;holdToDrag — Boolean (default: false)
+    /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">

@@ -359,18 +359,10 @@ kendo.Router.prototype = {
     },
 
 
-    Example: function() {
-        /// <summary>
-        /// 
-        /// </summary>
-
-    },
-
-
     route: function(route,callback) {
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -849,7 +841,7 @@ $.fn.kendoDataSource = function(options) {
     /// &#10;The number of data items per page.
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;The configuration used to parse the remote sevice response.
+    /// &#10;The configuration used to parse the remote service response.
     /// &#10;
     /// &#10;serverAggregates — Boolean (default: false)
     /// &#10;If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
@@ -967,7 +959,7 @@ kendo.data.Model.prototype = {
     isNew: function() {
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
         /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
 
@@ -1334,6 +1326,17 @@ kendo.data.SchedulerDataSource.prototype = {
 
 
 
+
+    expand: function(start,end) {
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1380,6 +1383,37 @@ kendo.data.SchedulerEvent = function() { };
 kendo.data.SchedulerEvent.prototype = {
 
 
+
+
+    clone: function(options) {
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+
+    },
+
+
+    duration: function() {
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+
+    },
+
+
+    expand: function(start,end,timeZoneId) {
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -1428,7 +1462,7 @@ $.fn.kendoSchedulerEvent = function(options) {
     /// &#10;If set to true the event is "all day". By default events are not all day.
     /// &#10;
     /// &#10;recurrenceException — String (default: undefined)
-    /// &#10;The recurrence exceptions. A list of colon separated dates formatted using the yyyyMMddTHHmmssZ format string.
+    /// &#10;The recurrence exceptions. A list of semicolon separated dates formatted using the yyyyMMddTHHmmssZ format string.
     /// &#10;
     /// &#10;recurrenceId — String|Number|Object (default: undefined)
     /// &#10;The id of the recurrence parent event. Required for events that are recurrence exceptions.
@@ -1457,6 +1491,15 @@ kendo.mobile.Application = function() { };
 kendo.mobile.Application.prototype = {
 
 
+
+
+    changeLoadingMessage: function(text) {
+        /// <summary>
+        /// Changes the loading message.
+        /// </summary>
+        /// <param name="text" type="String" >New text of the loading animation.</param>
+
+    },
 
 
     hideLoading: function() {
@@ -1559,7 +1602,7 @@ $.fn.kendoApplication = function(options) {
     /// &#10;The text displayed in the loading popup. Setting this value to false will disable the loading popup.Note: The text should be wrapped inside  tag.
     /// &#10;
     /// &#10;platform — String 
-    /// &#10;Which platform look to force on the application. Supported values are "ios", "android", "blackberry" and "wp8".
+    /// &#10;Which platform look to force on the application. Supported values are "ios6", "ios7","android", "blackberry" and "wp8".
     /// &#10;
     /// &#10;serverNavigation — Boolean 
     /// &#10;If set to true, the application will not use AJAX to load remote views.
@@ -1567,7 +1610,7 @@ $.fn.kendoApplication = function(options) {
     /// &#10;skin — String 
     /// &#10;The skin to apply to the application. Currently, Kendo UI Mobile ships with a flat skin in addition to the native looking ones.
     /// &#10;
-    /// &#10;statusBarStyle — String 
+    /// &#10;statusBarStyle — String (default: "black")
     /// &#10;Set the status bar style meta tag in iOS used to control the styling of the status bar in a pinned to the Home Screen app. Available as of Q2 2013 SP.
     /// &#10;
     /// &#10;transition — String 
@@ -1735,6 +1778,15 @@ kendo.mobile.ui.Button.prototype = {
 
     },
 
+
+    enable: function(enable) {
+        /// <summary>
+        /// Changes the enabled state of the widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >Whether to enable or disable the widget.</param>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1768,6 +1820,9 @@ $.fn.kendoButton = function(options) {
     /// &#10;
     /// &#10;badge — String 
     /// &#10;The badge of the button.
+    /// &#10;
+    /// &#10;enable — Boolean (default: true)
+    /// &#10;If set to false the widget will be disabled and will not allow the user to click it. The widget is enabled by default.
     /// &#10;
     /// &#10;icon — String 
     /// &#10;The icon of the button. It can be either one of the built-in icons, or a custom one.
@@ -1983,11 +2038,14 @@ $.fn.kendoDrawer = function(options) {
     /// &#10;position — String (default: 'left')
     /// &#10;The position of the drawer. Can be left (default) or right.
     /// &#10;
+    /// &#10;swipeToOpen — Boolean (default: true)
+    /// &#10;If set to false, swiping the view will not activate the drawer. In this case, the drawer will only be open by a designated button
+    /// &#10;
     /// &#10;title — String 
     /// &#10;The text to display in the Navbar title (if present).
     /// &#10;
     /// &#10;views — Array 
-    /// &#10;A list of the view ids on which the drawer will appear. If omitted, the drawer can be revealed on any view in the application.
+    /// &#10;A list of the view ids on which the drawer will appear. If omitted, the drawer will work on any view in the application.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2497,6 +2555,9 @@ $.fn.kendoPane = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
+    /// &#10;collapsible — Boolean (default: false)
+    /// &#10;Applicable when the pane is inside a SplitView. If set to true, the pane will be hidden when the device is in portrait position. The expandPanes SplitView method displays the hidden panes.The id of the initial mobile View to display.
+    /// &#10;
     /// &#10;initial — String 
     /// &#10;The id of the initial mobile View to display.
     /// &#10;
@@ -2635,6 +2696,15 @@ kendo.mobile.ui.ScrollView.prototype = {
 
     },
 
+
+    setDataSource: function(dataSource) {
+        /// <summary>
+        /// Sets the DataSource of an existing ScrollView and rebinds it.
+        /// </summary>
+        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -2667,7 +2737,7 @@ $.fn.kendoScrollView = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
-    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.Applicable only in data bound mode.
+    /// &#10;If set to false the widget will not bind to the DataSource during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the DataSource specified in the configuration.Applicable only in data bound mode.
     /// &#10;
     /// &#10;bounceVelocityThreshold — Number (default: 1.6)
     /// &#10;The velocity threshold after which a swipe will result in a bounce effect.
@@ -2678,20 +2748,17 @@ $.fn.kendoScrollView = function(options) {
     /// &#10;dataSource — Object 
     /// &#10;Instance of DataSource that the mobile ScrollView will be bound to. If DataSource is set, the widget will operate in data bound mode.
     /// &#10;
-    /// &#10;duration — Number (default: 300)
+    /// &#10;duration — Number (default: 400)
     /// &#10;The milliseconds that take the ScrollView to snap to the current page after released.
     /// &#10;
     /// &#10;emptyTemplate — String (default: "")
     /// &#10;The template which is used to render the pages without content. By default the ScrollView renders a blank page.Applicable only in data bound mode.
     /// &#10;
     /// &#10;enablePager — Boolean (default: true)
-    /// &#10;>>>>>> 4ce8960... formatting and whitespace
+    /// &#10;If set to true the ScrollView will display a pager. By default pager is enabled.
     /// &#10;
     /// &#10;itemsPerPage — Number (default: 1)
-    /// &#10;Determines how many data items will be passed to the page template. Important: In order ensure smooth scrolling the pageSize of the DataSource should be 6 times itemsPerPage amount or higher. For example, if itemsPerPage is set to 4, then the pageSize must be 24 (46) or higher.
-/// &#10;=======
-/// &#10;> Important: In order ensure smooth scrolling the pageSize of the DataSource should be 6 times itemsPerPage amount or higher. For example, if itemsPerPage is set to 4, then the pageSize must be 24 (46) or higher.
-/// &#10;>>>>>>> 4ce8960... formatting and whitespaceApplicable only in data bound mode.
+    /// &#10;Determines how many data items will be passed to the page template.Applicable only in data bound mode.
     /// &#10;
     /// &#10;page — Number (default: 0)
     /// &#10;The initial page to display.
@@ -2717,6 +2784,16 @@ kendo.mobile.ui.Scroller = function() { };
 kendo.mobile.ui.Scroller.prototype = {
 
 
+
+
+    animatedScrollTo: function(x,y) {
+        /// <summary>
+        /// Scrolls the scroll container to the specified location with animation. The arguments should be negative numbers.
+        /// </summary>
+        /// <param name="x" type="Number" >The horizontal offset in pixels to scroll to.</param>
+        /// <param name="y" type="Number" >The vertical offset in pixels to scroll to.</param>
+
+    },
 
 
     destroy: function() {
@@ -2875,6 +2952,22 @@ kendo.mobile.ui.SplitView.prototype = {
 
     },
 
+
+    expandPanes: function() {
+        /// <summary>
+        /// Displays the collapsible panes; has effect only when the device is in portrait orientation.
+        /// </summary>
+
+    },
+
+
+    collapsePanes: function() {
+        /// <summary>
+        /// Collapses back the collapsible panes (displayed previously with expandPanes); has effect only when the device is in portrait orientation.
+        /// </summary>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -2941,6 +3034,15 @@ kendo.mobile.ui.Switch.prototype = {
     },
 
 
+    enable: function(enable) {
+        /// <summary>
+        /// Changes the enabled state of the widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >Whether to enable or disable the widget.</param>
+
+    },
+
+
     toggle: function() {
         /// <summary>
         /// Toggle the checked state of the widget.
@@ -2981,6 +3083,9 @@ $.fn.kendoSwitch = function(options) {
     /// &#10;
     /// &#10;checked — Boolean (default: false)
     /// &#10;The checked state of the widget.
+    /// &#10;
+    /// &#10;enable — Boolean (default: true)
+    /// &#10;If set to false the widget will be disabled and will not allow the user to change its checked state. The widget is enabled by default.
     /// &#10;
     /// &#10;offLabel — String (default: "OFF")
     /// &#10;The OFF label.
@@ -3103,6 +3208,14 @@ kendo.mobile.ui.View.prototype = {
 
 
 
+    contentElement: function() {
+        /// <summary>
+        /// Retrieves the current content holder of the View - this is the content element if the View is stretched or the scroll container otherwise.
+        /// </summary>
+
+    },
+
+
     destroy: function() {
         /// <summary>
         /// Prepares the View for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
@@ -3111,10 +3224,11 @@ kendo.mobile.ui.View.prototype = {
     },
 
 
-    contentElement: function() {
+    enable: function(enable) {
         /// <summary>
-        /// Retrieves the current content holder of the View - this is the content element if the View is stretched or the scroll container otherwise.
+        /// Enables or disables the user interaction with the view and its contents.
         /// </summary>
+        /// <param name="enable" type="Boolean" >Omitting the parameter or passing true enables the view. Passing false disables the view.</param>
 
     },
 
@@ -3164,7 +3278,7 @@ $.fn.kendoView = function(options) {
     /// &#10;
     /// &#10;useNativeScrolling — Boolean (default: false)
     /// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
-/// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
+/// &#10;Native scrolling is only enabled on platforms that support it: iOS > 5+, Android > 3+, WP8. BlackBerry devices do support it, but the native scroller is flaky.
     /// &#10;
     /// &#10;zoom — Boolean (default: false)
     /// &#10;If set to true, the user can zoom in/out the contents of the view using the pinch/zoom gesture.
@@ -3234,6 +3348,14 @@ kendo.ui.Draggable.prototype = {
 
 
 
+
+    cancelHold: function() {
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -3280,6 +3402,9 @@ $.fn.kendoDraggable = function(options) {
     /// &#10;
     /// &#10;hint — Function 
     /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+    /// &#10;
+    /// &#10;holdToDrag — Boolean (default: false)
+    /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">

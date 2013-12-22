@@ -251,18 +251,11 @@ intellisense.annotate(instance, {
         /// </summary>
         /// </signature>
     },
-    Example: function() {
-        /// <signature>
-        /// <summary>
-        /// 
-        /// </summary>
-        /// </signature>
-    },
     route: function(route,callback) {
         /// <signature>
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -779,7 +772,7 @@ intellisense.annotate(instance, {
         /// <signature>
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
         /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
         /// </signature>
@@ -1129,6 +1122,16 @@ var original = kendo.data.SchedulerDataSource;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    expand: function(start,end) {
+        /// <signature>
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1176,6 +1179,34 @@ var original = kendo.data.SchedulerEvent;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    clone: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+        /// </signature>
+    },
+    duration: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+        /// </signature>
+    },
+    expand: function(start,end,timeZoneId) {
+        /// <signature>
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1677,6 +1708,124 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;transitions — Boolean (default: true)
         /// &#10;A value indicating if transition animations should be played.
+        /// &#10;
+        /// </summary>
+        /// <param name="options" type="Object">
+        /// The widget configuration options
+        /// </param>
+        /// </signature>
+    }
+});
+
+intellisense.annotate(kendo.dataviz.ui, {
+    Map: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.dataviz.ui.Map</summary>
+        /// </signature>
+    }
+});
+
+kendo.dataviz.ui.Map = (function() {
+var original = kendo.dataviz.ui.Map;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    destroy: function() {
+        /// <signature>
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+jQuery.fn.kendoMap = function() {
+    this.data("kendoMap", new kendo.dataviz.ui.Map());
+
+    return this;
+};
+
+intellisense.annotate(jQuery.fn, {
+    getKendoMap: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a reference to the kendo.dataviz.ui.Map widget, instantiated on the selector.
+        /// </summary>
+        /// <returns type="kendo.dataviz.ui.Map">The kendo.dataviz.ui.Map instance (if present).</returns>
+        /// </signature>
+    },
+    kendoMap: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Instantiates a kendo.dataviz.ui.Map widget based the DOM elements that match the selector.
+        /// &#10;Accepts an object with the following configuration options:
+        /// &#10;
+        /// &#10;center — Array 
+        /// &#10;The map center. Coordinates are listed as [Latitude, Longitude].
+/// &#10;You can also use a kendo.dataviz.map.Location instance.
+        /// &#10;
+        /// &#10;controls — Object 
+        /// &#10;The configuration of built-in map controls.
+        /// &#10;
+        /// &#10;layerDefaults — Object 
+        /// &#10;The default configuration for map layers by type.
+        /// &#10;
+        /// &#10;layers — Array 
+        /// &#10;The configuration of the map layers.
+/// &#10;The layer type is determined by the value of the type field.
+        /// &#10;
+        /// &#10;markerDefaults — Object 
+        /// &#10;The default options for all markers.
+        /// &#10;
+        /// &#10;markers — Array 
+        /// &#10;The initial markers to display on the map.
+        /// &#10;
+        /// &#10;minZoom — Number (default: 2)
+        /// &#10;The minimum zoom level.
+        /// &#10;
+        /// &#10;maxZoom — Number (default: 19)
+        /// &#10;The maximum zoom level.
+        /// &#10;
+        /// &#10;minSize — Number (default: 256)
+        /// &#10;The size of the map in pixels at zoom level 0.
+        /// &#10;
+        /// &#10;theme — String (default: "default")
+        /// &#10;The map theme name.The built-in themes are:
+        /// &#10;
+        /// &#10;zoom — Number (default: 3)
+        /// &#10;The initial zoom level.Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).The map size is derived from the zoom level and minScale options: size = (2 ^ zoom) * minSize
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -2430,6 +2579,13 @@ var original = kendo.ui.Draggable;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    cancelHold: function() {
+        /// <signature>
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -2500,6 +2656,9 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;hint — Function 
         /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+        /// &#10;
+        /// &#10;holdToDrag — Boolean (default: false)
+        /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
